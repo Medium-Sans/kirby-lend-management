@@ -1,0 +1,21 @@
+title: Student
+preset: page
+icon: user
+
+status:
+  draft: true
+  listed: true
+
+fields:
+  phone:
+    label: Phone
+    type: tel
+    width: 1/2
+  email:
+    label: Email
+    type: email
+    width: 1/2
+  notes:
+    label: notes
+    type: textarea
+    size: medium

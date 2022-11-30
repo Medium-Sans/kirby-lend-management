@@ -1,0 +1,96 @@
+<?php snippet('header') ?>
+
+<!-- Hero -->
+<div class="uni-hero uk-panel uk-overflow-hidden">
+
+    <!-- Hero: Header -->
+    <?php snippet('hero_header') ?>
+
+    <!-- Hero: Sticky menu -->
+    <div class="uni-sticky-menu uk-position-top-right">
+        <div class="uk-visible@l" data-uk-sticky="top: 100vh; animation: uk-animation-slide-top;">
+            <a class="uni-menu-trigger" href="javascript:void 0" data-uk-toggle="target: #uni-menu-modal;"></a>
+        </div>
+    </div>
+</div>
+
+<!-- Single project -->
+<article class="uk-panel uk-overflow-hidden uk-section-2xlarge@m uk-padding-remove-top">
+    <div class="uk-container">
+
+        <div class="uk-panel uk-overflow-hidden">
+            <canvas class="uk-visible@m" data-uk-height-viewport="offset-bottom: 30;"></canvas>
+            <canvas class="uk-hidden@m" data-uk-height-viewport="offset-bottom: 26;"></canvas>
+            <?php if ($cover = $page->images()->findBy("template", "cover")): ?>
+            <img src="<?= $cover->url() ?>" alt="image" data-uk-cover="">
+            <?php endif; ?>
+
+        </div>
+
+        <div class="uk-flex-center uk-margin-medium-top">
+            <a class="uni-icon-wave" href="#details" data-uk-scroll="offset: 40;">
+                <span class="material-icons-round uk-icon-medium">south</span>
+            </a>
+        </div>
+
+        <div class="uk-margin-xlarge-top uk-margin-2xlarge-top@m" id="details">
+            <div class="uk-container uk-container-small">
+                <div class="uk-grid uk-grid-medium@m uk-flex-between" data-uk-grid="">
+                    <div class="uk-width-1-3@m">
+                        <h1 class="uk-h2"><?= $page->headline() ?></h1>
+                    </div>
+                    <div class="uk-width-1-2@m">
+                        <ul class="uk-list uk-text-large@m">
+                            <li>
+                                <span><?php echo t('topic') ?>:</span>
+                                <a href="<?= $page->parent()->url() ?>">
+                                <?= $page->parent()->title() ?></a>
+                            </li>
+                            <li>
+                                <span><?php echo t('client') ?>:</span>
+                                <?= $page->customer() ?>
+                            </li>
+                            <li>
+                                <span><?php echo t('location') ?>:</span>
+                                <?= $page->location() ?>
+                            </li>
+                            <li>
+                                <span><?php echo t('year') ?>:</span>
+                                <?= $page->year() ?>
+                            </li>
+                        </ul>
+                        <a href="<?= $page->project_url() ?>"
+                            class="uk-link-expand uk-link-underline uk-margin-medium-top@m uk-text-large@m">
+                            <i class="material-icons-round">arrow_forward</i>
+                            <span><?php echo t('view_project') ?></span>
+                        </a>
+                    </div>
+                </div>
+                <p class="uk-text-xlarge@m uk-margin-3xlarge-top@m"><?= $page->intro() ?></p>
+            </div>
+        </div>
+
+        if($gallery)
+        <?php foreach($gallery as $picture):
+         $i = 1;?>
+        <div class="uk-grid uk-grid-medium@m uk-margin-large-top uk-margin-2xlarge-top@m" data-uk-grid="">
+            <div class="uk-width-1-<?= $i ?>">
+                <div class="uk-panel uk-overflow-hidden">
+                    <canvas class="uk-visible@m" height="680"></canvas>
+                    <canvas class="uk-hidden@m" height="340"></canvas>
+                    <img src="<?= $picture->url() ?>" alt="image" data-uk-cover="">
+                </div>
+            </div>
+        </div>
+        <?php $i++; endforeach; ?>
+
+        <div class="uk-margin-xlarge-top uk-margin-3xlarge-top@m">
+            <div class="uk-container uk-container-small">
+                <p class="uk-text-xlarge@m"><?= $page->text() ?></p>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Footer / cta -->
+<?php snippet('footer') ?>

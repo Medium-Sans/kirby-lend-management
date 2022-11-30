@@ -1,0 +1,20 @@
+title: Store
+preset: pages
+icon: 🔣
+
+options:
+  url: false
+  status: false
+  delete: false
+
+drafts:
+  extends: sections/categories
+  label: Unpublished categories
+
+unlisted:
+  extends: sections/categories
+  label: Unlisted categories
+
+listed:
+  extends: sections/categories
+  label: Published categories
