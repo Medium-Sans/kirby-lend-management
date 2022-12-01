@@ -2,31 +2,36 @@
 
 namespace Kirby\LendManagement;
 
+use DateTimeZone;
 use Kirby\Data\Data;
+use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
 use Kirby\Toolkit\I18n;
-use Kirby\Toolkit\Str;
+use Kirby\Toolkit\V;
 
 class Loan
 {
 
     /**
-     * Creates a new item with the given $input
+     * Creates a new loan with the given $input
      * data and adds it to the json file
      *
+     * @param array $input
      * @return bool
+     * @throws InvalidArgumentException
      */
     public static function create(array $input): bool
     {
-        // reuse the update method to create a new
-        // item with the new unique id. If you need different logic
-        // here, you can easily extend it
+        // We update the last loan date of the borrower
+        Borrower::update($input['borrowerId'][0], ['lastLoanAt' => date('Y-m-d H:i:s')]);
+
         return static::update(uuid(), $input);
     }
 
     /**
-     * Deletes a item by item id
+     * Deletes a loan by loanId
      *
+     * @param string $id
      * @return bool
      */
     public static function delete(string $id): bool
@@ -42,10 +47,7 @@ class Loan
     }
 
     /**
-     * Returns the absolute path to the items.json
-     * This is the place to modify if you don't want to
-     * store the items in your plugin folder
-     * – which you probably really don't want to do.
+     * Returns the absolute path to the loans.json
      *
      * @return string
      */
@@ -55,25 +57,26 @@ class Loan
     }
 
     /**
-     * Finds a item by id and throws an exception
-     * if the item cannot be found
+     * Finds a loan by id and throws an exception
+     * if the loan cannot be found
      *
      * @param string $id
      * @return array
+     * @throws NotFoundException
      */
     public static function find(string $id): array
     {
-        $item = static::list()[$id] ?? null;
+        $loan = static::list()[$id] ?? null;
 
-        if (empty($item) === true) {
+        if (empty($loan) === true) {
             throw new NotFoundException('The item could not be found');
         }
 
-        return $item;
+        return $loan;
     }
 
     /**
-     * Lists all items from the items.json
+     * Lists all loans from the loans.json
      *
      * @return array
      */
@@ -147,7 +150,7 @@ class Loan
     /**
      * Get the number of loans from the loans.json
      *
-     * @return array
+     * @return int
      */
     public static function count(): int
     {
@@ -158,17 +161,16 @@ class Loan
     }
 
     /**
-     * Updates an item by id with the given input
+     * Updates a loan by id with the given input
      * It throws an exception in case of validation issues
      *
      * @param string $id
      * @param array $input
      * @return boolean
-     * @throws InvalidArgumentException
      */
     public static function update(string $id, array $input): bool
     {
-        $item = [
+        $loan = [
             'id'                    => $id,
             'startDate'             => $input['startDate'] ?? null,
             'endDate'               => $input['endDate'] ?? null,
@@ -179,16 +181,23 @@ class Loan
             'returnedDate'          => $input['returnedDate'] ?? null,
         ];
 
-        // load all items
-        $items = static::list();
+        // require a borrower
+        if (V::required($input['borrowerId']) === false) {
+            throw new InvalidArgumentException('A borrower must be set');
+        }
+
+        // load all loans
+        $loans = static::list();
 
         // set/overwrite the item data
-        $items[$id] = $item;
+        $loans[$id] = $loan;
 
-        return Data::write(static::file(), $items);
+        return Data::write(static::file(), $loans);
     }
 
     /**
+     * Return a collection of loans from the loans.json
+     *
      * @throws NotFoundException
      */
     public static function collection(): array
