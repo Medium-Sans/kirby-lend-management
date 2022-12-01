@@ -179,12 +179,26 @@ class Item
                 'text' => $item['title'],
                 'link' => '/item/' . $item['id'],
                 'image' => [
-                    'icon' => 'cart',
+                    'icon' => 'tag',
                     'back' => 'purple-400'
                 ]
             ];
         }
         return $collection;
+    }
+
+    public static function getTotalItemsByCategoryId(string $categoryId): int
+    {
+        $items = static::list();
+        $ttl = 0;
+
+        foreach ($items as $item) {
+            if($item['categoryId'] === $categoryId) {
+                $ttl++;
+            }
+        }
+
+        return $ttl;
     }
 
     public static function getItemsByCategory(string $categoryId): array
@@ -197,8 +211,9 @@ class Item
                 $collection[] = [
                     'text' => $item['title'],
                     'link' => '/item/' . $item['id'],
+                    'info' => $item['quantity']. " pcs",
                     'image' => [
-                        'icon' => 'cart',
+                        'icon' => 'tag',
                         'back' => 'purple-400'
                     ]
                 ];
