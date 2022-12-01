@@ -3,7 +3,7 @@
 use Kirby\LendManagement\Borrower;
 
 return [
-    'pattern' => 'workshop/borrower/(:any)/delete',
+    'pattern' => 'lendmanagement/borrower/(:any)/delete',
     'load' => function () {
         return [
             'component' => 'k-remove-dialog',

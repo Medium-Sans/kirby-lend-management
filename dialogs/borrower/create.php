@@ -3,7 +3,7 @@
 use Kirby\LendManagement\Borrower;
 
 return [
-    'pattern' => 'lendmanagement/borrowers/borrower/create',
+    'pattern' => 'lendmanagement/borrower/create',
     'load' => function () {
         return [
             'component' => 'k-form-dialog',
