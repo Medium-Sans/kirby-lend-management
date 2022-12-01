@@ -3,6 +3,7 @@ import Inventory from "./components/Inventory.vue";
 import Category from "./components/Category.vue";
 import Borrowers from "./components/Borrowers.vue";
 import Loan from "./components/Loan.vue";
+import LoanAdd from "./components/LoanAdd.vue";
 
 panel.plugin("scardoso/lendmanagement", {
   components: {
@@ -11,5 +12,6 @@ panel.plugin("scardoso/lendmanagement", {
     "k-category-view":  Category,
     "k-borrowers-view": Borrowers,
     "k-loan-view":      Loan,
+    "k-loan-add-view":  LoanAdd,
   }
 });
