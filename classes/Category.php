@@ -4,6 +4,7 @@ namespace Kirby\LendManagement;
 
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
+use Kirby\Toolkit\I18n;
 
 class Category
 {
@@ -12,19 +13,18 @@ class Category
      * Creates a new category with the given $input
      * data and adds it to the json file
      *
+     * @param array $input
      * @return bool
      */
     public static function create(array $input): bool
     {
-        // reuse the update method to create a new
-        // category with the new unique id. If you need different logic
-        // here, you can easily extend it
         return static::update(uuid(), $input);
     }
 
     /**
      * Deletes a category by category id
      *
+     * @param string $id
      * @return bool
      */
     public static function delete(string $id): bool
@@ -41,9 +41,6 @@ class Category
 
     /**
      * Returns the absolute path to the categories.json
-     * This is the place to modify if you don't want to
-     * store the categories in your plugin folder
-     * – which you probably really don't want to do.
      *
      * @return string
      */
@@ -58,6 +55,7 @@ class Category
      *
      * @param string $id
      * @return array
+     * @throws NotFoundException
      */
     public static function find(string $id): array
     {
@@ -93,23 +91,6 @@ class Category
     }
 
     /**
-     * Lists all available category types
-     *
-     * @return array
-     */
-    public static function types(): array
-    {
-        return [
-            'bakery',
-            'dairy',
-            'fruit',
-            'meat',
-            'vegan',
-            'vegetable',
-        ];
-    }
-
-    /**
      * Updates a category by id with the given input
      * It throws an exception in case of validation issues
      *
@@ -140,11 +121,17 @@ class Category
         $categories = static::list();
         $collection = [];
         foreach ($categories as $category) {
+
+            $ttlItemsforCategory = Item::getTotalItemsByCategoryId($category['id']);
+            $itemsLabel = $ttlItemsforCategory > 1 ? I18n::translate('lendmanagement.items') :
+                I18n::translate('lendmanagement.item');
+
             $collection[] = [
                 'text' => $category['title'],
                 'link' => '/lendmanagement/inventory/category/' . $category['id'],
+                'info' => $ttlItemsforCategory . ' ' . $itemsLabel,
                 'image' => [
-                    'icon' => 'cart',
+                    'icon' => 'list-numbers',
                     'back' => 'purple-400'
                 ]
             ];
