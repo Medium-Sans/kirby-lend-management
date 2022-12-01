@@ -11,41 +11,38 @@ class Borrower
 {
 
     /**
-     * Creates a new item with the given $input
+     * Creates a new borrower with the given $input
      * data and adds it to the json file
      *
+     * @param array $input
      * @return bool
+     * @throws InvalidArgumentException
      */
     public static function create(array $input): bool
     {
-        // reuse the update method to create a new
-        // item with the new unique id. If you need different logic
-        // here, you can easily extend it
         return static::update(uuid(), $input);
     }
 
     /**
-     * Deletes a item by item id
+     * Deletes a borrower by borrower id
      *
+     * @param string $id
      * @return bool
      */
     public static function delete(string $id): bool
     {
-        // get all items
-        $items = static::list();
+        // get all borrowers
+        $borrowers = static::list();
 
-        // remove the item from the list
-        unset($items[$id]);
+        // remove the borrower from the list
+        unset($borrowers[$id]);
 
         // write the update list to the file
-        return Data::write(static::file(), $items);
+        return Data::write(static::file(), $borrowers);
     }
 
     /**
-     * Returns the absolute path to the items.json
-     * This is the place to modify if you don't want to
-     * store the items in your plugin folder
-     * – which you probably really don't want to do.
+     * Returns the absolute path to the borrowers.json
      *
      * @return string
      */
@@ -55,25 +52,26 @@ class Borrower
     }
 
     /**
-     * Finds a item by id and throws an exception
-     * if the item cannot be found
+     * Finds a borrower by id and throws an exception
+     * if the borrower cannot be found
      *
      * @param string $id
      * @return array
+     * @throws NotFoundException
      */
     public static function find(string $id): array
     {
-        $item = static::list()[$id] ?? null;
+        $borrower = static::list()[$id] ?? null;
 
-        if (empty($item) === true) {
-            throw new NotFoundException('The item could not be found');
+        if (empty($borrower) === true) {
+            throw new NotFoundException('The borrower could not be found');
         }
 
-        return $item;
+        return $borrower;
     }
 
     /**
-     * Lists all items from the items.json
+     * Lists all borrowers from the borrowers.json
      *
      * @return array
      */
@@ -83,37 +81,45 @@ class Borrower
     }
 
     /**
-     * Updates a item by id with the given input
+     * Updates a borrower by id with the given input
      * It throws an exception in case of validation issues
      *
      * @param string $id
      * @param array $input
      * @return boolean
+     * @throws InvalidArgumentException
+     * @throws NotFoundException
      */
     public static function update(string $id, array $input): bool
     {
-        $item = [
+        try {
+            $borrower = static::find($id);
+        } catch (NotFoundException $e) {
+            $borrower = [];
+        }
+
+        $updatedBorrower = [
             'id'            => $id,
-            'firstname'     => $input['firstname'] ?? null,
-            'lastname'      => $input['lastname'] ?? null,
-            'email'         => $input['email'] ?? null,
-            'phone'         => $input['phone'] ?? null,
-            'notes'         => $input['notes'] ?? null,
-            'lastloan'      => $input['lastloan'] ?? null,
+            'firstname'     => $input['firstname'] ?? ($borrower['firstname'] ?? ''),
+            'lastname'      => $input['lastname'] ?? ($borrower['lastname'] ?? ''),
+            'email'         => $input['email'] ?? ($borrower['email'] ?? ''),
+            'phone'         => $input['phone'] ?? ($borrower['phone'] ?? ''),
+            'notes'         => $input['notes'] ?? ($borrower['notes'] ?? ''),
+            'lastLoanAt'    => $input['lastLoanAt'] ?? ($borrower['lastLoanAt'] ?? ''),
         ];
 
         // require an email
-        if (V::minlength($item['email'], 1) === false) {
+        if (V::minlength($updatedBorrower['firstname'], 1) === false) {
             throw new InvalidArgumentException('The email must not be empty');
         }
 
-        // load all items
-        $items = static::list();
+        // load all borrowers
+        $borrowers = static::list();
 
-        // set/overwrite the item data
-        $items[$id] = $item;
+        // set/overwrite the borrower data
+        $borrowers[$id] = $updatedBorrower;
 
-        return Data::write(static::file(), $items);
+        return Data::write(static::file(), $borrowers);
     }
 
     public static function getOptions(): array
