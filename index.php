@@ -8,7 +8,6 @@ load([
 ]);
 
 Kirby::plugin('scardoso/lendmanagement', [
-    'translations' => require __DIR__ . '/i18n/i18n.php',
     'areas' => [
         'lendmanagement' => [
             'label' => t([
@@ -36,13 +35,21 @@ Kirby::plugin('scardoso/lendmanagement', [
                 require __DIR__ . '/dialogs/item/delete.php',
                 require __DIR__ . '/dialogs/item/update.php',
             ],
+            'dropdowns' => [
+                require __DIR__ . '/dropdowns/borrower/options.php',
+                require __DIR__ . '/dropdowns/item/options.php',
+            ],
             'views' => [
                 require __DIR__ . '/views/dashboard.php',
                 require __DIR__ . '/views/inventory.php',
-                require __DIR__ . '/views/category.php',
                 require __DIR__ . '/views/borrowers.php',
+                require __DIR__ . '/views/category.php',
+                require __DIR__ . '/views/item.php',
                 require __DIR__ . '/views/loan.php',
+                require __DIR__ . '/views/loanAdd.php',
             ]
         ]
-    ]
+    ],
+    'api' => require __DIR__ . '/routes/index.php',
+    'translations' => require __DIR__ . '/i18n/i18n.php',
 ]);
