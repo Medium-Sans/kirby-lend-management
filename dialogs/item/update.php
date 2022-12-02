@@ -1,7 +1,6 @@
 <?php
 
 use Kirby\LendManagement\Item;
-use Kirby\Toolkit\A;
 
 return [
     'pattern' => 'inventory/item/(:any)/update',
