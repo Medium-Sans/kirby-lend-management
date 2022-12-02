@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\LendManagement\Item;
+use Kirby\Panel\Panel;
 
 return [
     'pattern' => 'inventory/item/(:any)/delete',
@@ -13,6 +14,8 @@ return [
         ];
     },
     'submit' => function (string $id) {
+        Item::delete($id);
+        Panel::go('lendmanagement/inventory');
         return Item::delete($id);
     }
 ];
