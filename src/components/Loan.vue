@@ -6,9 +6,10 @@
         {{ borrower.firstname }} {{ borrower.lastname }} - {{ loan.startDate }}
 
         <k-button-group slot="left">
-          <k-button icon="add"
-                    :text="$t('lendmanagement.loan.add')"
-                    @click="$dialog('lendmanagement/loan/create')" />
+          <k-button icon="archive"
+                    :text="$t('lendmanagement.loan.archive')"
+                    @click="$dialog('lendmanagement/loan/delete')" />
+
           <k-button icon="undo"
                     :text="$t('lendmanagement.loan.notify')"
                     @click="$dialog('lendmanagement/loan/notifyexpired')" />
