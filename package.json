@@ -5,6 +5,7 @@
     "build": "npx -y kirbyup src/index.js"
   },
   "dependencies": {
-    "kirbyup": "^2.1.0"
+    "kirbyup": "^2.1.0",
+    "vue-barcode-reader": "^1.0.3"
   }
 }
