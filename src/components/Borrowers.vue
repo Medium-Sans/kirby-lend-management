@@ -7,7 +7,7 @@
           <k-button
             text="New Borrower"
             icon="add"
-            @click="$dialog('lendmanagement/borrowers/borrower/create')"
+            @click="$dialog('lendmanagement/borrower/create')"
           />
         </k-button-group>
       </k-header>
@@ -19,13 +19,17 @@
           <th>{{ $t('lendmanagement.borrowers.table.email') }}</th>
           <th>{{ $t('lendmanagement.borrowers.table.phone') }}</th>
           <th>{{ $t('lendmanagement.borrowers.table.lastlend') }}</th>
+          <th class="k-product-options"></th>
         </tr>
         <tr v-for="(borrower, id) in borrowers" :key="id">
           <td>{{ borrower.firstname }}</td>
           <td>{{ borrower.lastname }}</td>
           <td>{{ borrower.email }}</td>
           <td>{{ borrower.phone }}</td>
-          <td>{{ borrower.lastlend }}</td>
+          <td>{{ borrower.lastLendAt }}</td>
+          <td class="k-product-options">
+            <k-options-dropdown :options="'lendmanagement/borrower' + id" />
+          </td>
         </tr>
       </table>
     </k-view>
@@ -37,12 +41,6 @@ export default {
   props: {
     borrowers: Object
   },
-  methods: {
-    // format the price in EURO
-    price(price) {
-      return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
-    }
-  }
 };
 </script>
 
@@ -61,5 +59,10 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   background: var(--color-white);
+}
+.k-product-options {
+  padding: 0 !important;
+  width: 3rem;
+  overflow: visible !important;
 }
 </style>
