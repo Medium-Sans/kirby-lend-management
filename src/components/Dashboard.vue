@@ -6,9 +6,13 @@
         {{ $t('view.lendmanagement.dashboard') }}
 
         <k-button-group slot="left">
-          <k-button icon="add"
-                    :text="$t('lendmanagement.loan.add')"
-                    @click="$dialog('lendmanagement/loan/create')" />
+          <k-button-link
+            icon="add"
+            :link="`/lendmanagement/loan-add`"
+          >
+            {{ $t('lendmanagement.loan.add') }}
+          </k-button-link>
+
           <k-button icon="undo"
                     :text="$t('lendmanagement.loan.notify')"
                     @click="$dialog('lendmanagement/loan/notifyexpired')" />
