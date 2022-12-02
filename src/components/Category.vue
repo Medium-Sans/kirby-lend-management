@@ -5,11 +5,6 @@
         {{ category.title }}
         <k-button-group slot="left">
           <k-button
-            text="Edit"
-            icon="edit"
-            @click="$dialog('/inventory/category/' + category.id + '/update')"
-          />
-          <k-button
             text="Delete"
             icon="trash"
             @click="$dialog('/inventory/category/' + category.id + '/delete')"
