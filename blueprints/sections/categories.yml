@@ -1,6 +1,0 @@
-type: pages
-label: Events
-parent: site.find("item-categories")
-sortBy: from desc
-template: category
-empty: No item categories yet

@@ -2,8 +2,11 @@
 
 namespace Kirby\LendManagement;
 
+use chillerlan\QRCode\{QRCode, QROptions};
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
+
+require_once __DIR__.'/../vendor/autoload.php';
 
 class Item
 {
@@ -12,6 +15,7 @@ class Item
      * Creates a new item with the given $input
      * data and adds it to the json file
      *
+     * @param array $input
      * @return bool
      */
     public static function create(array $input): bool
@@ -23,8 +27,9 @@ class Item
     }
 
     /**
-     * Deletes a item by item id
+     * Deletes an item by item id
      *
+     * @param string $id
      * @return bool
      */
     public static function delete(string $id): bool
@@ -53,11 +58,12 @@ class Item
     }
 
     /**
-     * Finds a item by id and throws an exception
+     * Finds an item by id and throws an exception
      * if the item cannot be found
      *
      * @param string $id
      * @return array
+     * @throws NotFoundException
      */
     public static function find(string $id): array
     {
@@ -124,23 +130,6 @@ class Item
     }
 
     /**
-     * Lists all available item types
-     *
-     * @return array
-     */
-    public static function types(): array
-    {
-        return [
-            'bakery',
-            'dairy',
-            'fruit',
-            'meat',
-            'vegan',
-            'vegetable',
-        ];
-    }
-
-    /**
      * Updates an item by id with the given input
      * It throws an exception in case of validation issues
      *
@@ -150,6 +139,8 @@ class Item
      */
     public static function update(string $id, array $input): bool
     {
+        $QrCode = new QRCode;
+
         $item = [
             'id'                 => $id,
             'title'              => $input['title'] ?? null,
@@ -159,6 +150,7 @@ class Item
             'categoryId'         => $input['categoryId'] ?? null,
             'quantity'           => $input['quantity'] ?? null,
             'nbrOfLoans'         => $input['nbrOfLoans'] ?? null,
+            'qrCode'             => $QrCode->render($id),
         ];
 
         // load all items
@@ -170,14 +162,25 @@ class Item
         return Data::write(static::file(), $items);
     }
 
+    /**
+     * Return a collection of items from in items.json
+     *
+     * @return array
+     * @throws NotFoundException
+     */
     public static function collection(): array
     {
+
         $items = static::list();
         $collection = [];
         foreach ($items as $item) {
+
+            $category = $item['categoryId'] ? Category::find($item['categoryId'])['title'] : '';
+
             $collection[] = [
                 'text' => $item['title'],
-                'link' => '/item/' . $item['id'],
+                'link' => 'lendmanagement/inventory/item/' . $item['id'],
+                'info' => $category ?? '',
                 'image' => [
                     'icon' => 'tag',
                     'back' => 'purple-400'
@@ -210,7 +213,7 @@ class Item
             if($item['categoryId'] === $categoryId) {
                 $collection[] = [
                     'text' => $item['title'],
-                    'link' => '/item/' . $item['id'],
+                    'link' => 'lendmanagement/inventory/item/' . $item['id'],
                     'info' => $item['quantity']. " pcs",
                     'image' => [
                         'icon' => 'tag',
