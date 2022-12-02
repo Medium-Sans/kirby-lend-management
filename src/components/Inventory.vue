@@ -48,7 +48,7 @@
             <k-headline>{{ $t('lendmanagement.categories')}}</k-headline>
             <k-button icon="add"
                       :text="$t('lendmanagement.category.add')"
-                      @click="$dialog('stock/category/create')" />
+                      @click="$dialog('inventory/category/create')" />
           </header>
 
           <k-collection layout="list" :items="categories" />
