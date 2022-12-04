@@ -9,13 +9,12 @@ return [
         return [
             'component' => 'k-remove-dialog',
             'props' => [
-                'text' => 'Do you really want to delete this item ?'
+                'text' => t('lendmanagement.item.delete')
             ]
         ];
     },
-    'submit' => function (string $id) {
+    'submit' => function (string $id): void {
         Item::delete($id);
         Panel::go('lendmanagement/inventory');
-        return Item::delete($id);
     }
 ];

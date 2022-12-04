@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\LendManagement\Category;
+use Kirby\Panel\Panel;
 
 return [
     'pattern' => 'inventory/category/(:any)/delete',
@@ -8,11 +9,12 @@ return [
         return [
             'component' => 'k-remove-dialog',
             'props' => [
-                'text' => 'Do you really want to delete this category ?'
+                'text' => t('lendmanagement.category.delete')
             ]
         ];
     },
-    'submit' => function (string $id) {
-        return Category::delete($id);
+    'submit' => function (string $id): void {
+        Category::delete($id);
+        Panel::go('lendmanagement/inventory');
     }
 ];

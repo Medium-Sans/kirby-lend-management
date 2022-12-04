@@ -8,7 +8,7 @@ return [
         return [
             'component' => 'k-remove-dialog',
             'props' => [
-                'text' => 'Do you really want to delete this student ?'
+                'text' => t('lendmanagement.borrower.delete')
             ]
         ];
     },
