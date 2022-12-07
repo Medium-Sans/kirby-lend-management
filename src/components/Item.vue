@@ -1,7 +1,6 @@
 <template>
   <k-inside>
     <k-view>
-
       <k-header>
         {{ item.title }}
         <k-button-group slot="left">
@@ -75,7 +74,6 @@
           </k-field>
         </k-column>
       </k-grid>
-
 
       <input ref="submitter" class="k-form-submitter" type="submit" />
     </k-view>

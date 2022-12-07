@@ -10,6 +10,20 @@
             @click="$dialog('lendmanagement/borrower/create')"
           />
         </k-button-group>
+        <k-button-group slot="right">
+          <k-button-link
+            icon="cart"
+            :link="`/lendmanagement/`"
+          >
+            {{ $t('lendmanagement.dashboard.view') }}
+          </k-button-link>
+          <k-button-link
+            icon="table"
+            :link="`/lendmanagement/inventory/`"
+          >
+            {{ $t('lendmanagement.dashboard.inventory.view') }}
+          </k-button-link>
+        </k-button-group>
       </k-header>
 
       <table class="k-products">

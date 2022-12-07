@@ -8,11 +8,15 @@
         <k-button-group slot="left">
           <k-button icon="archive"
                     :text="$t('lendmanagement.loan.archive')"
-                    @click="$dialog('lendmanagement/loan/delete')" />
+                    @click="$dialog(`lendmanagement/loan/${loan.id}/archive`)" />
+
+          <k-button icon="refresh"
+                    :text="$t('lendmanagement.loan.extend')"
+                    @click="$dialog(`lendmanagement/loan/${loan.id}/extend`)" />
 
           <k-button icon="undo"
                     :text="$t('lendmanagement.loan.notify')"
-                    @click="$dialog('lendmanagement/loan/notifyexpired')" />
+                    @click="$dialog(`lendmanagement/loan/${loan.id}/notifyexpired`)" />
         </k-button-group>
       </k-header>
 
@@ -25,14 +29,14 @@
                 label: 'Début du prêt',
                 type: 'date',
                 time: false,
-                required: true,
+                disabled: true,
                 width: '1/2'
               },
               endDate: {
                 label: 'Fin du prêt',
                 type: 'date',
                 time: false,
-                required: true,
+                disabled: true,
                 width: '1/2'
               },
               line: {
@@ -44,22 +48,23 @@
               firstname: {
                 label: $t('lendmanagement.borrowers.table.firstname'),
                 type: 'text',
-                required: true,
+                disabled: true,
                 width: '1/2'
               },
               lastname: {
                 label: $t('lendmanagement.borrowers.table.lastname'),
                 type: 'text',
-                required: true,
+                disabled: true,
                 width: '1/2'
               },
               email: {
                 label: $t('lendmanagement.borrowers.table.email'),
-                required: true,
+                disabled: true,
                 type: 'text'
               },
               phone: {
                 label: $t('lendmanagement.borrowers.table.phone'),
+                disabled: true,
                 type: 'text'
               },
             }" />
@@ -81,7 +86,7 @@
               <td>{{ item.title }}</td>
               <td>{{ item.quantity }}</td>
               <td class="k-product-options">
-                <k-options-dropdown :options="'products/' + id" />
+                <k-options-dropdown :options="'loans/' + id" />
               </td>
             </tr>
           </table>

@@ -87,13 +87,14 @@ export default {
       loan: {
         startDate: this.startDate,
         endDate: this.endDate,
-      }
+      },
+      hasChanged: false
     }
   },
   methods: {
     input() {
       // the data is automatically updated
-      console.log(this.loan);
+      this.hasChanged = true;
     },
     submit() {
       // let's send this thing to the server

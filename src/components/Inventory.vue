@@ -13,6 +13,13 @@
 
         <k-button-group slot="right">
           <k-button-link
+            icon="users"
+            :link="`/lendmanagement/borrowers/`"
+          >
+            {{ $t('lendmanagement.borrowers.view') }}
+          </k-button-link>
+
+          <k-button-link
             icon="cart"
             :link="`/lendmanagement/`"
           >
