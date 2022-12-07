@@ -1,13 +1,15 @@
 <?php
 
 load([
-    'Kirby\LendManagement\Loan'     => __DIR__ . '/classes/Loan.php',
-    'Kirby\LendManagement\Category' => __DIR__ . '/classes/Category.php',
-    'Kirby\LendManagement\Item'     => __DIR__ . '/classes/Item.php',
-    'Kirby\LendManagement\Borrower' => __DIR__ . '/classes/Borrower.php',
+    'Kirby\LendManagement\Loan'          => __DIR__ . '/classes/Loan.php',
+    'Kirby\LendManagement\LoanExtension' => __DIR__ . '/classes/LoanExtension.php',
+    'Kirby\LendManagement\Category'      => __DIR__ . '/classes/Category.php',
+    'Kirby\LendManagement\Item'          => __DIR__ . '/classes/Item.php',
+    'Kirby\LendManagement\Borrower'      => __DIR__ . '/classes/Borrower.php',
+    'Kirby\LendManagement\Database'      => __DIR__ . '/classes/Database.php',
 ]);
 
-Kirby::plugin('scardoso/lendmanagement', [
+Kirby::plugin('scardoso/kirby-lendmanagement', [
     'areas' => [
         'lendmanagement' => [
             'label' => t([
@@ -26,6 +28,7 @@ Kirby::plugin('scardoso/lendmanagement', [
                 require __DIR__ . '/dialogs/loan/create.php',
                 require __DIR__ . '/dialogs/loan/delete.php',
                 require __DIR__ . '/dialogs/loan/update.php',
+                require __DIR__ . '/dialogs/loan/extend.php',
                 // Borrower
                 require __DIR__ . '/dialogs/borrower/create.php',
                 require __DIR__ . '/dialogs/borrower/delete.php',
@@ -52,4 +55,10 @@ Kirby::plugin('scardoso/lendmanagement', [
     ],
     'api' => require __DIR__ . '/routes/index.php',
     'translations' => require __DIR__ . '/i18n/i18n.php',
+    'beebmx.kirby-db.drivers' => [
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'database' => __DIR__ . '/database/db.sqlite',
+        ]
+    ],
 ]);

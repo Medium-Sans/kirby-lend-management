@@ -6,7 +6,7 @@ import Borrowers from "./components/Borrowers.vue";
 import Loan from "./components/Loan.vue";
 import LoanAdd from "./components/LoanAdd.vue";
 
-panel.plugin("scardoso/lendmanagement", {
+panel.plugin("scardoso/kirby-lendmanagement", {
   components: {
     "k-dashboard-view": Dashboard,
     "k-inventory-view": Inventory,
