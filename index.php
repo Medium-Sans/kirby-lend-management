@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/vendor/autoload.php';
+
 load([
     'Kirby\LendManagement\Loan'          => __DIR__ . '/classes/Loan.php',
     'Kirby\LendManagement\LoanExtension' => __DIR__ . '/classes/LoanExtension.php',
