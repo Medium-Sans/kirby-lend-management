@@ -1,10 +1,10 @@
 <?php
 
 use Kirby\LendManagement\Item;
-use Kirby\Panel\Panel;
+use Kirby\LendManagement\Loan;
 
 return [
-    'routes' => function ($kirby) {
+    'routes' => function () {
         return [
             [
                 'pattern' => 'lendmanagement/item/(:any)/update',
@@ -14,10 +14,10 @@ return [
                 }
             ],
             [
-                'pattern' => 'lendmanagement/item/(:any)/delete',
-                'method' => 'GET',
-                'action' => function (string $id) use ($kirby) {
-                    return Item::delete($id);
+                'pattern' => 'lendmanagement/loan/create',
+                'method' => 'POST',
+                'action' => function () {
+                    return Loan::create(get());
                 }
             ]
         ];
