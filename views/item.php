@@ -7,7 +7,7 @@ return [
     'pattern' => 'lendmanagement/inventory/item/(:any)',
     'action'  => function ($id) {
 
-        $item = Item::find($id);
+        $item = Item::find($id)[0];
         $categories = Category::getOptions();
 
         return [
@@ -19,7 +19,7 @@ return [
                     'link'  => 'lendmanagement/inventory'
                 ],
                 [
-                    'label' => $item['title'],
+                    'label' => $item->title,
                     'link'  => 'lendmanagement/inventory/item/' . $id
                 ]
             ],
