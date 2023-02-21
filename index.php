@@ -4,6 +4,7 @@ require_once __DIR__.'/vendor/autoload.php';
 
 load([
     'Kirby\LendManagement\Loan'          => __DIR__ . '/classes/Loan.php',
+    'Kirby\LendManagement\LoanItems'     => __DIR__ . '/classes/LoanItems.php',
     'Kirby\LendManagement\LoanExtension' => __DIR__ . '/classes/LoanExtension.php',
     'Kirby\LendManagement\Category'      => __DIR__ . '/classes/Category.php',
     'Kirby\LendManagement\Item'          => __DIR__ . '/classes/Item.php',
