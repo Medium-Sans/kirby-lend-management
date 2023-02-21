@@ -2,12 +2,14 @@
 
 namespace Kirby\LendManagement;
 
+use Beebmx\KirbyDb\DB;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
 use Kirby\Toolkit\I18n;
 
 class Category
 {
+    public static string $tableName = "categories";
 
     /**
      * Creates a new category with the given $input
@@ -29,14 +31,7 @@ class Category
      */
     public static function delete(string $id): bool
     {
-        // get all categories
-        $categories = static::list();
-
-        // remove the category from the list
-        unset($categories[$id]);
-
-        // write the update list to the file
-        return Data::write(static::file(), $categories);
+        return DB::table(self::$tableName)->where('kirby_uuid', $id)->delete();
     }
 
     /**
@@ -75,7 +70,7 @@ class Category
      */
     public static function list(): array
     {
-        return Data::read(static::file());
+        return DB::table(self::$tableName)->get()->toArray();
     }
 
     /**

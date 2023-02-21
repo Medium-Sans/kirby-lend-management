@@ -2,13 +2,13 @@
 
 namespace Kirby\LendManagement;
 
-use Kirby\Data\Data;
+use Beebmx\KirbyDb\DB;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
-use Kirby\Toolkit\V;
 
 class Borrower
 {
+    public static string $tableName = "borrowers";
 
     /**
      * Creates a new borrower with the given $input
@@ -17,10 +17,11 @@ class Borrower
      * @param array $input
      * @return bool
      * @throws InvalidArgumentException
+     * @throws NotFoundException
      */
     public static function create(array $input): bool
     {
-        return static::update(uuid(), $input);
+        return self::update(uuid(), $input);
     }
 
     /**
@@ -31,24 +32,8 @@ class Borrower
      */
     public static function delete(string $id): bool
     {
-        // get all borrowers
-        $borrowers = static::list();
+        return DB::table(self::$tableName)->where('kirby_uuid', $id)->delete();
 
-        // remove the borrower from the list
-        unset($borrowers[$id]);
-
-        // write the update list to the file
-        return Data::write(static::file(), $borrowers);
-    }
-
-    /**
-     * Returns the absolute path to the borrowers.json
-     *
-     * @return string
-     */
-    public static function file(): string
-    {
-        return __DIR__ . '/../data/borrowers.json';
     }
 
     /**
@@ -59,9 +44,9 @@ class Borrower
      * @return array
      * @throws NotFoundException
      */
-    public static function find(string $id): array
+    public static function find(string $id): \stdClass
     {
-        $borrower = static::list()[$id] ?? null;
+        $borrower = DB::table(self::$tableName)->where('id', $id)->first();
 
         if (empty($borrower) === true) {
             throw new NotFoundException('The borrower could not be found');
@@ -77,7 +62,7 @@ class Borrower
      */
     public static function list(): array
     {
-        return Data::read(static::file());
+        return (array)DB::table(self::$tableName)->get()->toArray();
     }
 
     /**
@@ -92,34 +77,11 @@ class Borrower
      */
     public static function update(string $id, array $input): bool
     {
-        try {
-            $borrower = static::find($id);
-        } catch (NotFoundException $e) {
-            $borrower = [];
-        }
+        $input['kirby_uuid'] = $id;
 
-        $updatedBorrower = [
-            'id'            => $id,
-            'firstname'     => $input['firstname'] ?? ($borrower['firstname'] ?? ''),
-            'lastname'      => $input['lastname'] ?? ($borrower['lastname'] ?? ''),
-            'email'         => $input['email'] ?? ($borrower['email'] ?? ''),
-            'phone'         => $input['phone'] ?? ($borrower['phone'] ?? ''),
-            'notes'         => $input['notes'] ?? ($borrower['notes'] ?? ''),
-            'lastLoanAt'    => $input['lastLoanAt'] ?? ($borrower['lastLoanAt'] ?? ''),
-        ];
-
-        // require an email
-        if (V::minlength($updatedBorrower['firstname'], 1) === false) {
-            throw new InvalidArgumentException('The email must not be empty');
-        }
-
-        // load all borrowers
-        $borrowers = static::list();
-
-        // set/overwrite the borrower data
-        $borrowers[$id] = $updatedBorrower;
-
-        return Data::write(static::file(), $borrowers);
+        return DB::table(self::$tableName)->updateOrInsert(
+            ['kirby_uuid' => $id],
+            $input);
     }
 
     public static function getOptions(): array
@@ -128,8 +90,8 @@ class Borrower
         $options = [];
         foreach ($borrowers as $borrower) {
             $options[] = [
-                'text' => $borrower['firstname'] . ' ' . $borrower['lastname'] . ' - ' . $borrower['email'],
-                'value' => $borrower['id'],
+                'text' => $borrower->firstname . ' ' . $borrower->lastname . ' - ' . $borrower->email,
+                'value' => $borrower->id,
             ];
         }
         return $options;

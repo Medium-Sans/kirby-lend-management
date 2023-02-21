@@ -2,8 +2,7 @@
 
 namespace Kirby\LendManagement;
 
-use DateTimeZone;
-use Kirby\Data\Data;
+use Beebmx\KirbyDb\DB;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
 use Kirby\Toolkit\I18n;
@@ -11,62 +10,45 @@ use Kirby\Toolkit\V;
 
 class Loan
 {
+    public static string $tableName = "loans";
 
     /**
      * Creates a new loan with the given $input
      * data and adds it to the json file
      *
      * @param array $input
-     * @return bool
+     * @return bool true on success, false on failure
      * @throws InvalidArgumentException
+     * @throws NotFoundException
      */
     public static function create(array $input): bool
     {
-        // We update the last loan date of the borrower
-        Borrower::update($input['borrowerId'][0], ['lastLoanAt' => date('Y-m-d H:i:s')]);
 
-        return static::update(uuid(), $input);
+        return self::update(uuid(), $input);
     }
 
     /**
      * Deletes a loan by loanId
      *
-     * @param string $id
-     * @return bool
+     * @param string $id Loan id
+     * @return bool true on success, false on failure
      */
     public static function delete(string $id): bool
     {
-        // get all items
-        $items = static::list();
-
-        // remove the item from the list
-        unset($items[$id]);
-
-        // write the update list to the file
-        return Data::write(static::file(), $items);
-    }
-
-    /**
-     * Returns the absolute path to the loans.json
-     *
-     * @return string
-     */
-    public static function file(): string
-    {
-        return __DIR__ . '/../data/loans.json';
+        return DB::table(self::$tableName)->where('kirby_uuid', $id)->delete();
     }
 
     /**
      * Finds a loan by id and throws an exception
      * if the loan cannot be found
      *
-     * @param string $id
-     * @return array
+     * @param string $id The id of the loan
+     * @return array The loan data
      * @throws NotFoundException
      */
     public static function find(string $id): array
     {
-        $loan = static::list()[$id] ?? null;
+        $loan = (array)DB::table(self::$tableName)->where('id', $id)->first();
 
         if (empty($loan) === true) {
             throw new NotFoundException('The item could not be found');
@@ -78,84 +60,109 @@ class Loan
     /**
      * Lists all loans from the loans.json
      *
-     * @return array
+     * @return array The list of loans
      */
     public static function list(): array
     {
-        return Data::read(static::file());
+        // First thing that will be shown to the user is the loan list.
+        // We assume that if something need to be created for the first use
+        // of the plugin here is the place to do it
+        if (!Database::hasTable(Loan::$tableName)) {
+            Database::init();
+        };
+
+        $result = DB::table(self::$tableName)->get()->toArray();
+
+        return $result;
     }
 
+
     /**
-     * Get the number of pending loans from the loans.json
+     * Return a list of pending loans
      *
-     * @return int
+     * @return array list of pending loans
      */
-    public static function totalPendingLoans(): int
+    public static function listOfPendingLoans(): array
     {
         // get all items
         $loans = static::list();
-        $pendingLoans = 0;
+        $pendingLoans = [];
 
-        foreach($loans as $loan) {
-            if (!$loan['returnedDate']) {
-                $pendingLoans++;
+        foreach ($loans as $loan) {
+            if (!$loan->returned_date) {
+                $pendingLoans[] = $loan;
             }
         }
 
         return $pendingLoans;
     }
 
+    public static function totalPendingLoans(): int
+    {
+        return count(self::listOfPendingLoans());
+    }
+
     /**
      * Get the number of late pending loans from the loans.json
      *
-     * @return int
+     * @return array array of late and pending loans
      */
-    public static function totalLatePendingLoans(): int
+    public static function listOfLatePendingLoans(): array
     {
         // get all items
-        $loans = static::list();
-        $latePendingLoans = 0;
+        $loans = self::list();
+        $latePendingLoans = [];
 
-        foreach($loans as $loan) {
-            if (!$loan['returnedDate'] && (strtotime($loan['endDate']) < strtotime(date('Y-m-d')))) {
-                $latePendingLoans++;
+        foreach ($loans as $loan) {
+            if (!$loan->returned_date && (strtotime($loan->end_date) < strtotime(date('Y-m-d')))) {
+                $latePendingLoans[] = $loan;
             }
         }
 
         return $latePendingLoans;
     }
 
+    public static function totalLatePendingLoans(): int
+    {
+        return count(self::listOfLatePendingLoans());
+    }
+
     /**
      * Get the number of pending and prolonged loans from the loans.json
      *
-     * @return int
+     * @return array list of pending and prolonged loans
      */
-    public static function totalPendingAndProlongedLoans(): int
+    public static function listOfPendingAndProlongedLoans(): array
     {
         // get all items
-        $loans = static::list();
-        $pendingAndProlongedLoans = 0;
+        $loans = self::list();
+        $pendingAndProlongedLoans = [];
 
-        foreach($loans as $loan) {
-            if (!$loan['returnedDate']
-                && (strtotime($loan['endDate']) < strtotime(date('Y-m-d')))
-                && $loan['isProlonged']) {
-                $pendingAndProlongedLoans++;
+        foreach ($loans as $loan) {
+            if ((!$loan->returned_date)
+                && (strtotime($loan->end_date) < strtotime(date('Y-m-d')))
+                && $loan->is_prolonged) {
+                $pendingAndProlongedLoans[] = $loan;
             }
         }
 
         return $pendingAndProlongedLoans;
     }
 
+    public static function totalPendingAndProlongedLoans(): int
+    {
+        return count(self::listOfPendingAndProlongedLoans());
+    }
+
     /**
      * Get the number of loans from the loans.json
      *
-     * @return int
+     * @return int The number of loans
      */
     public static function count(): int
     {
         // get all items
-        $loans = static::list();
+        $loans = self::list();
 
         return count($loans);
     }
@@ -164,35 +171,54 @@ class Loan
      * Updates a loan by id with the given input
      * It throws an exception in case of validation issues
      *
-     * @param string $id
-     * @param array $input
-     * @return boolean
+     * @param string $id The id of the loan
+     * @param array $input The input data
+     * @return boolean True on success, false on failure
+     * @throws InvalidArgumentException
      */
     public static function update(string $id, array $input): bool
     {
-        $loan = [
-            'id'                    => $id,
-            'startDate'             => $input['startDate'] ?? null,
-            'endDate'               => $input['endDate'] ?? null,
-            'borrowerId'            => $input['borrowerId'] ?? null,
-            'itemIds'               => $input['itemIds'] ?? null,
-            'nbrOfProlongations'    => $input['nbrOfProlongations'] ?? null,
-            'isProlonged'           => $input['isProlonged'] ?? null,
-            'returnedDate'          => $input['returnedDate'] ?? null,
-        ];
+        $input['kirby_uuid'] = $id;
+        $input['borrower_id'] = $input['borrower_id'][0] ?? null;
+
+        // The end date must be greater than the start date
+        if (V::date($input['end_date'], '>=', $input['start_date']) === false) {
+            throw new InvalidArgumentException('The date of return must be greater than the date of loan');
+        }
 
         // require a borrower
-        if (V::required($input['borrowerId']) === false) {
+        if (V::required($input['borrower_id']) === false) {
             throw new InvalidArgumentException('A borrower must be set');
         }
 
-        // load all loans
-        $loans = static::list();
+        // require a item
+        if (V::required($input['item_ids']) === false) {
+            throw new InvalidArgumentException('An item must be set');
+        }
 
-        // set/overwrite the item data
-        $loans[$id] = $loan;
+        $loan = DB::table(self::$tableName)->updateOrInsert(
+            [
+                'kirby_uuid' => $id
+            ],
+            [
+                'start_date' => $input['start_date'],
+                'end_date' => $input['end_date'],
+                'borrower_id' => $input['borrower_id'],
+            ]);
 
-        return Data::write(static::file(), $loans);
+        if ($loan) {
+            $loan_id = DB::getPdo()->lastInsertId();
+
+            foreach ($input['item_ids'] as $itemId) {
+                $item = Item::find($itemId);
+                DB::table(LoanItems::$tableName)->insert([
+                    'item_id' => $item[0]->id,
+                    'loan_id' => $loan_id,
+                ]);
+            }
+        }
+
+        return $loan;
     }
 
     /**
@@ -202,24 +228,24 @@ class Loan
      */
     public static function collection(): array
     {
-        $loans = static::list();
+        $loans = self::list();
         $collection = [];
         foreach ($loans as $loan) {
 
-            $borrower = Borrower::find($loan['borrowerId'][0]);
+            $borrower = Borrower::find($loan->borrower_id);
 
-            $startDate = date_create($loan['startDate']);
-            $endDate = date_create($loan['endDate']);
+            $startDate = date_create($loan->start_date);
+            $endDate = date_create($loan->end_date);
 
-            $nbrObjects = count($loan['itemIds']);
+            $nbrObjects = LoanItems::getTotalOfLendedItemsForLoan($loan->id);
             $itemCaption = $nbrObjects > 1 ? i18n::translate('lendmanagement.items') : i18n::translate('lendmanagement.item');
 
-            $statusColor = (strtotime($loan['endDate']) < strtotime(date('Y-m-d'))) ? 'red-400' : 'green-400';
+            $statusColor = (strtotime($loan->end_date) < strtotime(date('Y-m-d'))) ? 'red-400' : 'green-400';
 
             $collection[] = [
-                'text' => $borrower['firstname'] . ' ' . $borrower['lastname'] . ' • ' . $nbrObjects . ' ' . $itemCaption,
-                'info' => date_format($startDate, 'd.m.Y') . ' / ' . date_format($endDate,'d.m.Y'),
-                'link' => '/lendmanagement/loan/' . $loan['id'],
+                'text' => $borrower->firstname . ' ' . $borrower->lastname . ' • ' . $nbrObjects . ' ' . $itemCaption,
+                'info' => date_format($startDate, 'd.m.Y') . ' / ' . date_format($endDate, 'd.m.Y'),
+                'link' => '/lendmanagement/loan/' . $loan->id,
                 'image' => [
                     'icon' => 'box',
                     'back' => $statusColor
@@ -227,5 +253,25 @@ class Loan
             ];
         }
         return $collection;
+    }
+
+    /**
+     * Extend the loan endDate by id with the given input
+     *
+     * @param string $id The loan id
+     * @param int $daysProlonged The number of days to prolong the loan
+     *
+     * @throws NotFoundException
+     * @throws InvalidArgu^mentException
+     */
+    public static function extend(string $id, int $daysProlonged): bool
+    {
+        $loan = self::find($id);
+
+        $loan['endDate'] = date('Y-m-d', strtotime($loan['endDate'] . ' + ' . $daysProlonged . ' days'));
+        $loan['isProlonged'] = true;
+        $loan['nbrOfProlongations']++;
+
+        return self::update($id, $loan);
     }
 }
