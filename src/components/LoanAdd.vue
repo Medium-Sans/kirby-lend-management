@@ -1,6 +1,6 @@
 <template>
   <k-inside>
-    <k-view>
+    <k-view class="k-page-view">
 
       <k-header>
         {{ $t('view.loan.add') }}
@@ -20,17 +20,17 @@
         </k-button-group>
       </k-header>
 
-      <k-grid>
+      <k-grid gutter="large">
         <k-column width="1/2">
-          <k-form v-model="loan" @input="input" @submit="submit" :fields="{
-              startDate: {
+          <k-fieldset v-model="loan" @input="input" :fields="{
+              start_date: {
                 label: $t('lendmanagement.loan.form.startDate'),
                 type: 'date',
                 time: false,
                 required: true,
                 width: '1/2'
               },
-              endDate: {
+              end_date: {
                 label: $t('lendmanagement.loan.form.endDate'),
                 type: 'date',
                 time: false,
@@ -40,28 +40,33 @@
               line1: {
                 type: 'line'
               },
-              borrowerId: {
-                label: $t('lendmanagement.borrowers'),
+              borrower_id: {
+                label: $t('lendmanagement.borrower'),
                 type: 'multiselect',
                 required: true,
                 search: true,
                 max: 1,
-                options: borrowers,
+                options: borrower_id,
                 width: '1'
               },
               line2: {
                 type: 'line'
               },
-             itemIds: {
+              item_ids: {
                 label: $t('lendmanagement.items'),
                 type: 'multiselect',
                 search: true,
                 min: 1,
                 required: true,
-                options: items,
+                options: item_ids,
                 width: '1'
-             }}">
-          </k-form>
+              },
+              line3: {
+                type: 'line'
+              },
+             }">
+          </k-fieldset>
+          <k-button icon="check" @click="submit">Save</k-button>
         </k-column>
 
         <k-column width="1/2">
@@ -76,35 +81,40 @@
 import { StreamBarcodeReader } from "vue-barcode-reader";
 
 export default {
-  props: {
-    items: Array,
-    borrowers: Object,
-    startDate: String,
-    endDate: String,
+  components: {
+    StreamBarcodeReader,
   },
-  data: function() {
+  props: {
+    item_ids: Array,
+    borrower_id: Array,
+    start_date: String,
+    end_date: String,
+  },
+  data() {
     return {
-      loan: {
-        startDate: this.startDate,
-        endDate: this.endDate,
-      },
-      hasChanged: false
+        loan: {
+          start_date: this.start_date,
+          end_date: this.end_date,
+          borrower_id: [],
+          item_ids: [],
+        },
+        hasChanged: false,
+        decodedText: '',
     }
   },
   methods: {
     input() {
-      // the data is automatically updated
-      this.hasChanged = true;
+      console.log(this.loan);
     },
     submit() {
       // let's send this thing to the server
       this.$api.post('/lendmanagement/loan/create', this.loan);
     },
     onLoaded() {
-      console.log("loaded");
     },
     onDecode(result) {
-      console.log(result);
+      this.decodedText = result.text;
+      console.log(this.decodedText);
     }
   }
 };

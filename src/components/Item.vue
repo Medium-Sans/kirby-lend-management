@@ -69,7 +69,7 @@
         <k-column width="1/3">
           <k-field label="Qr-Code">
           <k-image class="k-image"
-                   :src="item.qrCode"
+                   :src="item.qr_code"
                    ratio="1/1" />
           </k-field>
         </k-column>

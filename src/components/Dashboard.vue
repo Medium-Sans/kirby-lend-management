@@ -19,14 +19,6 @@
         </k-button-group>
 
         <k-button-group slot="right">
-
-          <k-button-link
-            icon="cog"
-            :link="`/lendmanagement/settings/`"
-          >
-            {{ $t('lendmanagement.settings.view') }}
-          </k-button-link>
-
           <k-button-link
             icon="users"
             :link="`/lendmanagement/borrowers/`"
