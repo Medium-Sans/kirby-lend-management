@@ -17,6 +17,6 @@ return [
         ];
     },
     'submit' => function (string $id) {
-        return Borrower::update($id, get());
+        return (new Kirby\LendManagement\Borrower)->update($id, get());
     }
 ];
