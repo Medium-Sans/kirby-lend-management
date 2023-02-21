@@ -11,6 +11,7 @@ return [
 
         return [
             'component' => 'k-loan-add-view',
+            'extends' => 'k-model-view',
             'breadcrumb' => [
                 [
                     'label' => t('view.loan.add'),
@@ -18,10 +19,10 @@ return [
                 ]
             ],
             'props' => [
-                'borrowers'  => Borrower::getOptions(),
-                'items'     => Item::getOptions(),
-                'startDate' => $startDate,
-                'endDate'  => $endDate,
+                'borrower_id'  => Borrower::getOptions(),
+                'item_ids'     => Item::getOptions(),
+                'start_date' => $startDate,
+                'end_date'  => $endDate,
             ]
         ];
     }
