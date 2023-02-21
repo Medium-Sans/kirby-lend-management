@@ -1,9 +1,9 @@
 {
-	"name": "scardoso/lendmanagement",
+	"name": "scardoso/kirby-lendmanagement",
 	"description": "A lend management plugin for Kirby CMS",
 	"license": "MIT",
 	"type": "kirby-plugin",
-	"version": "1.0.0",
+	"version": "0.0.2",
 	"authors": [
 		{
 			"name": "Samuel Cardoso",
@@ -14,7 +14,13 @@
         "getkirby/cms": ">=3.7.4 <3.9.0",
 		"getkirby/composer-installer": "^1.1",
         "php": ">=8.0.0 <8.2.0",
-        "chillerlan/php-qrcode": "dev-main"
+        "chillerlan/php-qrcode": "dev-main",
+        "beebmx/kirby-db": ">=2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Beebmx\\": "site/"
+        }
     },
 	"config": {
 		"allow-plugins": {
