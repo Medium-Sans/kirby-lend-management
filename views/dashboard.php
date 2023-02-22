@@ -28,7 +28,8 @@ return [
                         'info' => ''
                     ],
                 ],
-                'loans' => Loan::collection(),
+                'loans' => Loan::getCurrentLoans(),
+                'loans_history' => Loan::getReturnedLoans(),
             ]
         ];
     }
