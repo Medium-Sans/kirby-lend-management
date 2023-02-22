@@ -8,15 +8,15 @@
         <k-button-group slot="left">
           <k-button icon="archive"
                     :text="$t('lendmanagement.loan.archive')"
-                    @click="$dialog(`lendmanagement/loan/${loan.id}/archive`)"/>
+                    @click="loanIsBack(`${loan.id})`)" />
 
           <k-button icon="refresh"
                     :text="$t('lendmanagement.loan.extend')"
-                    @click="$dialog(`lendmanagement/loan/${loan.id}/extend`)"/>
+                    @click="`extend(${loan.id})`" />
 
           <k-button icon="undo"
                     :text="$t('lendmanagement.loan.notify')"
-                    @click="$dialog(`lendmanagement/loan/${loan.id}/notifyexpired`)"/>
+                    @click="`notify(${loan.id})`" />
         </k-button-group>
       </k-header>
 
@@ -109,11 +109,26 @@ export default {
   data() {
     return {
       loan: {
+        id: this.loan.id,
         start_date: this.start_date,
         end_date: this.end_date,
       },
     }
   },
+  methods: {
+    loanIsBack() {
+      this.$api.post('lendmanagement/loan/' + this.loan.id + '/return', this.loan);
+      this.$go('/lendmanagement');
+    },
+    extend() {
+      this.$api.post('lendmanagement/loan/' + this.loan.id + '/extend', this.loan);
+      this.$go('/lendmanagement');
+    },
+    notify() {
+      this.$api.post('lendmanagement/loan/' + this.loan.id + '/notify', this.loan);
+      this.$go('/lendmanagement');
+    }
+  }
 };
 </script>
 
