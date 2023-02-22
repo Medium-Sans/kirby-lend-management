@@ -46,9 +46,9 @@ class Loan
      * @return array The loan data
      * @throws NotFoundException
      */
-    public static function find(string $id): array
+    public static function find(string $id): \stdClass
     {
-        $loan = (array)DB::table(self::$tableName)->where('id', $id)->first();
+        $loan = DB::table(self::$tableName)->where('id', $id)->first();
 
         if (empty($loan) === true) {
             throw new NotFoundException('The item could not be found');
@@ -255,6 +255,66 @@ class Loan
         return $collection;
     }
 
+    public static function getCurrentLoans(): array
+    {
+        $loans = self::list();
+        $collection = [];
+        foreach ($loans as $loan) {
+            if (!$loan->returned_date) {
+                $borrower = Borrower::find($loan->borrower_id);
+
+                $startDate = date_create($loan->start_date);
+                $endDate = date_create($loan->end_date);
+
+                $nbrObjects = LoanItems::getTotalOfLendedItemsForLoan($loan->id);
+                $itemCaption = $nbrObjects > 1 ? i18n::translate('lendmanagement.items') : i18n::translate('lendmanagement.item');
+
+                $statusColor = (strtotime($loan->end_date) < strtotime(date('Y-m-d'))) ? 'red-400' : 'green-400';
+
+                $collection[] = [
+                    'text' => $borrower->firstname . ' ' . $borrower->lastname . ' • ' . $nbrObjects . ' ' . $itemCaption,
+                    'info' => date_format($startDate, 'd.m.Y') . ' / ' . date_format($endDate, 'd.m.Y'),
+                    'link' => '/lendmanagement/loan/' . $loan->id,
+                    'image' => [
+                        'icon' => 'box',
+                        'back' => $statusColor
+                    ]
+                ];
+            }
+        }
+        return $collection;
+    }
+
+    public static function getReturnedLoans(): array
+    {
+        $loans = self::list();
+        $collection = [];
+        foreach ($loans as $loan) {
+            if ($loan->returned_date) {
+                $borrower = Borrower::find($loan->borrower_id);
+
+                $startDate = date_create($loan->start_date);
+                $endDate = date_create($loan->end_date);
+
+                $nbrObjects = LoanItems::getTotalOfLendedItemsForLoan($loan->id);
+                $itemCaption = $nbrObjects > 1 ? i18n::translate('lendmanagement.items') : i18n::translate('lendmanagement.item');
+
+                $statusColor = 'blue-400';
+
+                $collection[] = [
+                    'text' => $borrower->firstname . ' ' . $borrower->lastname . ' • ' . $nbrObjects . ' ' . $itemCaption,
+                    'info' => 'Retourné le ' . date_format(date_create($loan->returned_date), 'd.m.Y'),
+                    'link' => '/lendmanagement/loan/' . $loan->id,
+                    'image' => [
+                        'icon' => 'box',
+                        'back' => $statusColor
+                    ]
+                ];
+            }
+        }
+        return $collection;
+    }
+
     /**
      * Extend the loan endDate by id with the given input
      *
@@ -273,5 +333,21 @@ class Loan
         $loan['nbrOfProlongations']++;
 
         return self::update($id, $loan);
+    }
+
+    public static function return(string $id): bool
+    {
+        $loan = self::find($id);
+        $loan->returned_date = date('Y-m-d');
+        $loan->is_returned = 1;
+
+        $result = DB::table(Loan::$tableName)->where('id', $loan->id)->update(
+            [
+                'returned_date' => date('Y-m-d'),
+                'is_returned' => 1,
+            ]
+        );
+
+        return $result;
     }
 }
