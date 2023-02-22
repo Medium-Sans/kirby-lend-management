@@ -70,7 +70,11 @@
         </k-column>
 
         <k-column width="1/2">
-          <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
+          <qrcode-stream @init="onInit" @decode="onDecode" v-if="!destroyed" :key="_uid" :track="this.paintOutline">
+            <div class="loading-indicator" v-if="loading">
+              Loading...
+            </div>
+          </qrcode-stream>
         </k-column>
       </k-grid>
     </k-view>
@@ -78,11 +82,11 @@
 </template>
 
 <script>
-import { StreamBarcodeReader } from "vue-barcode-reader";
+import {QrcodeStream} from 'vue-qrcode-reader'
 
 export default {
   components: {
-    StreamBarcodeReader,
+    QrcodeStream,
   },
   props: {
     item_ids: Array,
@@ -92,30 +96,65 @@ export default {
   },
   data() {
     return {
-        loan: {
-          start_date: this.start_date,
-          end_date: this.end_date,
-          borrower_id: [],
-          item_ids: [],
-        },
-        hasChanged: false,
-        decodedText: '',
+      loading: false,
+      loan: {
+        start_date: this.start_date,
+        end_date: this.end_date,
+        borrower_id: [],
+        item_ids: [],
+      },
+      hasChanged: false,
+      decodedText: ''
     }
   },
   methods: {
+    paintOutline(detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const [firstPoint, ...otherPoints] = detectedCode.cornerPoints
+
+        ctx.strokeStyle = "red";
+
+        ctx.beginPath();
+        ctx.moveTo(firstPoint.x, firstPoint.y);
+        for (const {x, y} of otherPoints) {
+          ctx.lineTo(x, y);
+        }
+        ctx.lineTo(firstPoint.x, firstPoint.y);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    },
+    async onInit(promise) {
+      this.loading = true
+
+      try {
+        await promise
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.loading = false
+      }
+    },
+    submit() {
+      this.$api.post('/lendmanagement/loan/create', this.loan);
+      this.$go('/lendmanagement');
+    },
+    onDecode(result) {
+      this.decodedText = result;
+      this.addItem(result);
+      console.log(this.loan);
+    },
+    addItem(result) {
+      this.loan.item_ids.push(parseInt(result));
+      this.beep();
+    },
+    beep() {
+      let beep = new Audio('https://soundbible.com/mp3/Checkout%20Scanner%20Beep-SoundBible.com-593325210.mp3');
+      beep.play();
+    },
     input() {
       console.log(this.loan);
     },
-    submit() {
-      // let's send this thing to the server
-      this.$api.post('/lendmanagement/loan/create', this.loan);
-    },
-    onLoaded() {
-    },
-    onDecode(result) {
-      this.decodedText = result.text;
-      console.log(this.decodedText);
-    }
   }
 };
 </script>
