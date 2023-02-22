@@ -10,11 +10,11 @@ return [
     'action'  => function ($id) {
 
         $loan = Loan::find($id);
-        $borrower = Borrower::find($loan['borrower_id']);
+        $borrower = Borrower::find($loan->borrower_id);
         $loan_items = LoanItems::getItemsbyLoan($id);
         $items = Item::getItemsByIds($loan_items);
-        $startDate = date_format(date_create($loan['start_date']), 'd.m.Y');
-        $endDate = date_format(date_create($loan['end_date']), 'd.m.Y');
+        $startDate = date_format(date_create($loan->start_date), 'd.m.Y');
+        $endDate = date_format(date_create($loan->end_date), 'd.m.Y');
 
         return [
             'component' => 'k-loan-view',
