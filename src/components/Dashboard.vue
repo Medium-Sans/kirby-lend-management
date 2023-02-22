@@ -43,13 +43,21 @@
       </k-stats>
 
       <k-grid gutter="large">
-        <k-column width="1">
+        <k-column width="1/2">
           <header class="k-section-header">
             <k-headline>{{ $t('lendmanagement.loan') }}</k-headline>
           </header>
           <k-collection layout="list" :items="loans" />
         </k-column>
+
+        <k-column width="1/2">
+          <header class="k-section-header">
+            <k-headline>{{ $t('lendmanagement.loan.returned') }}</k-headline>
+          </header>
+          <k-collection layout="list" :items="loans_history" />
+        </k-column>
       </k-grid>
+
     </k-view>
   </k-inside>
 </template>
@@ -60,6 +68,7 @@ export default {
     items: Object,
     stats: Array,
     loans: Array,
+    loans_history: Array,
     categories: Array
   },
   methods: {

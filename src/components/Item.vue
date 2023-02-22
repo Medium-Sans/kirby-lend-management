@@ -63,19 +63,19 @@
               required: false,
               width: '1'
             },
-          }" />
+          }"/>
         </k-column>
 
         <k-column width="1/3">
           <k-field label="Qr-Code">
-          <k-image class="k-image"
-                   :src="item.qr_code"
-                   ratio="1/1" />
+            <k-image class="k-image"
+                     :src="item.qr_code"
+                     ratio="1/1"/>
           </k-field>
         </k-column>
       </k-grid>
 
-      <input ref="submitter" class="k-form-submitter" type="submit" />
+      <input ref="submitter" class="k-form-submitter" type="submit"/>
     </k-view>
   </k-inside>
 </template>
@@ -87,11 +87,20 @@ export default {
     categories: Array
   },
   methods: {
+    forceFileDownload(response, title) {
+      const url = window.URL.createObjectURL(new Blob([response], {encoding:"UTF-8", type:"text/plain;charset=UTF-8"} ))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', title)
+      document.body.appendChild(link)
+      link.click()
+    },
     submit() {
       this.$api.post('lendmanagement/item/' + this.item.id + '/update', this.item);
     },
-    print() {
-      this.$api.get('lendmanagement/item/' + this.item.id + '/print');
+    async print() {
+      const label = await this.$api.post('lendmanagement/item/' + this.item.id + '/print');
+      this.forceFileDownload(atob(label.data), this.item.id + '-item.label');
     }
   }
 };
