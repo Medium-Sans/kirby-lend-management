@@ -5,8 +5,6 @@
 ****
 
 ![dashboard.png](docs%2Fdashboard.png)
-![dashboard.png](docs%2Fborrowers.png)
-![dashboard.png](docs%2Finventory.png)
 
 ## Installation
 
