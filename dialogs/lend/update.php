@@ -1,23 +1,23 @@
 <?php
 
-use Kirby\LendManagement\Loan;
+use Kirby\LendManagement\Lend;
 use Kirby\Toolkit\A;
 
 return [
-    'pattern' => 'lendmanagement/loan/(:any)/update',
+    'pattern' => 'lendmanagement/lend/(:any)/update',
     'load'    => function (string $id) {
-        $loan = Loan::find($id);
+        $lend = Lend::find($id);
 
         return [
             'component' => 'k-form-dialog',
             'props' => [
                 'fields' => require __DIR__ . '/fields.php',
-                'value'  => $loan,
+                'value'  => $lend,
                 'size'   => 'large'
             ]
         ];
     },
     'submit' => function (string $id) {
-        return Loan::update($id, get());
+        return Lend::update($id, get());
     }
 ];

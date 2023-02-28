@@ -71,7 +71,7 @@ export default {
   props: {
     items: Object,
     stats: Array,
-    loans: Array,
+    lends: Array,
     categories: Array
   },
   methods: {

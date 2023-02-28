@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Loan;
+use Kirby\LendManagement\Lend;
 
 return [
     'pattern' => 'workshop/category/(:any)/delete',
@@ -8,11 +8,11 @@ return [
         return [
             'component' => 'k-remove-dialog',
             'props' => [
-                'text' => 'Do you really want to delete this loan ?'
+                'text' => 'Do you really want to delete this lend ?'
             ]
         ];
     },
     'submit' => function (string $id) {
-        return Loan::delete($id);
+        return Lend::delete($id);
     }
 ];

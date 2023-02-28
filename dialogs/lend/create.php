@@ -1,9 +1,9 @@
 <?php
 
-use Kirby\LendManagement\Loan;
+use Kirby\LendManagement\Lend;
 
 return [
-    'pattern' => 'lendmanagement/loan/create',
+    'pattern' => 'lendmanagement/lend/create',
     'load'    => function () {
         return [
             'component' => 'k-form-dialog',
@@ -15,6 +15,6 @@ return [
         ];
     },
     'submit' => function () {
-        return Loan::create(get());
+        return Lend::create(get());
     }
 ];

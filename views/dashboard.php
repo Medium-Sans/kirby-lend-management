@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Loan;
+use Kirby\LendManagement\Lend;
 use Kirby\LendManagement\Category;
 use Kirby\LendManagement\Item;
 
@@ -14,22 +14,22 @@ return [
                 'stats' => [
                     [
                         'label' => t('view.dashboard.stats.inprogress'),
-                        'value' => Loan::totalPendingLoans(),
+                        'value' => Lend::totalPendingLends(),
                         'info' => ''
                     ],
                     [
                         'label' => t('view.dashboard.stats.delayed'),
-                        'value' => Loan::totalLatePendingLoans(),
+                        'value' => Lend::totalLatePendingLends(),
                         'info' => ''
                     ],
                     [
                         'label' => t('view.dashboard.stats.prolonged'),
-                        'value' => Loan::totalPendingAndProlongedLoans(),
+                        'value' => Lend::totalPendingAndProlongedLends(),
                         'info' => ''
                     ],
                 ],
-                'loans' => Loan::getCurrentLoans(),
-                'loans_history' => Loan::getReturnedLoans(),
+                'lends' => Lend::getCurrentLends(),
+                'lends_history' => Lend::getReturnedLends(),
             ]
         ];
     }

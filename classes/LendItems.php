@@ -4,21 +4,21 @@ namespace Kirby\LendManagement;
 
 use Beebmx\KirbyDb\DB;
 
-class LoanItems
+class LendItems
 {
-    public static string $tableName = "loans_items";
+    public static string $tableName = "lend_items";
 
     public static function getTotalOfLendedItems() {
         return DB::table(self::$tableName)->count();
     }
 
-    public static function getTotalOfLendedItemsForLoan($id) {
-        $result = DB::table(self::$tableName)->where('loan_id', $id)->count();
+    public static function getTotalOfLendedItemsForLend($id) {
+        $result = DB::table(self::$tableName)->where('lend_id', $id)->count();
         return $result;
     }
 
-    public static function getItemsbyLoan($id) {
-        $result = DB::table(self::$tableName)->where('loan_id', $id)->get();
+    public static function getItemsbyLend($id) {
+        $result = DB::table(self::$tableName)->where('lend_id', $id)->get();
         $items = [];
         foreach ($result as $item) {
             $items[] = $item->item_id;

@@ -1,19 +1,19 @@
 <?php
 
-use Kirby\LendManagement\Loan;
+use Kirby\LendManagement\Lend;
 use Kirby\LendManagement\Borrower;
 
 return [
     'label' => 'Emprunts',
     'icon'  => 'box',
     'query' => function (string $query) {
-        $loans = Loan::list();
+        $lends = Lend::list();
         $results  = [];
-        foreach ($loans as $loan) {
-            if ($loan['isReturned'] === true) {
+        foreach ($lends as $lend) {
+            if ($lend['isReturned'] === true) {
                 $results[] = [
-                    'text' => Borrower::find($loan['studentId']) - $loan['stardDate'] . ' / ' . $loan['endDate'],
-                    'link' => '/loans',
+                    'text' => Borrower::find($lend['studentId']) - $lend['stardDate'] . ' / ' . $lend['endDate'],
+                    'link' => '/lends',
                     'image' => [
                         'icon' => 'box',
                         'back' => 'purple-400'

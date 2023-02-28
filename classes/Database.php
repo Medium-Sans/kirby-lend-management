@@ -57,35 +57,36 @@ class Database
             $table->timestamps();
         });
 
-        // Loans
-        Schema::create(Loan::$tableName, function ($table) {
+        // Lends
+        Schema::create(Lend::$tableName, function ($table) {
             $table->increments('id');
             $table->string('kirby_uuid');
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('borrower_id')->unsigned();
+            $table->string('user')->nullable();
             $table->boolean('is_returned')->default(false);
             $table->date('returned_date')->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
         });
 
-        // Loan Items
-        Schema::create(LoanItems::$tableName, function ($table) {
+        // Lend Items
+        Schema::create(LendItems::$tableName, function ($table) {
             $table->increments('id');
-            $table->integer('loan_id')->unsigned();
+            $table->integer('lend_id')->unsigned();
             $table->integer('item_id')->unsigned();
             $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('loan_id')->references('id')->on('loans');
+            $table->foreign('lend_id')->references('id')->on('lends');
         });
 
-        // Loan Extensions
-        Schema::create(LoanExtension::$tableName, function($table)
+        // Lend Extensions
+        Schema::create(LendExtension::$tableName, function($table)
         {
             $table->increments('id');
-            $table->string('kirby_uuid');
-            $table->integer('loan_id')->unsigned();
-            $table->foreign('loan_id')->references('id')->on('loans');
+            $table->integer('lend_id')->unsigned();
+            $table->foreign('lend_id')->references('id')->on('lends');
+            $table->string('user')->nullable();
             $table->integer('nbr_of_days');
             $table->timestamps();
         });

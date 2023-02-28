@@ -2,8 +2,8 @@
 
 use Kirby\Http\Response;
 use Kirby\LendManagement\Item;
-use Kirby\LendManagement\Loan;
-use Kirby\Data\Data;
+use Kirby\LendManagement\Lend;
+use Kirby\LendManagement\Mailer;
 
 return [
     'routes' => function () {
@@ -16,31 +16,32 @@ return [
                 }
             ],
             [
-                'pattern' => 'lendmanagement/loan/create',
+                'pattern' => 'lendmanagement/lend/create',
                 'method' => 'POST',
                 'action' => function () {
-                    return Loan::create(get());
+                    return Lend::create(get());
                 }
             ],
             [
-                'pattern' => 'lendmanagement/loan/(:any)/return',
+                'pattern' => 'lendmanagement/lend/(:any)/return',
                 'method' => 'POST',
                 'action' => function (string $id) {
-                    return Loan::return($id);
+                    return Lend::return($id);
                 }
             ],
             [
-                'pattern' => 'lendmanagement/loan/(:any)/extend',
+                'pattern' => 'lendmanagement/lend/(:any)/extend',
                 'method' => 'POST',
                 'action' => function (string $id) {
-                    return Loan::return($id);
+                    return Lend::return($id);
                 }
             ],
             [
-                'pattern' => 'lendmanagement/loan/(:any)/notify',
+                'pattern' => 'lendmanagement/lend/(:any)/notify',
                 'method' => 'POST',
                 'action' => function (string $id) {
-                    return Loan::return($id);
+                    $sent = Mailer::notifyLenderOfExpiration(Lend::find($id));
+                    return response::json([ 'sent' => $sent ]);
                 }
             ],
             [

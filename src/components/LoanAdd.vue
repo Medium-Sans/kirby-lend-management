@@ -3,7 +3,7 @@
     <k-view class="k-page-view">
 
       <k-header>
-        {{ $t('view.loan.add') }}
+        {{ $t('view.lend.add') }}
 
         <k-button-group slot="left">
           <k-button
@@ -22,16 +22,16 @@
 
       <k-grid gutter="large">
         <k-column width="1/2">
-          <k-fieldset v-model="loan" @input="input" :fields="{
+          <k-fieldset v-model="lend" @input="input" :fields="{
               start_date: {
-                label: $t('lendmanagement.loan.form.startDate'),
+                label: $t('lendmanagement.lend.form.startDate'),
                 type: 'date',
                 time: false,
                 required: true,
                 width: '1/2'
               },
               end_date: {
-                label: $t('lendmanagement.loan.form.endDate'),
+                label: $t('lendmanagement.lend.form.endDate'),
                 type: 'date',
                 time: false,
                 required: true,
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       loading: false,
-      loan: {
+      lend: {
         start_date: this.start_date,
         end_date: this.end_date,
         borrower_id: [],
@@ -136,16 +136,16 @@ export default {
       }
     },
     submit() {
-      this.$api.post('/lendmanagement/loan/create', this.loan);
+      this.$api.post('/lendmanagement/lend/create', this.lend);
       this.$go('/lendmanagement');
     },
     onDecode(result) {
       this.decodedText = result;
       this.addItem(result);
-      console.log(this.loan);
+      console.log(this.lend);
     },
     addItem(result) {
-      this.loan.item_ids.push(parseInt(result));
+      this.lend.item_ids.push(parseInt(result));
       this.beep();
     },
     beep() {
@@ -153,7 +153,7 @@ export default {
       beep.play();
     },
     input() {
-      console.log(this.loan);
+      console.log(this.lend);
     },
   }
 };

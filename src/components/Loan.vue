@@ -3,20 +3,20 @@
     <k-view>
 
       <k-header>
-        {{ borrower.firstname }} {{ borrower.lastname }} - {{ loan.start_date }}
+        {{ borrower.firstname }} {{ borrower.lastname }} - {{ lend.start_date }}
 
         <k-button-group slot="left">
           <k-button icon="archive"
-                    :text="$t('lendmanagement.loan.archive')"
-                    @click="loanIsBack(`${loan.id})`)" />
+                    :text="$t('lendmanagement.lend.archive')"
+                    @click="loanIsBack(`${lend.id})`)"/>
 
           <k-button icon="refresh"
-                    :text="$t('lendmanagement.loan.extend')"
-                    @click="`extend(${loan.id})`" />
+                    :text="$t('lendmanagement.lend.extend')"
+                    @click="$dialog(`lendmanagement/lend/${lend.id}/extend`)"/>
 
           <k-button icon="undo"
-                    :text="$t('lendmanagement.loan.notify')"
-                    @click="`notify(${loan.id})`" />
+                    :text="$t('lendmanagement.lend.notify')"
+                    @click="notify(`${lend.id}`)"/>
         </k-button-group>
       </k-header>
 
@@ -24,7 +24,24 @@
 
         <k-column width="1/2">
 
-          <k-form v-model="loan" @input="input" @submit="submit" :fields="{
+          <k-grid gutter="small">
+
+            <k-column width="1/2">
+              <k-date-field :help="'Fin du prêt +' + nbr_of_days_added +' jours'" :value=expiry_date :time=false :disabled=true name="date" label="Date d'expiration du prêt" />
+            </k-column>
+
+            <k-column width="1/2">
+            </k-column>
+
+          </k-grid>
+
+          <k-form v-model="lend" @input="input" @submit="submit" :fields="{
+              line: {
+                type: 'line'
+              }
+            }"/>
+
+          <k-form v-model="lend" @input="input" @submit="submit" :fields="{
               start_date: {
                 label: 'Début du prêt',
                 type: 'date',
@@ -78,16 +95,34 @@
             </tr>
             </thead>
             <tr>
-              <th>{{ $t('lendmanagement.loan.table.name') }}</th>
-              <th>{{ $t('lendmanagement.loan.table.quantity') }}</th>
+              <th>{{ $t('lendmanagement.lend.table.name') }}</th>
+              <th>{{ $t('lendmanagement.lend.table.quantity') }}</th>
               <th></th>
             </tr>
             <tr v-for="(item, id) in items" :key="id">
               <td>{{ item.title }}</td>
               <td>{{ item.quantity }}</td>
               <td class="k-product-options">
-                <k-options-dropdown :options="'loans/' + id"/>
+                <k-options-dropdown :options="'lends/' + id"/>
               </td>
+            </tr>
+          </table>
+
+          <table style="margin-top: 50px;" class="k-products">
+            <thead>
+            <tr>
+              <th colspan="3">{{ $t('lendmanagement.lend.extended') }}</th>
+            </tr>
+            </thead>
+            <tr>
+              <th>{{ $t('lendmanagement.lend.extensions.nbrOfDays') }}</th>
+              <th>{{ $t('lendmanagement.lend.extensions.addedAt') }}</th>
+              <th>{{ $t('lendmanagement.lend.extensions.people') }}</th>
+            </tr>
+            <tr v-for="(item, id) in extensions" :key="id">
+              <td>{{ item.nbr_of_days }}</td>
+              <td>{{ item.created_at }}</td>
+              <td>{{ item.user }}</td>
             </tr>
           </table>
         </k-column>
@@ -102,30 +137,35 @@ export default {
   props: {
     items: Array,
     borrower: Object,
-    loan: Object,
+    lend: Object,
     start_date: String,
     end_date: String,
+    expiry_date: String,
+    extensions: Array,
+    nbr_of_days_added: Number,
   },
   data() {
     return {
-      loan: {
-        id: this.loan.id,
+      lend: {
+        id: this.lend.id,
         start_date: this.start_date,
         end_date: this.end_date,
+        expiry_date: this.expiry_date,
+        nbr_of_days_added: this.nbr_of_days_added,
       },
     }
   },
   methods: {
     loanIsBack() {
-      this.$api.post('lendmanagement/loan/' + this.loan.id + '/return', this.loan);
+      this.$api.post('lendmanagement/lend/' + this.lend.id + '/return', this.lend);
       this.$go('/lendmanagement');
     },
     extend() {
-      this.$api.post('lendmanagement/loan/' + this.loan.id + '/extend', this.loan);
+      this.$api.post('lendmanagement/lend/' + this.lend.id + '/extend', this.lend);
       this.$go('/lendmanagement');
     },
     notify() {
-      this.$api.post('lendmanagement/loan/' + this.loan.id + '/notify', this.loan);
+      this.$api.post('lendmanagement/lend/' + this.lend.id + '/notify', this.lend);
       this.$go('/lendmanagement');
     }
   }

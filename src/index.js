@@ -3,8 +3,8 @@ import Inventory from "./components/Inventory.vue";
 import Category from "./components/Category.vue";
 import Item from "./components/Item.vue";
 import Borrowers from "./components/Borrowers.vue";
-import Loan from "./components/Loan.vue";
-import LoanAdd from "./components/LoanAdd.vue";
+import Lend from "./components/Lend.vue";
+import LendAdd from "./components/LendAdd.vue";
 
 panel.plugin("scardoso/kirby-lendmanagement", {
   components: {
@@ -13,7 +13,7 @@ panel.plugin("scardoso/kirby-lendmanagement", {
     "k-borrowers-view": Borrowers,
     "k-category-view":  Category,
     "k-item-view":      Item,
-    "k-loan-view":      Loan,
-    "k-loan-add-view":  LoanAdd,
+    "k-lend-view":      Lend,
+    "k-lend-add-view":  LendAdd,
   }
 });

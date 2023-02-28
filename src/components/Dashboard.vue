@@ -8,14 +8,14 @@
         <k-button-group slot="left">
           <k-button-link
             icon="add"
-            :link="`/lendmanagement/loan-add`"
+            :link="`/lendmanagement/lend-add`"
           >
-            {{ $t('lendmanagement.loan.add') }}
+            {{ $t('lendmanagement.lend.add') }}
           </k-button-link>
 
           <k-button icon="undo"
-                    :text="$t('lendmanagement.loan.notify')"
-                    @click="$dialog('lendmanagement/loans/notifyexpired')" />
+                    :text="$t('lendmanagement.lend.notify')"
+                    @click="$dialog('lendmanagement/lends/notifyexpired')" />
         </k-button-group>
 
         <k-button-group slot="right">
@@ -45,16 +45,16 @@
       <k-grid gutter="large">
         <k-column width="1/2">
           <header class="k-section-header">
-            <k-headline>{{ $t('lendmanagement.loan') }}</k-headline>
+            <k-headline>{{ $t('lendmanagement.lend') }}</k-headline>
           </header>
-          <k-collection layout="list" :items="loans" />
+          <k-collection layout="list" :items="lends" />
         </k-column>
 
         <k-column width="1/2">
           <header class="k-section-header">
-            <k-headline>{{ $t('lendmanagement.loan.returned') }}</k-headline>
+            <k-headline>{{ $t('lendmanagement.lend.returned') }}</k-headline>
           </header>
-          <k-collection layout="list" :items="loans_history" />
+          <k-collection layout="list" :items="lends_history" />
         </k-column>
       </k-grid>
 
@@ -67,8 +67,8 @@ export default {
   props: {
     items: Object,
     stats: Array,
-    loans: Array,
-    loans_history: Array,
+    lends: Array,
+    lends_history: Array,
     categories: Array
   },
   methods: {
