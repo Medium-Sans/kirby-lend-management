@@ -1,6 +1,6 @@
 # Kirby - Lend Management
 
-Manage your lendings, notify your the people you lend to and keep track of your items.
+Manage your lendings, notify the people you lend to and keep track of your items.
 
 - Email notification
 - QrCode Labels - Dymo Printer
@@ -67,7 +67,7 @@ Notifications templates are located in the `site/templates/notifications` folder
 At the moment we only support Dymo LabelWriter 450... Templates are hardcoded not ideal, but I'm working on it.
 
 ## Dependencies
-- [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode),
+- [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode)
 - [beebmx/kirby-db](https://github.com/beebmx/kirby-db)
 
 ## License
