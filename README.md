@@ -4,9 +4,14 @@
 
 ****
 
+![dashboard.png](docs%2Fdashboard.png)
+![dashboard.png](docs%2Fborrowers.png)
+![dashboard.png](docs%2Finventory.png)
+
 ## Installation
 
 * Copy the plugin folder to your site/plugins folder
+* Run `composer install` in the plugin folder
 
 ## Setup
 
@@ -28,6 +33,7 @@ return [
     ],
 ];
 ````
+And create the database file in the specified location, the database will then be created the first time you reach the dashboard.
 
 ### Notifications
 
