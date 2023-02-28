@@ -1,6 +1,12 @@
 # Kirby - Lend Management
 
-> A lend management plugin for kirby cms
+Manage your lendings, notify your the people you lend to and keep track of your items.
+
+- Email notification
+- QrCode Labels - Dymo Printer
+- Webcam Scanner to add items faster to a lend
+- Clear and quick overview of your items and lends
+- Inventory management
 
 ****
 
