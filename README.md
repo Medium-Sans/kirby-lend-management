@@ -6,15 +6,59 @@
 
 ## Installation
 
-* TODO
+* Copy the plugin folder to your site/plugins folder
 
 ## Setup
 
-* TODO
+### Database
+We use a sqlite database to store the data. For it to work you need to set those parameters in your config.php file:
 
-## Options
+````php
+return [
+    ...
+    'beebmx.kirby-db.default' => 'sqlite',
+    'beebmx.kirby-db.drivers' => [
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'database' => __DIR__ . '/../storage/database/lendmanagement.sqlite',
+            # with this configuration the database will be created in a folder named "database" inside
+            # the "storage" folder in the "site" folder that sits at the root of your kirby project.
+            'prefix' => ''
+        ]
+    ],
+];
+````
 
-* TODO
+### Notifications
+
+For the nofitications to work you need to setup a mail server. You can do this by adding the following to your config.php file:
+
+```php
+return [
+    ...
+    'email' => [
+        'transport' => [
+            'type' => 'smtp',
+            'host' => 'my.hostname.com',
+            'port' => 465, // 587
+            'security' => true, // false if 587
+            'auth' => true,
+            'username' => 'my@username.com',
+            'password' => 'mypassword'
+        ]
+    ]
+];
+```
+
+Notifications templates are located in the `site/templates/notifications` folder.
+
+### Label Printing
+
+At the moment we only support Dymo LabelWriter 450... Templates are hardcoded not ideal, but I'm working on it.
+
+## Dependencies
+- [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode),
+- [beebmx/kirby-db](https://github.com/beebmx/kirby-db)
 
 ## License
 
