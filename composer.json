@@ -3,7 +3,7 @@
 	"description": "A lend management plugin for Kirby CMS",
 	"license": "MIT",
 	"type": "kirby-plugin",
-	"version": "0.0.2",
+	"version": "1.0.0",
 	"authors": [
 		{
 			"name": "Samuel Cardoso",
