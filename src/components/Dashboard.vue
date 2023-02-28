@@ -43,18 +43,25 @@
       </k-stats>
 
       <k-grid gutter="large">
-        <k-column width="1/2">
+        <k-column width="1/3">
           <header class="k-section-header">
-            <k-headline>{{ $t('lendmanagement.lend') }}</k-headline>
+            <k-headline>{{ $t('lendmanagement.lends') }}</k-headline>
           </header>
           <k-collection layout="list" :items="lends" />
         </k-column>
 
-        <k-column width="1/2">
+        <k-column width="1/3">
+          <header class="k-section-header">
+            <k-headline>{{ $t('lendmanagement.lend.late') }}</k-headline>
+          </header>
+          <k-collection layout="list" :items="late_lends" />
+        </k-column>
+
+        <k-column width="1/3">
           <header class="k-section-header">
             <k-headline>{{ $t('lendmanagement.lend.returned') }}</k-headline>
           </header>
-          <k-collection layout="list" :items="lends_history" />
+          <k-collection layout="list" :items="returned_lends" />
         </k-column>
       </k-grid>
 
@@ -68,7 +75,8 @@ export default {
     items: Object,
     stats: Array,
     lends: Array,
-    lends_history: Array,
+    late_lends: Array,
+    returned_lends: Array,
     categories: Array
   },
   methods: {

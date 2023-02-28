@@ -29,7 +29,8 @@ return [
                     ],
                 ],
                 'lends' => Lend::getCurrentLends(),
-                'lends_history' => Lend::getReturnedLends(),
+                'late_lends' => Lend::getLateLends(),
+                'returned_lends' => Lend::getReturnedLends(),
             ]
         ];
     }

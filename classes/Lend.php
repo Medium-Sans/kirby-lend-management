@@ -140,8 +140,7 @@ class Lend
 
         foreach ($lends as $lend) {
             if ((!$lend->returned_date)
-                && (strtotime($lend->end_date) < strtotime(date('Y-m-d')))
-                && $lend->is_prolonged) {
+                && (strtotime($lend->end_date) < strtotime(date('Y-m-d')))) {
                 $pendingAndProlongedLends[] = $lend;
             }
         }
@@ -263,7 +262,37 @@ class Lend
         $lends = self::list();
         $collection = [];
         foreach ($lends as $lend) {
-            if (!$lend->returned_date) {
+            if (!$lend->returned_date && strtotime($lend->end_date) >= strtotime(date('Y-m-d'))) {
+                $borrower = Borrower::find($lend->borrower_id);
+
+                $startDate = date_create($lend->start_date);
+                $endDate = date_create($lend->end_date);
+
+                $nbrObjects = LendItems::getTotalOfLendedItemsForLend($lend->id);
+                $itemCaption = $nbrObjects > 1 ? i18n::translate('lendmanagement.items') : i18n::translate('lendmanagement.item');
+
+                $statusColor = (strtotime($lend->end_date) < strtotime(date('Y-m-d'))) ? 'red-400' : 'green-400';
+
+                $collection[] = [
+                    'text' => $borrower->firstname . ' ' . $borrower->lastname . ' • ' . $nbrObjects . ' ' . $itemCaption,
+                    'info' => date_format($startDate, 'd.m.Y') . ' / ' . date_format($endDate, 'd.m.Y'),
+                    'link' => '/lendmanagement/lend/' . $lend->id,
+                    'image' => [
+                        'icon' => 'box',
+                        'back' => $statusColor
+                    ]
+                ];
+            }
+        }
+        return $collection;
+    }
+
+    public static function getLateLends(): array
+    {
+        $lends = self::list();
+        $collection = [];
+        foreach ($lends as $lend) {
+            if (!$lend->returned_date && strtotime($lend->end_date) <= strtotime(date('Y-m-d'))) {
                 $borrower = Borrower::find($lend->borrower_id);
 
                 $startDate = date_create($lend->start_date);
@@ -293,7 +322,7 @@ class Lend
         $lends = self::list();
         $collection = [];
         foreach ($lends as $lend) {
-            if ($lend->returned_date) {
+            if (boolval($lend->is_returned) && $lend->returned_date) {
                 $borrower = Borrower::find($lend->borrower_id);
 
                 $startDate = date_create($lend->start_date);
