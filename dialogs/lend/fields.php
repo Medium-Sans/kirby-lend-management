@@ -1,8 +1,8 @@
 <?php
 
 use Kirby\Http\Header;
-use Kirby\LendManagement\Borrower;
-use Kirby\LendManagement\Item;
+use MediumSans\LendManagement\Borrower;
+use MediumSans\LendManagement\Item;
 use Kirby\Toolkit\A;
 
 return [

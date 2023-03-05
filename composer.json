@@ -1,8 +1,8 @@
 {
 	"name": "scardoso/kirby-lendmanagement",
 	"description": "A lend management plugin for Kirby CMS",
-	"license": "MIT",
-	"type": "kirby-plugin",
+    "license": "proprietary",
+    "type": "kirby-plugin",
 	"version": "1.0.0",
 	"authors": [
 		{
@@ -19,7 +19,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Beebmx\\": "site/"
+            "Beebmx\\": "site/",
+            "Wagnerwagner\\Merx\\": "classes/"
         }
     },
 	"config": {

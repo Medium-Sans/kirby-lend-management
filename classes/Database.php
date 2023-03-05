@@ -1,6 +1,6 @@
 <?php
 
-namespace Kirby\LendManagement;
+namespace MediumSans\LendManagement;
 
 use Beebmx\KirbyDb\Schema;
 use Kirby\Filesystem\F;

@@ -1,10 +1,10 @@
 <?php
 
-use Kirby\LendManagement\Borrower;
-use Kirby\LendManagement\Item;
-use Kirby\LendManagement\Lend;
-use Kirby\LendManagement\LendExtension;
-use Kirby\LendManagement\LendItems;
+use MediumSans\LendManagement\Borrower;
+use MediumSans\LendManagement\Item;
+use MediumSans\LendManagement\Lend;
+use MediumSans\LendManagement\LendExtension;
+use MediumSans\LendManagement\LendItems;
 
 return [
     'pattern' => 'lendmanagement/lend/(:any)',

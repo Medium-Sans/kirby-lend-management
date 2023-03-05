@@ -1,7 +1,7 @@
 <?php
 
-use Kirby\LendManagement\Lend;
-use Kirby\LendManagement\LendExtension;
+use MediumSans\LendManagement\Lend;
+use MediumSans\LendManagement\LendExtension;
 use Kirby\Toolkit\I18n;
 
 return [

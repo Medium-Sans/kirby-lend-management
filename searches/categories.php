@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Category;
+use MediumSans\LendManagement\Category;
 use Kirby\Toolkit\Str;
 
 return [

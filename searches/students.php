@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Borrower;
+use MediumSans\LendManagement\Borrower;
 use Kirby\Toolkit\Str;
 
 return [

@@ -17,6 +17,10 @@
           <k-button icon="undo"
                     :text="$t('lendmanagement.lend.notify')"
                     @click="notify(`${lend.id}`)"/>
+
+          <k-button icon="email"
+                    :text="$t('lendmanagement.lend.sendMessage')"
+                    @click="sendMessage(`${lend.id}`)"/>
         </k-button-group>
       </k-header>
 
@@ -27,7 +31,8 @@
           <k-grid gutter="small">
 
             <k-column width="1/2">
-              <k-date-field :help="'Fin du prêt +' + nbr_of_days_added +' jours'" :value=expiry_date :time=false :disabled=true name="date" label="Date d'expiration du prêt" />
+              <k-date-field :help="'Fin du prêt +' + nbr_of_days_added +' jours'" :value=expiry_date :time=false
+                            :disabled=true name="date" label="Date d'expiration du prêt"/>
             </k-column>
 
             <k-column width="1/2">

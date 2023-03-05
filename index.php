@@ -1,16 +1,16 @@
 <?php
 
-require_once __DIR__.'/vendor/autoload.php';
+@include_once __DIR__ . '/vendor/autoload.php';
 
 load([
-    'Kirby\LendManagement\Lend'          => __DIR__ . '/classes/Lend.php',
-    'Kirby\LendManagement\LendItems'     => __DIR__ . '/classes/LendItems.php',
-    'Kirby\LendManagement\LendExtension' => __DIR__ . '/classes/LendExtension.php',
-    'Kirby\LendManagement\Category'      => __DIR__ . '/classes/Category.php',
-    'Kirby\LendManagement\Item'          => __DIR__ . '/classes/Item.php',
-    'Kirby\LendManagement\Borrower'      => __DIR__ . '/classes/Borrower.php',
-    'Kirby\LendManagement\Database'      => __DIR__ . '/classes/Database.php',
-    'Kirby\LendManagement\Mailer'        => __DIR__ . '/classes/Mailer.php',
+    'MediumSans\LendManagement\Lend'          => __DIR__ . '/classes/Lend.php',
+    'MediumSans\LendManagement\LendItems'     => __DIR__ . '/classes/LendItems.php',
+    'MediumSans\LendManagement\LendExtension' => __DIR__ . '/classes/LendExtension.php',
+    'MediumSans\LendManagement\Category'      => __DIR__ . '/classes/Category.php',
+    'MediumSans\LendManagement\Item'          => __DIR__ . '/classes/Item.php',
+    'MediumSans\LendManagement\Borrower'      => __DIR__ . '/classes/Borrower.php',
+    'MediumSans\LendManagement\Database'      => __DIR__ . '/classes/Database.php',
+    'MediumSans\LendManagement\Mailer'        => __DIR__ . '/classes/Mailer.php',
 ]);
 
 Kirby::plugin('scardoso/kirby-lendmanagement', [

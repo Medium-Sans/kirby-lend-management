@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Category;
+use MediumSans\LendManagement\Category;
 
 return [
     'pattern' => 'inventory/category/(:any)/update',

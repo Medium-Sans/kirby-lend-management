@@ -1,7 +1,7 @@
 <?php
 
-use Kirby\LendManagement\Category;
-use Kirby\LendManagement\Item;
+use MediumSans\LendManagement\Category;
+use MediumSans\LendManagement\Item;
 
 return [
     'pattern' => 'lendmanagement/inventory/category/(:any)',

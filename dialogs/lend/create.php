@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Lend;
+use MediumSans\LendManagement\Lend;
 
 return [
     'pattern' => 'lendmanagement/lend/create',

@@ -1,9 +1,9 @@
 <?php
 
 use Kirby\Http\Response;
-use Kirby\LendManagement\Item;
-use Kirby\LendManagement\Lend;
-use Kirby\LendManagement\Mailer;
+use MediumSans\LendManagement\Item;
+use MediumSans\LendManagement\Lend;
+use MediumSans\LendManagement\Mailer;
 
 return [
     'routes' => function () {

@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Item;
+use MediumSans\LendManagement\Item;
 
 return [
     'pattern' => 'inventory/item/create',

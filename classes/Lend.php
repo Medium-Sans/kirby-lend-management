@@ -1,6 +1,6 @@
 <?php
 
-namespace Kirby\LendManagement;
+namespace MediumSans\LendManagement;
 
 use Beebmx\KirbyDb\DB;
 use Kirby\Exception\InvalidArgumentException;

@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Borrower;
+use MediumSans\LendManagement\Borrower;
 
 return [
     'pattern' => 'lendmanagement/borrower/(:any)/delete',

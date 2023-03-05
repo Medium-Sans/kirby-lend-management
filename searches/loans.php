@@ -1,7 +1,7 @@
 <?php
 
-use Kirby\LendManagement\Lend;
-use Kirby\LendManagement\Borrower;
+use MediumSans\LendManagement\Lend;
+use MediumSans\LendManagement\Borrower;
 
 return [
     'label' => 'Emprunts',

@@ -1,0 +1,19 @@
+FR
+Une rallonge pour votre emprunt vous a été accordé.
+Nouvelle date de retour: <?php echo $return_date; ?>
+
+EN
+Your lend has been extended.
+New return date: <?php echo $return_date; ?>
+
+Le Pool Image-Son
+https://head-pool-image-son.ch
+HEAD-Genève
+
+Permanence
+Mardi/Mercredi
+10h-17h
+
+Retour Matériel
+Mardi
+10h-12:30h

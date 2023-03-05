@@ -1,7 +1,7 @@
 <?php
 
-use Kirby\LendManagement\Borrower;
-use Kirby\LendManagement\Item;
+use MediumSans\LendManagement\Borrower;
+use MediumSans\LendManagement\Item;
 
 return [
     'pattern' => 'lendmanagement/lend-add',

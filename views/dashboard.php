@@ -1,8 +1,8 @@
 <?php
 
-use Kirby\LendManagement\Lend;
-use Kirby\LendManagement\Category;
-use Kirby\LendManagement\Item;
+use MediumSans\LendManagement\Lend;
+use MediumSans\LendManagement\Category;
+use MediumSans\LendManagement\Item;
 
 return [
     'pattern' => 'lendmanagement',

@@ -1,6 +1,6 @@
 <?php
 
-use Kirby\LendManagement\Borrower;
+use MediumSans\LendManagement\Borrower;
 
 return [
     'pattern' => 'lendmanagement/borrower/(:any)/update',
@@ -17,6 +17,6 @@ return [
         ];
     },
     'submit' => function (string $id) {
-        return (new Kirby\LendManagement\Borrower)->update($id, get());
+        return (new MediumSans\LendManagement\Borrower)->update($id, get());
     }
 ];
