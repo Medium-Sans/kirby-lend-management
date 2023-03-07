@@ -19,6 +19,8 @@
   "lendmanagement.lend.archive":                "Return",
   "lendmanagement.lend.notify":                 "Notify of delay",
   "lendmanagement.lend.sendMessage":            "Send message",
+  "lendmanagement.lend.sendMessage.subject":    "Subject",
+  "lendmanagement.lend.sendMessage.body":       "Content",
   "lendmanagement.lend.extend":                 "Extend",
   "lendmanagement.lend.extended":               "Extensions",
   "lendmanagement.lend.extensions.nbrOfDays":   "Number of days",

@@ -19,6 +19,8 @@
   "lendmanagement.lend.archive":                "Retour",
   "lendmanagement.lend.notify":                 "Notifier du retard",
   "lendmanagement.lend.sendMessage":            "Send message",
+  "lendmanagement.lend.sendMessage.subject":    "Sujet",
+  "lendmanagement.lend.sendMessage.body":       "Contenu",
   "lendmanagement.lend.extend":                 "Prolonge",
   "lendmanagement.lend.extended":               "Prolongement d'emprunt",
   "lendmanagement.lend.extensions.nbrOfDays":   "Nombre de jours",
