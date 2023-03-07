@@ -20,7 +20,7 @@
 
           <k-button icon="email"
                     :text="$t('lendmanagement.lend.sendMessage')"
-                    @click="sendMessage(`${lend.id}`)"/>
+                    @click="$dialog(`lendmanagement/lend/${lend.id}/sendMessage`)"/>
         </k-button-group>
       </k-header>
 
@@ -172,7 +172,7 @@ export default {
     notify() {
       this.$api.post('lendmanagement/lend/' + this.lend.id + '/notify', this.lend);
       this.$go('/lendmanagement');
-    }
+    },
   }
 };
 </script>
