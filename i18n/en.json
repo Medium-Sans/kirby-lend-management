@@ -12,6 +12,7 @@
   "lendmanagement.lend":                        "Lend",
   "lendmanagement.lend.returned":               "Returned lends",
   "lendmanagement.lends":                       "Lends",
+  "lendmanagement.lend.form.expiredDate":       "Lend expiration date",
   "lendmanagement.lend.form.startDate":         "Start date",
   "lendmanagement.lend.form.endDate":           "End date",
   "lendmanagement.lend.add":                    "Add a Lend",

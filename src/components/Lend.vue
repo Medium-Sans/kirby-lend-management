@@ -32,7 +32,7 @@
 
             <k-column width="1/2">
               <k-date-field :help="'Fin du prêt +' + nbr_of_days_added +' jours'" :value=expiry_date :time=false
-                            :disabled=true name="date" label="Date d'expiration du prêt"/>
+                            :disabled=true name="date" :label="$t('lendmanagement.lend.form.expiredDate')"/>
             </k-column>
 
             <k-column width="1/2">
@@ -48,14 +48,14 @@
 
           <k-form v-model="lend" @input="input" @submit="submit" :fields="{
               start_date: {
-                label: 'Début du prêt',
+                label: $t('lendmanagement.lend.form.startDate'),
                 type: 'date',
                 time: false,
                 disabled: true,
                 width: '1/2'
               },
               end_date: {
-                label: 'Fin du prêt',
+                label: $t('lendmanagement.lend.form.endDate'),
                 type: 'date',
                 time: false,
                 disabled: true,
