@@ -13,7 +13,7 @@ load([
     'MediumSans\LendManagement\Mailer'        => __DIR__ . '/classes/Mailer.php',
 ]);
 
-Kirby::plugin('scardoso/kirby-lendmanagement', [
+Kirby::plugin('mediumsans/kirby-lend-management', [
     'areas' => [
         'lendmanagement' => [
             'label' => t([
@@ -33,6 +33,7 @@ Kirby::plugin('scardoso/kirby-lendmanagement', [
                 require __DIR__ . '/dialogs/lend/delete.php',
                 require __DIR__ . '/dialogs/lend/update.php',
                 require __DIR__ . '/dialogs/lend/extend.php',
+                require __DIR__ . '/dialogs/lend/sendMessage.php',
                 // Borrower
                 require __DIR__ . '/dialogs/borrower/create.php',
                 require __DIR__ . '/dialogs/borrower/delete.php',
