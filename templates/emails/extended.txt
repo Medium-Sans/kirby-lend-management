@@ -1,10 +1,10 @@
 FR
 Une rallonge pour votre emprunt vous a été accordé.
-Nouvelle date de retour: <?php echo $return_date; ?>
+Nouvelle date de retour: %new_return_date%
 
 EN
 Your lend has been extended.
-New return date: <?php echo $return_date; ?>
+New return date: %new_return_date%
 
 Le Pool Image-Son
 https://head-pool-image-son.ch
