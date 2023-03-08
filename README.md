@@ -4,13 +4,25 @@ Manage your lendings, notify the people you lend to and keep track of your items
 
 - Email notification
 - QrCode Labels - Dymo Printer
-- Webcam Scanner to add items faster to a lend
+- Webcam Scanner to add items faster to a loan
 - Clear and quick overview of your items and lends
-- Inventory management
+- Inventory management with categories and quantities, description, etc...
 
 ****
 
 ![dashboard.png](docs%2Fdashboard.png)
+
+## Table of Contents
+- [Installation](##installation)
+- [Setup](##setup)
+ - [Database](###database)
+ - [Email Notifications](###email-notifications)
+   - [Properties](####properties)
+   - [Templates](####templates)
+ - [Label Printing](###label-printing)
+ - [Dependencies](##dependencies)
+ - [License](##license)
+ - [Credits](##credits)
 
 ## Installation
 
@@ -20,6 +32,7 @@ Manage your lendings, notify the people you lend to and keep track of your items
 ## Setup
 
 ### Database
+
 We use a sqlite database to store the data. For it to work you need to set those parameters in your config.php file:
 
 ````php
@@ -39,9 +52,9 @@ return [
 ````
 And create the database file in the specified location, the database will then be created the first time you reach the dashboard.
 
-### Notifications
+### Email Notifications
 
-For the nofitications to work you need to setup a mail server. You can do this by adding the following to your config.php file:
+For the notifications to work you need to setup a mail server. You can do this by adding the following to your config.php file:
 
 ```php
 return [
@@ -60,11 +73,28 @@ return [
 ];
 ```
 
-Notifications templates are located in the `site/templates/notifications` folder.
+#### Properties
+
+You can use those properties to change the sender, replyTo and subject of the "expired" and "extended" emails.
+
+```php
+return [
+    ...
+    'mediumsans.kirby-lend-management.email.sender' => 'the-email@from',
+    'mediumsans.kirby-lend-management.email.replyTo' => 'the-email@we-will-reply-to',
+    'mediumsans.kirby-lend-management.email.subject.expired' => 'Subject | Of the expired notification',
+    'mediumsans.kirby-lend-management.email.subject.extended' => 'Subject | Of the extended notification',
+    ...
+]
+```
+
+#### Templates
+
+Emails templates are located in the `site/templates/emails` folder, you can change them to your liking.
 
 ### Label Printing
 
-At the moment we only support Dymo LabelWriter 450... Templates are hardcoded not ideal, but I'm working on it.
+At the moment we only support the Dymo LabelWriter 450. *Templates are hardcoded not ideal, but I'm working on it.*
 
 ## Dependencies
 - [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode)
