@@ -3,6 +3,7 @@
 use MediumSans\LendManagement\Lend;
 use MediumSans\LendManagement\LendExtension;
 use Kirby\Toolkit\I18n;
+use MediumSans\LendManagement\Mailer;
 
 return [
     'pattern' => 'lendmanagement/lend/(:any)/extend',
@@ -27,6 +28,7 @@ return [
     },
     'submit' => function (string $id) {
         $data = get();
-        return LendExtension::create($id, $data['extended']);
+        LendExtension::create($id, $data['extended']);
+        return Mailer::notifyBorrowerOfExtension(Lend::find($id));
     }
 ];
