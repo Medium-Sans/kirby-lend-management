@@ -40,7 +40,7 @@ return [
                 'pattern' => 'lendmanagement/lend/(:any)/notify',
                 'method' => 'POST',
                 'action' => function (string $id) {
-                    $sent = Mailer::notifyLenderOfExpiration(Lend::find($id));
+                    $sent = Mailer::notifyBorrowerOfExpiration(Lend::find($id));
                     return response::json([ 'sent' => $sent ]);
                 }
             ],
