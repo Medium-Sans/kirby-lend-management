@@ -292,7 +292,7 @@ class Lend
         $lends = self::list();
         $collection = [];
         foreach ($lends as $lend) {
-            if (!$lend->returned_date && strtotime($lend->end_date) <= strtotime(date('Y-m-d'))) {
+            if (!$lend->returned_date && strtotime($lend->end_date) < strtotime(date('Y-m-d'))) {
                 $borrower = Borrower::find($lend->borrower_id);
 
                 $startDate = date_create($lend->start_date);
@@ -301,7 +301,7 @@ class Lend
                 $nbrObjects = LendItems::getTotalOfLendedItemsForLend($lend->id);
                 $itemCaption = $nbrObjects > 1 ? i18n::translate('lendmanagement.items') : i18n::translate('lendmanagement.item');
 
-                $statusColor = (strtotime($lend->end_date) < strtotime(date('Y-m-d'))) ? 'red-400' : 'green-400';
+                $statusColor = (strtotime($lend->end_date) <= strtotime(date('Y-m-d'))) ? 'red-400' : 'green-400';
 
                 $collection[] = [
                     'text' => $borrower->firstname . ' ' . $borrower->lastname . ' • ' . $nbrObjects . ' ' . $itemCaption,
