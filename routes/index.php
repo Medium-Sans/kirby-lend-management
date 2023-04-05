@@ -8,13 +8,7 @@ use MediumSans\LendManagement\Mailer;
 return [
     'routes' => function () {
         return [
-            [
-                'pattern' => 'lendmanagement/item/(:any)/update',
-                'method' => 'POST',
-                'action' => function (string $id) {
-                    return Item::update($id, get());
-                }
-            ],
+            /* LEND */
             [
                 'pattern' => 'lendmanagement/lend/create',
                 'method' => 'POST',
@@ -42,6 +36,22 @@ return [
                 'action' => function (string $id) {
                     $sent = Mailer::notifyBorrowerOfExpiration(Lend::find($id));
                     return response::json([ 'sent' => $sent ]);
+                }
+            ],
+            /* ITEM */
+            [
+                'pattern' => 'lendmanagement/item/(:any)',
+                'method' => 'GET',
+                'action' => function (string $id) {
+                    $item = Item::find($id);
+                    return response::json($item);
+                }
+            ],
+            [
+                'pattern' => 'lendmanagement/item/(:any)/update',
+                'method' => 'POST',
+                'action' => function (string $id) {
+                    return Item::update($id, get());
                 }
             ],
             [

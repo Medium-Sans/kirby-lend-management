@@ -64,6 +64,8 @@
               width: '1'
             },
           }"/>
+
+          <k-button icon="check" @click="submit">Save</k-button>
         </k-column>
 
         <k-column width="1/3">
@@ -74,8 +76,6 @@
           </k-field>
         </k-column>
       </k-grid>
-
-      <input ref="submitter" class="k-form-submitter" type="submit"/>
     </k-view>
   </k-inside>
 </template>

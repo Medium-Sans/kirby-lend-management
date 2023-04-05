@@ -20,7 +20,7 @@
     "autoload": {
         "psr-4": {
             "Beebmx\\": "site/",
-            "Wagnerwagner\\Merx\\": "classes/"
+            "MediumSans\\LendManagement\\": "classes/"
         }
     },
 	"config": {

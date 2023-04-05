@@ -60,12 +60,41 @@
                 required: true,
                 options: item_ids,
                 width: '1'
-              },
-              line3: {
-                type: 'line'
-              },
+              }
              }">
           </k-fieldset>
+
+          <section class="k-itemstable-section">
+            <vue-good-table
+              v-if="rows.length && !isLoading"
+              ref="table"
+              :columns="columns"
+              :rows="rows"
+            >
+              <template slot="table-row" slot-scope="props">
+                <span
+                  class="k-quantity-buttons"
+                  v-if="props.column.field === 'p-add'"
+                  @click="removeQuantity(props.row.id)"
+                >
+                  <k-icon
+                    class="block"
+                    type="remove"/>
+                </span>
+
+                <span
+                  class="k-quantity-buttons"
+                  v-if="props.column.field === 'p-remove'"
+                  @click="addQuantity(props.row.id)"
+                >
+                  <k-icon
+                    class="block"
+                    type="add" />
+                </span>
+              </template>
+            </vue-good-table>
+          </section>
+
           <k-button icon="check" @click="submit">Save</k-button>
         </k-column>
 
@@ -76,17 +105,20 @@
             </div>
           </qrcode-stream>
         </k-column>
+
       </k-grid>
     </k-view>
   </k-inside>
 </template>
 
 <script>
-import {QrcodeStream} from 'vue-qrcode-reader'
+import {QrcodeStream} from "vue-qrcode-reader";
+import {VueGoodTable} from "vue-good-table";
 
 export default {
   components: {
-    QrcodeStream,
+    VueGoodTable,
+    QrcodeStream
   },
   props: {
     item_ids: Array,
@@ -104,8 +136,39 @@ export default {
         item_ids: [],
       },
       hasChanged: false,
-      decodedText: ''
-    }
+      decodedText: '',
+      columns: [
+        {
+          label: 'Item',
+          field: 'name',
+          type: 'text',
+          tdClass: 'vgt-left-align',
+        },
+        {
+          label: 'Quantity',
+          field: 'qty',
+          type: 'number',
+          tdClass: 'vgt-center-align',
+          width: '90px'
+        },
+        {
+          label: '',
+          field: 'p-add',
+          tdClass: 'vgt-center-align',
+          width: '50px'
+        },
+        {
+          label: '',
+          field: 'p-remove',
+          tdClass: 'vgt-center-align',
+          width: '50px'
+        },
+      ],
+      rows: [
+        { id: 1, name: "John", qty: 20 },
+        { id: 2, name: "John", qty: 20 },
+      ],
+    };
   },
   methods: {
     paintOutline(detectedCodes, ctx) {
@@ -123,7 +186,8 @@ export default {
         ctx.closePath();
         ctx.stroke();
       }
-    },
+    }
+    ,
     async onInit(promise) {
       this.loading = true
 
@@ -142,25 +206,39 @@ export default {
     onDecode(result) {
       this.decodedText = result;
       this.addItem(result);
-      console.log(this.lend);
+      this.beep();
     },
     addItem(result) {
       this.lend.item_ids.push(parseInt(result));
-      this.beep();
+      let item = this.$api.get('/lendmanagement/item/' + result);
+      console.log(item);
+      this.rows.push({ id: item.id, name: item.name, qty: item.qty});
     },
     beep() {
       let beep = new Audio('https://soundbible.com/mp3/Checkout%20Scanner%20Beep-SoundBible.com-593325210.mp3');
       beep.play();
     },
-    input() {
-      console.log(this.lend);
+    input(result) {
+      console.log(result);
     },
+    addQuantity(id) {
+      this.rows.forEach(function (value) {
+        if (value.id === id) {
+          value.qty++;
+        }
+      });
+    },
+    removeQuantity(id) {
+      this.rows.forEach(function (value) {
+        if (value.id === id) {
+          value.qty--;
+        }
+      });
+    }
   }
 };
 </script>
 
-<style>
-.k-row {
-  margin-bottom: 20px;
-}
+<style lang="scss">
+@import "../assets/css/styles.scss";
 </style>

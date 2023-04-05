@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'title' => [
-        'label' => 'Title',
+    'name' => [
+        'label' => 'Name',
         'type' => 'text'
     ],
     'description' => [

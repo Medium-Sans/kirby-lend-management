@@ -11,9 +11,9 @@ panel.plugin("scardoso/kirby-lendmanagement", {
     "k-dashboard-view": Dashboard,
     "k-inventory-view": Inventory,
     "k-borrowers-view": Borrowers,
-    "k-category-view":  Category,
-    "k-item-view":      Item,
-    "k-lend-view":      Lend,
-    "k-lend-add-view":  LendAdd,
+    "k-category-view": Category,
+    "k-item-view": Item,
+    "k-lend-view": Lend,
+    "k-lend-add-view": LendAdd
   }
 });

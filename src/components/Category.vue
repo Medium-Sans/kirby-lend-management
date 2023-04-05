@@ -2,7 +2,7 @@
   <k-inside>
     <k-view>
       <k-header>
-        {{ category.title }}
+        {{ category.name }}
         <k-button-group slot="left">
           <k-button
             text="Delete"
@@ -35,6 +35,10 @@ export default {
   methods: {
     price(price) {
       return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
+    },
+    submit() {
+      this.$api.post('/lendmanagement/item/create', this.lend);
+      this.$go('/lendmanagement');
     },
   }
 };

@@ -7,7 +7,7 @@ return [
     'pattern' => 'lendmanagement/inventory/category/(:any)',
     'action'  => function ($id) {
 
-        $category = Category::find($id);
+        $category = Category::find($id)[0];
 
         return [
             'component' => 'k-category-view',
@@ -17,13 +17,13 @@ return [
                     'link'  => 'lendmanagement/inventory'
                 ],
                 [
-                    'label' => $category['title'],
+                    'label' => $category->name,
                     'link'  => '/lendmanagement/inventory/category/' . $id
                 ]
             ],
             'props' => [
                 'category' => $category,
-                'items' => Item::getItemsByCategory($category['id']),
+                'items' => Item::getItemsByCategory($category->id),
             ]
         ];
     }

@@ -3,9 +3,9 @@
 namespace MediumSans\LendManagement;
 
 use Beebmx\KirbyDb\DB;
-use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
-use Kirby\Toolkit\I18n;
+use Illuminate\Support\Collection;
+
 
 class Category
 {
@@ -52,15 +52,9 @@ class Category
      * @return array
      * @throws NotFoundException
      */
-    public static function find(string $id): array
+    public static function find(string $id): Collection
     {
-        $category = static::list()[$id] ?? null;
-
-        if (empty($category) === true) {
-            throw new NotFoundException('The category could not be found');
-        }
-
-        return $category;
+        return DB::table(self::$tableName)->where('id', '=', $id)->get();
     }
 
     /**
@@ -95,39 +89,34 @@ class Category
      */
     public static function update(string $id, array $input): bool
     {
-        $category = [
-            'id'          => $id,
-            'title'       => $input['title'] ?? null,
-            'description' => $input['description'] ?? null,
-            'location'    => $input['location'] ?? null,
-        ];
+        $input['kirby_uuid'] = $id;
 
-        // load all categories
-        $categories = static::list();
-
-        // set/overwrite the category data
-        $categories[$id] = $category;
-
-        return Data::write(static::file(), $categories);
+        return DB::table(self::$tableName)->updateOrInsert(
+            ['kirby_uuid' => $id],
+            $input);
     }
 
+    /**
+     * Return a collection of items from in items.json
+     *
+     * @return array
+     * @throws NotFoundException
+     */
     public static function collection(): array
     {
-        $categories = static::list();
+
+        $categories = self::list();
         $collection = [];
+
         foreach ($categories as $category) {
 
-            $ttlItemsforCategory = Item::getTotalItemsByCategoryId($category['id']);
-            $itemsLabel = $ttlItemsforCategory > 1 ? I18n::translate('lendmanagement.items') :
-                I18n::translate('lendmanagement.item');
-
             $collection[] = [
-                'text' => $category['title'],
-                'link' => '/lendmanagement/inventory/category/' . $category['id'],
-                'info' => $ttlItemsforCategory . ' ' . $itemsLabel,
+                'text' => $category->name,
+                'link' => 'lendmanagement/inventory/category/' . $category->id,
+                'info' => $category->location ?? '',
                 'image' => [
-                    'icon' => 'list-numbers',
-                    'back' => 'purple-400'
+                    'icon' => 'tag',
+                    'back' => 'blue-400'
                 ]
             ];
         }
@@ -136,12 +125,12 @@ class Category
 
     public static function getOptions(): array
     {
-        $categories = static::list();
+        $categories = self::list();
         $options = [];
         foreach ($categories as $category) {
             $options[] = [
-                'text' => $category['title'],
-                'value' => $category['id'],
+                'text' => $category->name,
+                'value' => $category->id,
             ];
         }
         return $options;

@@ -111,7 +111,7 @@ class Item
         $input['qr_code'] = $QrCode->render($id);
 
         // The end date must be greater than the start date
-        if (V::required($input['title']) === false) {
+        if (V::required($input['name']) === false) {
             throw new InvalidArgumentException('A title must be set');
         }
 
