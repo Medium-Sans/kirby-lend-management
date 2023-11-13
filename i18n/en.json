@@ -1,21 +1,31 @@
 {
-  "view.lendmanagement.dashboard":              "Dashboard",
-  "view.lendmanagement.inventory":              "Inventory",
+  "lendmanagement.inventory":                   "Inventory",
+
   "view.inventory.stats.objectsinstock":        "Total of objects in stock",
   "view.inventory.stats.nbrcategories":         "Total of categories",
   "view.inventory.stats.objectslended":         "Total of lended objects",
+
   "view.dashboard.stats.inprogress":            "In Progress",
   "view.dashboard.stats.prolonged":             "Prolonged",
   "view.dashboard.stats.delayed":               "Late",
+
   "view.borrowers.breadcrumb":                  "Borrowers",
+
   "view.lend.add":                              "New lend",
+
+  "lendmangement.item.dropdown.edit":           "Edit",
+  "lendmangement.item.dropdown.delete":         "Delete",
+  "lendmangement.item.dropdown.preview":        "Preview",
+
+  "lendmanagement.lends":                       "Lends",
+
   "lendmanagement.lend":                        "Lend",
   "lendmanagement.lend.returned":               "Returned lends",
-  "lendmanagement.lends":                       "Lends",
   "lendmanagement.lend.form.expiredDate":       "Lend expiration date",
   "lendmanagement.lend.form.startDate":         "Start date",
   "lendmanagement.lend.form.endDate":           "End date",
   "lendmanagement.lend.add":                    "Add a Lend",
+  "lendmanagement.lend.inProgress":             "In progress lends",
   "lendmanagement.lend.late":                   "Late lends",
   "lendmanagement.lend.archive":                "Return",
   "lendmanagement.lend.notify":                 "Notify of delay",
@@ -27,20 +37,27 @@
   "lendmanagement.lend.extensions.nbrOfDays":   "Number of days",
   "lendmanagement.lend.extensions.addedAt":     "Added at",
   "lendmanagement.lend.extensions.people":      "By",
+
   "lendmanagement.item":                        "Item",
-  "lendmanagement.items":                       "Items",
   "lendmanagement.item.form.title":             "Title",
   "lendmanagement.item.form.description":       "Description",
   "lendmanagement.item.form.note":              "Note",
   "lendmanagement.item.form.quantity":          "Quantity",
   "lendmanagement.item.add":                    "Add an item",
   "lendmanagement.item.delete":                 "Do you really want to delete this item ?",
+
+  "lendmanagement.items":                       "Items",
+
   "lendmanagement.borrower":                    "Borrower",
   "lendmanagement.borrowers":                   "Borrowers",
+
   "lendmanagement.borrower.add":                "Add a borrower",
   "lendmanagement.borrower.delete":             "Do you really want to delete this borrower ?",
+
+  "lendmanagement.categories.table.name":       "Name",
+  "lendmanagement.categories.table.location":   "Location",
+
   "lendmanagement.category":                    "Category",
-  "lendmanagement.categories":                  "Categories",
   "lendmanagement.category.delete":             "Do you really want to delete this category ?",
   "lendmanagement.category.add":                "Add a category",
   "lendmanagement.dashboard.status":            "Status",
@@ -53,6 +70,15 @@
   "lendmanagement.borrowers.table.email":       "Email",
   "lendmanagement.borrowers.table.phone":       "Phone",
   "lendmanagement.borrowers.table.lastlend":    "Date of last lend",
+
+  "lendmanagement.inventory.table.title":         "Name",
+  "lendmanagement.inventory.table.description":   "Description",
+  "lendmanagement.inventory.table.quantity":      "Quantity",
+  "lendmanagement.inventory.table.category":      "Category",
+  "lendmanagement.inventory.table.lended":        "Lended",
+  "lendmanagement.inventory.table.createdAt":     "Created at",
+  "lendmanagement.inventory.table.updatedAt":     "Updated at",
+
   "lendmanagement.lend.table.name":             "Name",
   "lendmanagement.lend.table.quantity":         "Quantity"
 }

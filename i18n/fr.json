@@ -1,6 +1,7 @@
 {
-  "view.lendmanagement.dashboard":              "Dashboard",
-  "view.lendmanagement.inventory":              "Inventory",
+  "lendmanagement.inventory":                   "Inventaire",
+  "lendmanagement.dashboard":                   "Dashboard",
+
   "view.inventory.stats.objectsinstock":        "Nombre d'objets en stock",
   "view.inventory.stats.nbrcategories":         "Nombre de catégories",
   "view.inventory.stats.objectslended":         "Nombres d'objets en prêt",
@@ -9,13 +10,20 @@
   "view.dashboard.stats.delayed":               "En retard",
   "view.borrowers.breadcrumb":                  "Emprunteurs",
   "view.lend.add":                              "Nouveau prêt",
+
+  "lendmangement.item.dropdown.edit":           "Editer",
+  "lendmangement.item.dropdown.delete":         "Supprimer",
+  "lendmangement.item.dropdown.preview":        "Voir",
+
+  "lendmanagement.lends":                       "Emprunts",
+
   "lendmanagement.lend":                        "Emprunt",
   "lendmanagement.lend.returned":               "Emprunts retourné",
-  "lendmanagement.lends":                       "Emprunts",
   "lendmanagement.lend.form.expiredDate":       "Date d'expiration du prêt",
   "lendmanagement.lend.form.startDate":         "Date de début du prêt",
   "lendmanagement.lend.form.endDate":           "Date de fin du prêt",
   "lendmanagement.lend.add":                    "Ajouter un emprunt",
+  "lendmanagement.lend.inProgress":             "Emprunts en cours",
   "lendmanagement.lend.late":                   "Emprunts en retard",
   "lendmanagement.lend.archive":                "Retour",
   "lendmanagement.lend.notify":                 "Notifier du retard",
@@ -27,20 +35,27 @@
   "lendmanagement.lend.extensions.nbrOfDays":   "Nombre de jours",
   "lendmanagement.lend.extensions.addedAt":     "Ajouté le",
   "lendmanagement.lend.extensions.people":      "Par",
-  "lendmanagement.item":                        "Objet",
+
   "lendmanagement.items":                       "Objets",
+
+  "lendmanagement.item":                        "Objet",
   "lendmanagement.item.form.title":             "Désignation",
   "lendmanagement.item.form.description":       "Description",
   "lendmanagement.item.form.note":              "Notes",
   "lendmanagement.item.form.quantity":          "Quantité",
   "lendmanagement.item.add":                    "Ajouter un objet",
   "lendmanagement.item.delete":                 "Voulez-vous vraiment supprimer cet objet ?",
+
   "lendmanagement.borrower":                    "Emprunteur",
   "lendmanagement.borrowers":                   "Emprunteurs",
   "lendmanagement.borrower.add":                "Ajouter un emprunteur",
   "lendmanagement.borrower.delete":             "Voulez-vous vraiment supprimer cet emprunteur ?",
-  "lendmanagement.category":                    "Catégorie",
+
   "lendmanagement.categories":                  "Catégories",
+  "lendmanagement.categories.table.name":       "Name",
+  "lendmanagement.categories.table.location":   "Location",
+
+  "lendmanagement.category":                    "Catégorie",
   "lendmanagement.category.delete":             "Voulez-vous vraiment supprimer cette catégorie ?",
   "lendmanagement.category.add":                "Ajouter une catégorie",
   "lendmanagement.status":                      "Status",
@@ -48,11 +63,21 @@
   "lendmanagement.dashboard.view":              "Emprunts",
   "lendmanagement.borrowers.view":              "Emprunteurs",
   "lendmanagement.settings.view":               "Paramètres",
+
   "lendmanagement.borrowers.table.firstname":   "Prénom",
   "lendmanagement.borrowers.table.lastname":    "Nom",
   "lendmanagement.borrowers.table.email":       "Email",
   "lendmanagement.borrowers.table.phone":       "Téléphone",
   "lendmanagement.borrowers.table.lastlend":    "Dernier Prêt",
+
+  "lendmanagement.inventory.table.title":         "Nom",
+  "lendmanagement.inventory.table.description":   "Description",
+  "lendmanagement.inventory.table.quantity":      "Quantité",
+  "lendmanagement.inventory.table.category":      "Catégorie",
+  "lendmanagement.inventory.table.lended":        "Emprunté",
+  "lendmanagement.inventory.table.createdAt":     "Créé le",
+  "lendmanagement.inventory.table.updatedAt":     "Mis à jour le",
+
   "lendmanagement.lend.table.name":             "Nom",
   "lendmanagement.lend.table.quantity":         "Quantité"
 }
