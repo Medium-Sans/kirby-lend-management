@@ -1,28 +1,27 @@
 <template>
   <k-inside>
-    <k-view class="k-page-view">
 
-      <k-header>
-        {{ $t('view.lend.add') }}
+    <k-header>
+      {{ $t('view.lend.add') }}
 
-        <k-button-group slot="left">
-          <k-button
-            :text="$t('lendmanagement.item.add')"
-            icon="add"
-            @click="$dialog('inventory/item/create')"
-          />
+      <k-button-group slot="left">
+        <k-button
+          :text="$t('lendmanagement.item.add')"
+          icon="add"
+          @click="$dialog('inventory/item/create')"
+        />
 
-          <k-button
-            :text="$t('lendmanagement.borrower.add')"
-            icon="add"
-            @click="$dialog('lendmanagement/borrower/create')"
-          />
-        </k-button-group>
-      </k-header>
+        <k-button
+          :text="$t('lendmanagement.borrower.add')"
+          icon="add"
+          @click="$dialog('lendmanagement/borrower/create')"
+        />
+      </k-button-group>
+    </k-header>
 
-      <k-grid gutter="large">
-        <k-column width="1/2">
-          <k-fieldset v-model="lend" @input="input" :fields="{
+    <k-grid gutter="large">
+      <k-column width="1/2">
+        <k-fieldset v-model="lend" @input="input" :fields="{
               start_date: {
                 label: $t('lendmanagement.lend.form.startDate'),
                 type: 'date',
@@ -52,72 +51,60 @@
               line2: {
                 type: 'line'
               },
-              item_ids: {
+              items: {
                 label: $t('lendmanagement.items'),
-                type: 'multiselect',
-                search: true,
-                min: 1,
-                required: true,
-                options: item_ids,
-                width: '1'
+                type: 'structure',
+                fields: {
+                  item_id: {
+                    label: $t('lendmanagement.item'),
+                    type: 'select',
+                    required: true,
+                    options: item_ids,
+                    width: '1/2'
+                  },
+                  quantity: {
+                    label: $t('lendmanagement.quantity'),
+                    type: 'number',
+                    required: true,
+                    width: '1/2'
+                  },
+                  line: {
+                    type: 'line'
+                  }
+                }
               }
              }">
-          </k-fieldset>
+        </k-fieldset>
 
-          <section class="k-itemstable-section">
-            <vue-good-table
-              v-if="rows.length && !isLoading"
-              ref="table"
-              :columns="columns"
-              :rows="rows"
-            >
-              <template slot="table-row" slot-scope="props">
-                <span
-                  class="k-quantity-buttons"
-                  v-if="props.column.field === 'p-add'"
-                  @click="removeQuantity(props.row.id)"
-                >
-                  <k-icon
-                    class="block"
-                    type="remove"/>
-                </span>
+        <section class="k-itemstable-section">
+        </section>
 
-                <span
-                  class="k-quantity-buttons"
-                  v-if="props.column.field === 'p-remove'"
-                  @click="addQuantity(props.row.id)"
-                >
-                  <k-icon
-                    class="block"
-                    type="add" />
-                </span>
-              </template>
-            </vue-good-table>
-          </section>
+        <k-button icon="check" @click="submit">Save</k-button>
+      </k-column>
 
-          <k-button icon="check" @click="submit">Save</k-button>
-        </k-column>
+      <k-column width="1/2">
+        <qrcode-stream @init="onInit" @decode="onDecode" v-if="!destroyed" :key="_uid" :track="this.paintOutline">
+          <div class="loading-indicator" v-if="loading">
+            Loading...
+          </div>
+        </qrcode-stream>
+      </k-column>
 
-        <k-column width="1/2">
-          <qrcode-stream @init="onInit" @decode="onDecode" v-if="!destroyed" :key="_uid" :track="this.paintOutline">
-            <div class="loading-indicator" v-if="loading">
-              Loading...
-            </div>
-          </qrcode-stream>
-        </k-column>
-
-      </k-grid>
-    </k-view>
+    </k-grid>
   </k-inside>
 </template>
 
 <script>
 import {QrcodeStream} from "vue-qrcode-reader";
-import {VueGoodTable} from "vue-good-table";
+import structure from "../../../../../kirby/panel/lab/components/fields/structure/index.vue";
 
 export default {
+  computed: {
+    structure() {
+      return structure
+    }
+  },
   components: {
-    VueGoodTable,
     QrcodeStream
   },
   props: {
@@ -165,8 +152,8 @@ export default {
         },
       ],
       rows: [
-        { id: 1, name: "John", qty: 20 },
-        { id: 2, name: "John", qty: 20 },
+        {id: 1, name: "John", qty: 20},
+        {id: 2, name: "John", qty: 20},
       ],
     };
   },
@@ -212,7 +199,7 @@ export default {
       this.lend.item_ids.push(parseInt(result));
       let item = this.$api.get('/lendmanagement/item/' + result);
       console.log(item);
-      this.rows.push({ id: item.id, name: item.name, qty: item.qty});
+      this.rows.push({id: item.id, name: item.name, qty: item.qty});
     },
     beep() {
       let beep = new Audio('https://soundbible.com/mp3/Checkout%20Scanner%20Beep-SoundBible.com-593325210.mp3');
@@ -238,7 +225,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-@import "../assets/css/styles.scss";
-</style>
