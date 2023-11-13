@@ -11,7 +11,8 @@ return [
             'component' => 'k-form-dialog',
             'props' => [
                 'fields' => require __DIR__ . '/fields.php',
-                'value'  => $item
+                'value'  => $item,
+                'size'   => 'large',
             ]
         ];
     },
