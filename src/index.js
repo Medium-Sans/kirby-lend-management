@@ -1,17 +1,17 @@
-import Dashboard from "./components/Dashboard.vue";
+import Lends from "./components/Lends.vue";
 import Inventory from "./components/Inventory.vue";
-import Category from "./components/Category.vue";
-import Item from "./components/Item.vue";
 import Borrowers from "./components/Borrowers.vue";
 import Lend from "./components/Lend.vue";
 import LendAdd from "./components/LendAdd.vue";
+import Categories from "./components/Categories.vue";
+import Item from "./components/Item.vue";
 
-panel.plugin("scardoso/kirby-lendmanagement", {
+panel.plugin("mediumsans/kirby-lend-management", {
   components: {
-    "k-dashboard-view": Dashboard,
+    "k-lends-view": Lends,
     "k-inventory-view": Inventory,
     "k-borrowers-view": Borrowers,
-    "k-category-view": Category,
+    "k-categories-view": Categories,
     "k-item-view": Item,
     "k-lend-view": Lend,
     "k-lend-add-view": LendAdd
