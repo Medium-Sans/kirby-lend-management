@@ -7,12 +7,6 @@ return [
     'action'  => function () {
         return [
             'component' => 'k-borrowers-view',
-            'breadcrumb' => [
-                [
-                    'label' => t('view.borrowers.breadcrumb'),
-                    'link'  => 'lendmanagement/borrowers'
-                ]
-            ],
             'props' => [
                 'borrowers' => Borrower::list(),
             ]
