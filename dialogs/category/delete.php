@@ -4,7 +4,7 @@ use MediumSans\LendManagement\Category;
 use Kirby\Panel\Panel;
 
 return [
-    'pattern' => 'inventory/category/(:any)/delete',
+    'pattern' => 'lendmanagement/category/(:any)/delete',
     'load' => function () {
         return [
             'component' => 'k-remove-dialog',
@@ -15,6 +15,6 @@ return [
     },
     'submit' => function (string $id): void {
         Category::delete($id);
-        Panel::go('lendmanagement/inventory');
+        Panel::go('lendmanagement/categories');
     }
 ];

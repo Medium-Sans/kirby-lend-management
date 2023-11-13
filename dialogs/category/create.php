@@ -3,14 +3,14 @@
 use MediumSans\LendManagement\Category;
 
 return [
-    'pattern' => 'inventory/category/create',
+    'pattern' => 'lendmanagement/category/create',
     'load'    => function () {
         return [
             'component' => 'k-form-dialog',
             'props'     => [
-                'fields'       => require __DIR__ . '/fields.php',
-                'submitButton' => t('create'),
-                'size'     => 'large',
+                'fields'        => require __DIR__ . '/fields.php',
+                'submitButton'  => t('create'),
+                'size'          => 'large',
             ],
         ];
     },

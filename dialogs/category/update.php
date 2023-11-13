@@ -3,7 +3,7 @@
 use MediumSans\LendManagement\Category;
 
 return [
-    'pattern' => 'inventory/category/(:any)/update',
+    'pattern' => 'lendmanagement/category/(:any)/update',
     'load'    => function (string $id) {
         $category = Category::find($id);
 
