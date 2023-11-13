@@ -2,6 +2,7 @@
 
 use Kirby\Http\Response;
 use MediumSans\LendManagement\Item;
+use MediumSans\LendManagement\Category;
 use MediumSans\LendManagement\Lend;
 use MediumSans\LendManagement\Mailer;
 
@@ -61,6 +62,22 @@ return [
                     $label = Item::getLabelFromItemId($id);
                     $encoded = base64_encode(trim($label));
                     return response::json([ 'data' => $encoded ]);
+                }
+            ],
+            /* CATEGORY */
+            [
+                'pattern' => 'lendmanagement/category/(:any)',
+                'method' => 'GET',
+                'action' => function (string $id) {
+                    $item = Category::find($id);
+                    return response::json($item);
+                }
+            ],
+            [
+                'pattern' => 'lendmanagement/category/(:any)/update',
+                'method' => 'POST',
+                'action' => function (string $id) {
+                    return Category::update($id, get());
                 }
             ],
         ];
