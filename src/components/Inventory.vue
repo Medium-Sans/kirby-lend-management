@@ -1,120 +1,81 @@
 <template>
-  <k-inside>
-    <k-view>
+    <k-inside>
 
       <k-header>
-        {{ $t('view.lendmanagement.inventory') }}
-
-        <k-button-group slot="left">
-          <k-button icon="add"
-                    :text="$t('lendmanagement.item.add')"
-                    @click="$dialog('inventory/item/create')" />
-        </k-button-group>
+        {{ $t('lendmanagement.inventory') }}
 
         <k-button-group slot="right">
-          <k-button-link
-            icon="users"
-            :link="`/lendmanagement/borrowers/`"
-          >
-            {{ $t('lendmanagement.borrowers.view') }}
-          </k-button-link>
-
-          <k-button-link
-            icon="cart"
-            :link="`/lendmanagement/`"
-          >
-            {{ $t('lendmanagement.dashboard.view') }}
-          </k-button-link>
+          <k-button icon="add"
+                    variant="filled"
+                    :text="$t('lendmanagement.category.add')"
+                    @click="$dialog('inventory/item/create')"/>
+          <k-button icon="add"
+                    variant="filled"
+                    :text="$t('lendmanagement.item.add')"
+                    @click="$dialog('inventory/item/create')"/>
         </k-button-group>
       </k-header>
 
-      <header class="k-section-header">
-        <k-headline>{{ $t('lendmanagement.dashboard.status') }}</k-headline>
-      </header>
+      <table class="k-inventory">
 
-      <k-stats :reports="stats" size="small">
-      </k-stats>
+        <tr>
+          <th style="text-align: center;">#</th>
+          <th>{{ $t('lendmanagement.inventory.table.title') }}</th>
+          <th>{{ $t('lendmanagement.inventory.table.category') }}</th>
+          <th>{{ $t('lendmanagement.inventory.table.quantity') }}</th>
+          <th>{{ $t('lendmanagement.inventory.table.updated_at') }}</th>
+          <th>{{ $t('lendmanagement.inventory.table.created_at') }}</th>
+          <th class="k-product-options"></th>
+        </tr>
 
-      <k-grid gutter="large">
-        <k-column width="1/2">
-
-          <header class="k-section-header">
-            <k-headline>{{ $t('lendmanagement.items')}}</k-headline>
-            <k-button icon="add"
-                      :text="$t('lendmanagement.item.add')"
-                      @click="$dialog('inventory/item/create')" />
-          </header>
-
-          <k-collection layout="list" :items="items" />
-
-        </k-column>
-
-        <k-column width="1/2">
-
-          <header class="k-section-header">
-            <k-headline>{{ $t('lendmanagement.categories')}}</k-headline>
-            <k-button icon="add"
-                      :text="$t('lendmanagement.category.add')"
-                      @click="$dialog('inventory/category/create')" />
-          </header>
-
-          <k-collection layout="list" :items="categories" />
-
-        </k-column>
-      </k-grid>
-    </k-view>
+        <tr v-for="(item, id) in items" :key="id">
+          <td id="item-id" style="text-align: center;">{{ item.id}}</td>
+          <td class="name fitwidth">{{ item.title }}</td>
+          <td>{{ item.category }}</td>
+          <td class="fitwidth" style="text-align: center;">{{ item.quantity }}</td>
+          <td>{{ item.updated_at }}</td>
+          <td>{{ item.created_at }}</td>
+          <td class="k-product-options">
+            <k-options-dropdown :options="'lendmanagement/item/' + item.id"/>
+          </td>
+        </tr>
+      </table>
   </k-inside>
 </template>
 
 <script>
 export default {
   props: {
-    items: Object,
-    stats: Array,
+    items: Array,
     lends: Array,
     categories: Array
   },
   methods: {
     // format the price in EURO
     price(price) {
-      return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
+      return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(price);
     }
   }
 };
 </script>
 
 <style>
-.k-section-header {
-  margin-top: var(--spacing-8);
-  margin-bottom: var(--spacing-2);
+.k-inventory {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
 }
 
-.k-workshop {
-  width: 100%;
-  table-layout: fixed;
-  border-spacing: 1px;
-}
-.k-products td,
-.k-products th {
+.k-inventory th {
   text-align: left;
-  font-size: var(--text-sm);
-  padding: var(--spacing-2);
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-gray-100);
+}
+
+.k-inventory td {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
   background: var(--color-white);
-}
-.k-item-category-id {
-  width: 8rem;
-}
-.k-product-price {
-  width: 5rem;
-  font-variant-numeric: tabular-nums;
-  text-align: right !important;
-}
-.k-product-options {
-  padding: 0 !important;
-  width: 3rem;
-  overflow: visible !important;
 }
 </style>
