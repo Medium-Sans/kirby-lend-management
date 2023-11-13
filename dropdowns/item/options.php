@@ -1,16 +1,21 @@
 <?php
 
 return [
-    'pattern' => 'lendmanagement/inventory/item/(:any)',
+    'pattern' => 'lendmanagement/item/(:any)',
     'action'  => function (string $id) {
         return [
             [
-                'text'   => 'Edit',
-                'icon'   => 'edit',
-                'dialog' => 'lendmanagement/inventory/item/' . $id . '/update'
+                'text'   => t('lendmangement.item.dropdown.preview'),
+                'icon'   => 'preview',
+                'link'   => '/lendmanagement/inventory/item/' . $id
             ],
             [
-                'text'   => 'Delete',
+                'text'   => t('lendmangement.item.dropdown.edit'),
+                'icon'   => 'edit',
+                'dialog' => 'inventory/item/' . $id . '/update'
+            ],
+            [
+                'text'   => t('lendmangement.item.dropdown.delete'),
                 'icon'   => 'trash',
                 'dialog' => 'lendmanagement/inventory/item/' . $id . '/delete'
             ]
