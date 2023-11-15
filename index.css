@@ -20,13 +20,12 @@
   background: var(--color-white);
 }
 
-.k-products {
+.k-borrowers {
   width: 100%;
   table-layout: fixed;
   border-spacing: 1px;
 }
-.k-products td,
-.k-products th {
+.k-borrowers td {
   text-align: left;
   font-size: var(--text-sm);
   padding: var(--spacing-2);
@@ -35,7 +34,17 @@
   overflow: hidden;
   background: var(--color-white);
 }
-.k-product-options {
+.k-borrowers th {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-gray-100);
+}
+.k-borrower-options {
   padding: 0 !important;
   width: 3rem;
   overflow: visible !important;
@@ -45,13 +54,13 @@
   margin-bottom: 8px;
 }
 
-.k-products {
+.k-lend-items {
   width: 100%;
   table-layout: fixed;
   border-spacing: 1px;
 }
-.k-products td,
-.k-products th {
+.k-lend-items td,
+.k-lend-items th {
   text-align: left;
   font-size: var(--text-sm);
   padding: var(--spacing-2);
@@ -60,7 +69,44 @@
   overflow: hidden;
   background: var(--color-white);
 }
-.k-product-options {
+.k-lend-items-options {
+  padding: 0 !important;
+  width: 3rem;
+  text-align: center;
+  overflow: visible !important;
+}
+.k-button-group {
+  justify-content: center !important;
+}
+.k-lend-items-options button {
+  justify-content: end !important;
+}
+
+.k-categories {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 1px;
+}
+.k-categories td {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: var(--color-white);
+}
+.k-categories th {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-gray-100);
+}
+.k-categories-options {
   padding: 0 !important;
   width: 3rem;
   overflow: visible !important;
