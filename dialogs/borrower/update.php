@@ -17,6 +17,6 @@ return [
         ];
     },
     'submit' => function (string $id) {
-        return (new MediumSans\LendManagement\Borrower)->update($id, get());
+        return Borrower::update($id, get());
     }
 ];
