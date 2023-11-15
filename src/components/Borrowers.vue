@@ -43,7 +43,8 @@
 <script>
 export default {
   props: {
-    borrowers: Object
+    borrowers: Object,
+    locale: String
   },
   methods: {
     formatDate(dateString) {

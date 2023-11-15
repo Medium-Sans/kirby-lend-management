@@ -9,6 +9,7 @@ return [
             'component' => 'k-borrowers-view',
             'props' => [
                 'borrowers' => Borrower::listWithLastLend(),
+                'locale' => kirby()->user()->language(),
             ]
         ];
     }
