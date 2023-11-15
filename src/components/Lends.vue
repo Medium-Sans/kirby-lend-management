@@ -22,7 +22,7 @@
     <k-grid gutter="large">
       <k-column width="1/2">
         <header class="k-section-header">
-          <k-headline>{{ $t('lendmanagement.lends.inProgress') }}</k-headline>
+          <k-headline>{{ $t('lendmanagement.lend.inProgress') }}</k-headline>
         </header>
         <k-collection layout="list" :items="lends"/>
       </k-column>

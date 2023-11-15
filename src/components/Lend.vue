@@ -105,7 +105,7 @@
               <th></th>
             </tr>
             <tr v-for="(item, id) in items" :key="id">
-              <td>{{ item.title }}</td>
+              <td>{{ item.name }}</td>
               <td>{{ item.quantity }}</td>
               <td class="k-product-options">
                 <k-options-dropdown :options="'lends/' + id"/>

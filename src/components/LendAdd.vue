@@ -8,12 +8,14 @@
         <k-button
           :text="$t('lendmanagement.item.add')"
           icon="add"
+          variant="filled"
           @click="$dialog('inventory/item/create')"
         />
 
         <k-button
           :text="$t('lendmanagement.borrower.add')"
           icon="add"
+          variant="filled"
           @click="$dialog('lendmanagement/borrower/create')"
         />
       </k-button-group>
@@ -44,6 +46,7 @@
                 type: 'multiselect',
                 required: true,
                 search: true,
+                after: $t('lendmanagement.lendAdd.search'),
                 max: 1,
                 options: borrower_id,
                 width: '1'
@@ -51,35 +54,54 @@
               line2: {
                 type: 'line'
               },
-              items: {
-                label: $t('lendmanagement.items'),
-                type: 'structure',
-                fields: {
-                  item_id: {
-                    label: $t('lendmanagement.item'),
-                    type: 'select',
-                    required: true,
-                    options: item_ids,
-                    width: '1/2'
-                  },
-                  quantity: {
-                    label: $t('lendmanagement.quantity'),
-                    type: 'number',
-                    required: true,
-                    width: '1/2'
-                  },
-                  line: {
-                    type: 'line'
-                  }
-                }
-              }
              }">
         </k-fieldset>
 
-        <section class="k-itemstable-section">
-        </section>
+        <k-multiselect-field
+          style="margin-bottom: var(--spacing-4);"
+          :label="$t('lendmanagement.items')"
+          :after="$t('lendmanagement.lendAdd.search')"
+          :options="items"
+          required="true"
+          @input="itemsChange($event)"
+        />
 
-        <k-button icon="check" @click="submit">Save</k-button>
+        <table class="k-lend-items">
+
+          <tr>
+            <th class="k-lend-items-options" style="text-align: center;">#</th>
+            <th>{{ $t('lendmanagement.inventory.table.title') }}</th>
+            <th colspan="2">{{ $t('lendmanagement.inventory.table.quantity') }}</th>
+            <th class="k-lend-items-options"></th>
+          </tr>
+
+          <tr v-for="(item, id) in lend.items" :key="id">
+            <td style="text-align: center;">{{ id + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.qty }}</td>
+            <td>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          icon="add"
+                          @click="addQuantity(item.id)"
+                />
+                <k-button variant="filled"
+                          icon="remove"
+                          @click="removeQuantity(item.id)"
+                />
+              </k-button-group>
+            </td>
+            <td class="k-lend-items-options">
+              <k-button icon="trash" @click="removeItem(item.id)"/>
+            </td>
+          </tr>
+        </table>
+
+        <k-line-field></k-line-field>
+
+        <k-button variant="filled" icon="check" @click="submit">
+          {{ $t('lendmanagement.lendAdd.save') }}
+        </k-button>
       </k-column>
 
       <k-column width="1/2">
@@ -90,13 +112,23 @@
         </qrcode-stream>
       </k-column>
 
+      <k-dialog
+        ref="dialog"
+        submitButton="Ok"
+        theme="positive"
+        icon="check"
+      >
+        <k-text>
+          {{ message }}
+        </k-text>
+      </k-dialog>
+
     </k-grid>
   </k-inside>
 </template>
 
 <script>
 import {QrcodeStream} from "vue-qrcode-reader";
-import structure from "../../../../../kirby/panel/lab/components/fields/structure/index.vue";
 
 export default {
   computed: {
@@ -108,10 +140,12 @@ export default {
     QrcodeStream
   },
   props: {
-    item_ids: Array,
+    items: Array,
     borrower_id: Array,
+    lend_items: Array,
     start_date: String,
     end_date: String,
+    message: String,
   },
   data() {
     return {
@@ -120,41 +154,11 @@ export default {
         start_date: this.start_date,
         end_date: this.end_date,
         borrower_id: [],
+        items: [],
         item_ids: [],
       },
       hasChanged: false,
       decodedText: '',
-      columns: [
-        {
-          label: 'Item',
-          field: 'name',
-          type: 'text',
-          tdClass: 'vgt-left-align',
-        },
-        {
-          label: 'Quantity',
-          field: 'qty',
-          type: 'number',
-          tdClass: 'vgt-center-align',
-          width: '90px'
-        },
-        {
-          label: '',
-          field: 'p-add',
-          tdClass: 'vgt-center-align',
-          width: '50px'
-        },
-        {
-          label: '',
-          field: 'p-remove',
-          tdClass: 'vgt-center-align',
-          width: '50px'
-        },
-      ],
-      rows: [
-        {id: 1, name: "John", qty: 20},
-        {id: 2, name: "John", qty: 20},
-      ],
     };
   },
   methods: {
@@ -186,42 +190,105 @@ export default {
         this.loading = false
       }
     },
+    log(event) {
+      console.log(event);
+    },
     submit() {
-      this.$api.post('/lendmanagement/lend/create', this.lend);
-      this.$go('/lendmanagement');
+      if (this.lend.borrower_id.length > 0) {
+        this.$api.post('/lendmanagement/lend/create', this.lend);
+        this.$go('/lendmanagement/lends');
+      } else {
+        this.message = this.$t('lendmanagement.lendAdd.missingFields');
+        this.$refs.dialog.open();
+      }
     },
     onDecode(result) {
       this.decodedText = result;
       this.addItem(result);
       this.beep();
     },
-    addItem(result) {
-      this.lend.item_ids.push(parseInt(result));
-      let item = this.$api.get('/lendmanagement/item/' + result);
-      console.log(item);
-      this.rows.push({id: item.id, name: item.name, qty: item.qty});
+    itemsChange(result) {
+      console.log('test');
+      // Add
+      if(result.length > this.lend.items.length) {
+        this.addItem(result[result.length - 1]);
+      }
+      // Remove
+      if (result.length < this.lend.items.length) {
+        this.lend.items = this.lend.items.filter(value => result.includes(value.id));
+      }
+    },
+    getIndex(array, id) {
+      return array.findIndex(item => {
+        console.log(item, id);
+        return item.id === id;
+      });
+    },
+    async addItem(result) {
+      let item = await this.$api.get('/lendmanagement/item/' + result);
+      this.lend.items.push({
+        id: item[0].id,
+        name: item[0].name,
+        qty: 1
+      });
+    },
+    removeItem(id) {
+      this.lend.items = this.lend.items.filter(value => value.id !== id);
     },
     beep() {
       let beep = new Audio('https://soundbible.com/mp3/Checkout%20Scanner%20Beep-SoundBible.com-593325210.mp3');
       beep.play();
     },
-    input(result) {
-      console.log(result);
-    },
     addQuantity(id) {
-      this.rows.forEach(function (value) {
+      this.lend.items.forEach(function (value) {
         if (value.id === id) {
           value.qty++;
         }
       });
     },
     removeQuantity(id) {
-      this.rows.forEach(function (value) {
+      this.lend.items.forEach(function (value) {
         if (value.id === id) {
-          value.qty--;
+          if (value.qty > 1) {
+            value.qty--;
+          }
         }
       });
     }
   }
 };
 </script>
+
+<style>
+.k-lend-items {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 1px;
+}
+
+.k-lend-items td,
+.k-lend-items th {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.k-lend-items-options {
+  padding: 0 !important;
+  width: 3rem;
+  text-align: center;
+  overflow: visible !important;
+}
+
+.k-button-group {
+  justify-content: center !important;
+}
+
+.k-lend-items-options button {
+  justify-content: end !important;
+}
+</style>

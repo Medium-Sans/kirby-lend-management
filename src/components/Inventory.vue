@@ -8,11 +8,11 @@
           <k-button icon="add"
                     variant="filled"
                     :text="$t('lendmanagement.category.add')"
-                    @click="$dialog('inventory/item/create')"/>
+                    @click="$dialog('/lendmanagement/category/create')"/>
           <k-button icon="add"
                     variant="filled"
                     :text="$t('lendmanagement.item.add')"
-                    @click="$dialog('inventory/item/create')"/>
+                    @click="$dialog('/lendmanagement/item/create')"/>
         </k-button-group>
       </k-header>
 
@@ -22,19 +22,19 @@
           <th style="text-align: center;">#</th>
           <th>{{ $t('lendmanagement.inventory.table.title') }}</th>
           <th>{{ $t('lendmanagement.inventory.table.category') }}</th>
-          <th>{{ $t('lendmanagement.inventory.table.quantity') }}</th>
-          <th>{{ $t('lendmanagement.inventory.table.updated_at') }}</th>
-          <th>{{ $t('lendmanagement.inventory.table.created_at') }}</th>
+          <th style="text-align: center;">{{ $t('lendmanagement.inventory.table.quantity') }}</th>
+          <th style="text-align: center;">{{ $t('lendmanagement.inventory.table.updatedAt') }}</th>
+          <th style="text-align: center;">{{ $t('lendmanagement.inventory.table.createdAt') }}</th>
           <th class="k-product-options"></th>
         </tr>
 
         <tr v-for="(item, id) in items" :key="id">
           <td id="item-id" style="text-align: center;">{{ item.id}}</td>
-          <td class="name fitwidth">{{ item.title }}</td>
+          <td class="name fitwidth">{{ item.name }}</td>
           <td>{{ item.category }}</td>
           <td class="fitwidth" style="text-align: center;">{{ item.quantity }}</td>
-          <td>{{ item.updated_at }}</td>
-          <td>{{ item.created_at }}</td>
+          <td style="text-align: center;">{{ formatDate(item.updated_at) }}</td>
+          <td style="text-align: center;">{{ formatDate(item.created_at) }}</td>
           <td class="k-product-options">
             <k-options-dropdown :options="'lendmanagement/item/' + item.id"/>
           </td>
@@ -48,12 +48,15 @@ export default {
   props: {
     items: Array,
     lends: Array,
-    categories: Array
+    categories: Array,
+    locale: String,
   },
   methods: {
-    // format the price in EURO
-    price(price) {
-      return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(price);
+    formatDate(dateString) {
+      if(!dateString) return '-';
+      const date = new Date(dateString);
+      // Then specify how you want your dates to be formatted
+      return new Intl.DateTimeFormat(this.locale, {dateStyle: 'short', timeStyle: 'short',}).format(date);
     }
   }
 };
