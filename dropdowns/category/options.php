@@ -5,12 +5,12 @@ return [
     'action'  => function (string $id) {
         return [
             [
-                'text'   => t('lendmangement.item.dropdown.edit'),
+                'text'   => t('lendmanagement.item.dropdown.edit'),
                 'icon'   => 'edit',
                 'dialog' => 'lendmanagement/category/' . $id . '/update'
             ],
             [
-                'text'   => t('lendmangement.item.dropdown.delete'),
+                'text'   => t('lendmanagement.item.dropdown.delete'),
                 'icon'   => 'trash',
                 'dialog' => 'lendmanagement/category/' . $id . '/delete'
             ]

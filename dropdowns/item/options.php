@@ -5,19 +5,14 @@ return [
     'action'  => function (string $id) {
         return [
             [
-                'text'   => t('lendmangement.item.dropdown.preview'),
-                'icon'   => 'preview',
-                'link'   => '/lendmanagement/inventory/item/' . $id
-            ],
-            [
-                'text'   => t('lendmangement.item.dropdown.edit'),
+                'text'   => t('lendmanagement.item.dropdown.edit'),
                 'icon'   => 'edit',
-                'dialog' => 'inventory/item/' . $id . '/update'
+                'dialog' => 'lendmanagement/item/' . $id . '/update'
             ],
             [
-                'text'   => t('lendmangement.item.dropdown.delete'),
+                'text'   => t('lendmanagement.item.dropdown.delete'),
                 'icon'   => 'trash',
-                'dialog' => 'lendmanagement/inventory/item/' . $id . '/delete'
+                'dialog' => 'lendmanagement/item/' . $id . '/delete'
             ]
         ];
     }
