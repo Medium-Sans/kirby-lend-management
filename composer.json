@@ -1,5 +1,5 @@
 {
-	"name": "scardoso/kirby-lendmanagement",
+	"name": "mediumsans/kirby-lendmanagement",
 	"description": "A lend management plugin for Kirby CMS",
     "license": "proprietary",
     "type": "kirby-plugin",
@@ -11,9 +11,8 @@
 		}
 	],
 	"require": {
-        "getkirby/cms": ">=3.7.4 <3.9.0",
-		"getkirby/composer-installer": "^1.1",
-        "php": ">=8.0.0 <8.2.0",
+		"getkirby/composer-installer": "^1.2",
+        "php": ">=8.0.0",
         "chillerlan/php-qrcode": "dev-main",
         "beebmx/kirby-db": ">=2.0.0"
     },
