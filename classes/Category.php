@@ -30,17 +30,8 @@ class Category
      */
     public static function delete(string $id): bool
     {
-        return DB::table(self::$tableName)->where('kirby_uuid', $id)->delete();
-    }
-
-    /**
-     * Returns the absolute path to the categories.json
-     *
-     * @return string
-     */
-    public static function file(): string
-    {
-        return __DIR__ . '/../data/categories.json';
+        $query = DB::table(self::$tableName)->where('kirby_uuid', $id)->delete();
+        return $query;
     }
 
     /**
@@ -111,7 +102,6 @@ class Category
      * Return a collection of items from in items.json
      *
      * @return array
-     * @throws NotFoundException
      */
     public static function collection(): array
     {
