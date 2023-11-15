@@ -6,7 +6,7 @@ use Beebmx\KirbyDb\Schema;
 use Kirby\Filesystem\F;
 use Kirby\Exception\InvalidArgumentException;
 
-require_once __DIR__.'/../vendor/autoload.php';
+@include_once __DIR__ . '/vendor/autoload.php';
 
 class Database
 {
@@ -76,6 +76,7 @@ class Database
             $table->increments('id');
             $table->integer('lend_id')->unsigned();
             $table->integer('item_id')->unsigned();
+            $table->integer('quantity')->unsigned();
             $table->foreign('item_id')->references('id')->on('items');
             $table->foreign('lend_id')->references('id')->on('lends');
         });
@@ -110,7 +111,8 @@ class Database
      *
      * @return bool
      */
-    static function exist() : bool {
+    static function exist() : bool
+    {
         return F::exists(self::getPath());
     }
 

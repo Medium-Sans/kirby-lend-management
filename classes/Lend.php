@@ -23,7 +23,6 @@ class Lend
      */
     public static function create(array $input): bool
     {
-
         return self::update(uuid(), $input);
     }
 
@@ -43,7 +42,7 @@ class Lend
      * if the lend cannot be found
      *
      * @param string $id The id of the lend
-     * @return array The lend data
+     * @return \stdClass The lend data
      * @throws NotFoundException
      */
     public static function find(string $id): \stdClass
@@ -191,7 +190,7 @@ class Lend
         }
 
         // require a item
-        if (V::required($input['item_ids']) === false) {
+        if (V::required($input['items']) === false) {
             throw new InvalidArgumentException('An item must be set');
         }
 
@@ -211,11 +210,11 @@ class Lend
         if ($lend) {
             $lend_id = DB::getPdo()->lastInsertId();
 
-            foreach ($input['item_ids'] as $itemId) {
-                $item = Item::find($itemId);
+            foreach ($input['items'] as $item) {
                 DB::table(LendItems::$tableName)->insert([
-                    'item_id' => $item[0]->id,
+                    'item_id' => $item['id'],
                     'lend_id' => $lend_id,
+                    'quantity' => $item['qty'],
                 ]);
             }
         }

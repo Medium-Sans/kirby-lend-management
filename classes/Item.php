@@ -3,14 +3,12 @@
 namespace MediumSans\LendManagement;
 
 use Beebmx\KirbyDb\DB;
-use Illuminate\Support\Collection;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Toolkit\V;
 use chillerlan\QRCode\{QRCode, QROptions};
 use Kirby\Exception\NotFoundException;
-use stdClass;
 
-require_once __DIR__.'/../vendor/autoload.php';
+@include_once __DIR__ . '/vendor/autoload.php';
 
 class Item
 {
@@ -22,9 +20,11 @@ class Item
      *
      * @param array $input
      * @return bool
+     * @throws NotFoundException
      */
     public static function create(array $input): bool
     {
+        $input['created_at'] = date('Y-m-d H:i:s');
         return self::update(uuid(), $input);
     }
 
@@ -44,11 +44,11 @@ class Item
      * if the item cannot be found
      *
      * @param string $id
-     * @return string return the item found or null
+     * @return array return the item found or null
      */
-    public static function find(string $id): Collection
+    public static function find(string $id): array
     {
-        return DB::table(self::$tableName)->where('id', '=', $id)->get();
+        return DB::table(self::$tableName)->where('id', '=', $id)->get()->toArray();
     }
 
     /**
@@ -60,9 +60,26 @@ class Item
     {
         if(!Database::hasTable(self::$tableName)) {
             Database::init();
-        };
+        }
 
         return DB::table(self::$tableName)->get()->toArray();
+    }
+
+    public static function listWithCategory(): array
+    {
+        $items = self::list();
+        $collection = [];
+
+        foreach ($items as $item) {
+            if($item->category_id !== null) {
+                $category = Category::find($item->category_id)[0];
+                $item->category = $category->name;
+            }
+
+            $collection[] = $item;
+        }
+
+        return $collection;
     }
 
     /**
@@ -101,24 +118,24 @@ class Item
      * @param string $id
      * @param array $input
      * @return boolean
-     * @throws NotFoundException
+     * @throws InvalidArgumentException
      */
     public static function update(string $id, array $input): bool
     {
         $QrCode = new QRCode;
 
-        $input['kirby_uuid'] = $id;
         $input['qr_code'] = $QrCode->render($id);
+        $input['updated_at'] = date('Y-m-d H:i:s');
 
         // The end date must be greater than the start date
         if (V::required($input['name']) === false) {
-            throw new InvalidArgumentException('A title must be set');
+            throw new InvalidArgumentException('A name must be set');
         }
 
         // if there is already an item with this same uuid we update it
         // otherwise we create it
         return DB::table(self::$tableName)->updateOrInsert(
-            ['kirby_uuid' => $id],
+            ['kirby_uuid' => $input['kirby_uuid']],
             $input);
     }
 
@@ -139,11 +156,11 @@ class Item
             $category = '';
             if($item->category_id) {
                 $category = Category::find($item->category_id);
-                $item->category = $category->title;
+                $item->category = $category->name;
             }
 
             $collection[] = [
-                'text' => $item->title,
+                'text' => $item->name,
                 'link' => 'lendmanagement/inventory/item/' . $item->id,
                 'info' => $category ?? '',
                 'image' => [
@@ -177,7 +194,7 @@ class Item
         foreach ($items as $item) {
             if($item->category_id === $categoryId) {
                 $collection[] = [
-                    'text' => $item->title,
+                    'text' => $item->name,
                     'link' => 'lendmanagement/inventory/item/' . $item->id,
                     'info' => $item->quantity. " pcs",
                     'image' => [
@@ -201,25 +218,26 @@ class Item
         $options = [];
         foreach ($items as $item) {
             $options[] = [
-                'text' => $item->title,
+                'text' => $item->name,
                 'value' => $item->id,
             ];
         }
         return $options;
     }
 
-    public static function getItemsByIds(mixed $itemIds)
-    {
-        $items = self::list();
-        $collection = [];
+    public static function getItemsByIds(array $itemIds): array {
 
-        foreach ($items as $item) {
-            if(in_array($item->id, $itemIds)) {
-                $collection[] = $item;
+        $ids = array_column($itemIds, 'id');
+
+        $items = DB::table(self::$tableName)->whereIn('id', $ids)->get()->keyBy('id')->toArray();
+
+        foreach ($itemIds as $item) {
+            if (isset($items[$item->id])) {
+                $items[$item->id]->quantity = $item->quantity;
             }
         }
 
-        return $collection;
+        return array_values($items);
     }
 
     public static function getLabelFromItemId(string $id): string

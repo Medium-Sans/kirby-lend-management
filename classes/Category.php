@@ -4,8 +4,6 @@ namespace MediumSans\LendManagement;
 
 use Beebmx\KirbyDb\DB;
 use Kirby\Exception\NotFoundException;
-use Illuminate\Support\Collection;
-
 
 class Category
 {
@@ -20,6 +18,7 @@ class Category
      */
     public static function create(array $input): bool
     {
+        $input['created_at'] = date('Y-m-d H:i:s');
         return static::update(uuid(), $input);
     }
 
@@ -52,9 +51,9 @@ class Category
      * @return array
      * @throws NotFoundException
      */
-    public static function find(string $id): Collection
+    public static function find(string $id): array
     {
-        return DB::table(self::$tableName)->where('id', '=', $id)->get();
+        return DB::table(self::$tableName)->where('id', '=', $id)->get()->toArray();
     }
 
     /**
@@ -65,6 +64,17 @@ class Category
     public static function list(): array
     {
         return DB::table(self::$tableName)->get()->toArray();
+    }
+
+    public static function listWithTotalOfObjects(): array
+    {
+        $query = DB::table(self::$tableName)
+            ->leftJoin('items', self::$tableName.'.id', '=', 'items.category_id')
+            ->select(self::$tableName.'.*', DB::raw('COUNT(items.id) as totalOfObjects'))
+            ->groupBy(self::$tableName.'.id')
+            ->get()
+            ->toArray();
+        return $query;
     }
 
     /**
@@ -90,6 +100,7 @@ class Category
     public static function update(string $id, array $input): bool
     {
         $input['kirby_uuid'] = $id;
+        $input['updated_at'] = date('Y-m-d H:i:s');
 
         return DB::table(self::$tableName)->updateOrInsert(
             ['kirby_uuid' => $id],

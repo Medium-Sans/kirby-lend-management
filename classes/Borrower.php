@@ -65,6 +65,25 @@ class Borrower
         return (array)DB::table(self::$tableName)->get()->toArray();
     }
 
+    public static function listWithLastLend(): array
+    {
+        $borrowers = (array)DB::table(self::$tableName)->get()->toArray();
+        $lends = Lend::list();
+
+        foreach ($borrowers as $borrower) {
+
+            $borrower->lastLend = null;
+
+            foreach ($lends as $lend) {
+                if ($lend->borrower_id === $borrower->id) {
+                    $borrower->lastLend = $lend->end_date;
+                }
+            }
+        }
+
+        return $borrowers;
+    }
+
     /**
      * Updates a borrower by id with the given input
      * It throws an exception in case of validation issues
