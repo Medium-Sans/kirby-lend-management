@@ -1,7 +1,6 @@
 <?php
 
 use MediumSans\LendManagement\Lend;
-use Kirby\Toolkit\A;
 
 return [
     'pattern' => 'lendmanagement/lend/(:any)/update',
@@ -16,6 +15,7 @@ return [
                 'size'   => 'large'
             ]
         ];
+        
     },
     'submit' => function (string $id) {
         return Lend::update($id, get());

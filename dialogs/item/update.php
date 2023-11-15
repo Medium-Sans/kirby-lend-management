@@ -3,9 +3,9 @@
 use MediumSans\LendManagement\Item;
 
 return [
-    'pattern' => 'inventory/item/(:any)/update',
+    'pattern' => 'lendmanagement/item/(:any)/update',
     'load'    => function (string $id) {
-        $item = Item::find($id);
+        $item = Item::find($id)[0];
 
         return [
             'component' => 'k-form-dialog',

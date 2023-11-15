@@ -5,7 +5,7 @@ use MediumSans\LendManagement\Category;
 return [
     'pattern' => 'lendmanagement/category/(:any)/update',
     'load'    => function (string $id) {
-        $category = Category::find($id);
+        $category = Category::find($id)[0];
 
         return [
             'component' => 'k-form-dialog',
