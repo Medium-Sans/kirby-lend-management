@@ -24,15 +24,11 @@ Kirby::plugin('mediumsans/kirby-lend-management', [
                 'link' => 'lendmanagement/lends',
                 'view' => 'k-dashboard-view',
                 'dialogs' => [
-                    // Lend
                     require __DIR__ . '/dialogs/lend/create.php',
                     require __DIR__ . '/dialogs/lend/delete.php',
                     require __DIR__ . '/dialogs/lend/update.php',
                     require __DIR__ . '/dialogs/lend/extend.php',
                     require __DIR__ . '/dialogs/lend/sendMessage.php',
-                ],
-                'dropdowns' => [
-                    require __DIR__ . '/dropdowns/item/options.php',
                 ],
                 'views' => [
                     require __DIR__ . '/views/lends.php',
@@ -49,11 +45,6 @@ Kirby::plugin('mediumsans/kirby-lend-management', [
                 'link' => 'lendmanagement/inventory',
                 'view' => 'k-inventory-view',
                 'dialogs' => [
-                    // Category
-                    require __DIR__ . '/dialogs/category/create.php',
-                    require __DIR__ . '/dialogs/category/delete.php',
-                    require __DIR__ . '/dialogs/category/update.php',
-                    // Item
                     require __DIR__ . '/dialogs/item/create.php',
                     require __DIR__ . '/dialogs/item/delete.php',
                     require __DIR__ . '/dialogs/item/update.php',
@@ -63,8 +54,6 @@ Kirby::plugin('mediumsans/kirby-lend-management', [
                 ],
                 'views' => [
                     require __DIR__ . '/views/inventory.php',
-                    require __DIR__ . '/views/categories.php',
-                    require __DIR__ . '/views/item.php',
                 ]
             ];
         },
