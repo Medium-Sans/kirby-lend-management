@@ -4,7 +4,7 @@ use MediumSans\LendManagement\Item;
 use Kirby\Panel\Panel;
 
 return [
-    'pattern' => 'inventory/item/(:any)/delete',
+    'pattern' => 'lendmanagement/item/(:any)/delete',
     'load' => function () {
         return [
             'component' => 'k-remove-dialog',

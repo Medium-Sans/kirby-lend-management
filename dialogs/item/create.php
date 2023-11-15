@@ -3,7 +3,7 @@
 use MediumSans\LendManagement\Item;
 
 return [
-    'pattern' => 'inventory/item/create',
+    'pattern' => 'lendmanagement/item/create',
     'load'    => function () {
         return [
             'component' => 'k-form-dialog',
