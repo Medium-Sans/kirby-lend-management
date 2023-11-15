@@ -8,7 +8,7 @@ return [
         return [
             'component' => 'k-borrowers-view',
             'props' => [
-                'borrowers' => Borrower::list(),
+                'borrowers' => Borrower::listWithLastLend(),
             ]
         ];
     }

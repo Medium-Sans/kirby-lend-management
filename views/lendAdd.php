@@ -23,6 +23,7 @@ return [
                 'item_ids'     => Item::getOptions(),
                 'start_date' => $startDate,
                 'end_date'  => $endDate,
+                'items'     => Item::getOptions(),
             ]
         ];
     }

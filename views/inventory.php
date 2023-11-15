@@ -11,6 +11,7 @@ return [
             'props' => [
                 'items' => Item::listWithCategory(),
                 'categories' => Category::collection(),
+                'locale' => kirby()->user()->language(),
             ]
         ];
     }

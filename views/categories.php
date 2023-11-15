@@ -8,7 +8,7 @@ return [
         return [
             'component' => 'k-categories-view',
             'props' => [
-                'categories' => Category::list(),
+                'categories' => Category::listWithTotalOfObjects(),
             ]
         ];
     }

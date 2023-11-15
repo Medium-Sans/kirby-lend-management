@@ -13,7 +13,7 @@ return [
         $lend = Lend::find($id);
         $borrower = Borrower::find($lend->borrower_id);
 
-        $lend_items = LendItems::getItemsbyLend($id);
+        $lend_items = LendItems::getItemsByLend($id);
         $items = Item::getItemsByIds($lend_items);
         $startDate = date_format(date_create($lend->start_date), 'd.m.Y');
         $endDate = date_format(date_create($lend->end_date), 'd.m.Y');
