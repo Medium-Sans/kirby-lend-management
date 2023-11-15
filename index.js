@@ -135,7 +135,8 @@
   const Borrowers_vue_vue_type_style_index_0_lang = "";
   const _sfc_main$4 = {
     props: {
-      borrowers: Object
+      borrowers: Object,
+      locale: String
     },
     methods: {
       formatDate(dateString) {
