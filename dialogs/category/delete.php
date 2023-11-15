@@ -15,6 +15,6 @@ return [
     },
     'submit' => function (string $id): void {
         Category::delete($id);
-        Panel::go('lendmanagement/categories');
+        Panel::go('/lendmanagement/categories');
     }
 ];
