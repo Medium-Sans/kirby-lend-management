@@ -21,6 +21,7 @@ class Borrower
      */
     public static function create(array $input): bool
     {
+        $input['created_at'] = date('Y-m-d H:i:s');
         return self::update(uuid(), $input);
     }
 
@@ -56,7 +57,7 @@ class Borrower
     }
 
     /**
-     * Lists all borrowers from the borrowers.json
+     * Lists all borrowers
      *
      * @return array
      */
@@ -65,23 +66,19 @@ class Borrower
         return (array)DB::table(self::$tableName)->get()->toArray();
     }
 
+    /**
+     * Lists all borrowers with the last lend date
+     * @return array
+     */
     public static function listWithLastLend(): array
     {
-        $borrowers = (array)DB::table(self::$tableName)->get()->toArray();
-        $lends = Lend::list();
-
-        foreach ($borrowers as $borrower) {
-
-            $borrower->lastLend = null;
-
-            foreach ($lends as $lend) {
-                if ($lend->borrower_id === $borrower->id) {
-                    $borrower->lastLend = $lend->end_date;
-                }
-            }
-        }
-
-        return $borrowers;
+        $query = DB::table(self::$tableName)
+            ->leftJoin('lends', self::$tableName.'.id', '=', 'lends.borrower_id')
+            ->select(self::$tableName.'.*', DB::raw('MAX(lends.end_date) as lastLend'))
+            ->groupBy(self::$tableName.'.id')
+            ->get()
+            ->toArray();
+        return $query;
     }
 
     /**
@@ -96,13 +93,16 @@ class Borrower
      */
     public static function update(string $id, array $input): bool
     {
-        $input['kirby_uuid'] = $id;
+        $input['updated_at'] = date('Y-m-d H:i:s');
+        $query = DB::table(self::$tableName)
+                    ->updateOrInsert(['kirby_uuid' => $input['kirby_uuid']], $input);
 
-        return DB::table(self::$tableName)->updateOrInsert(
-            ['kirby_uuid' => $id],
-            $input);
+        return $query;
     }
 
+    /**
+     * @return array
+     */
     public static function getOptions(): array
     {
         $borrowers = static::list();
