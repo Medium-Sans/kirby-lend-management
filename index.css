@@ -22,7 +22,7 @@
 
 .k-borrowers {
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
   border-spacing: 1px;
 }
 .k-borrowers td {
@@ -50,8 +50,34 @@
   overflow: visible !important;
 }
 
-.k-headline {
-  margin-bottom: 8px;
+.k-lend {
+  width: 100%;
+  table-layout: auto;
+  border-spacing: 1px;
+}
+.k-lend td {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: var(--color-white);
+}
+.k-lend th {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-gray-100);
+}
+.k-lend-options {
+  padding: 0 !important;
+  width: 3rem;
+  overflow: visible !important;
 }
 
 .k-lend-items {

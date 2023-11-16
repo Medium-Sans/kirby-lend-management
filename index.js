@@ -75,7 +75,7 @@
   };
   var _sfc_render$6 = function render() {
     var _vm = this, _c = _vm._self._c;
-    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.lends")) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "variant": "filled", "icon": "add", "link": `/lendmanagement/lend-add` } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.add")) + " ")])], 1)], 1), _c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.dashboard.status")))])], 1), _c("k-stats", { attrs: { "reports": _vm.stats } }), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.inProgress")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.lends } })], 1), _c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.late")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.late_lends } })], 1), _c("k-column", { attrs: { "width": "1/1" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.returned")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.returned_lends } })], 1)], 1)], 1);
+    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.lends")) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "variant": "filled", "icon": "add", "link": `/lendmanagement/lend-add` } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.add")) + " ")])], 1)], 1), _c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.dashboard.status")))])], 1), _c("k-stats", { attrs: { "reports": _vm.stats } }), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.inProgress")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.lends } })], 1), _c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.late")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.late_lends } })], 1), _c("k-column", { attrs: { "width": "1/1" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.returned")))])], 1), _c("k-collection", { attrs: { "sortable": "true", "layout": "list", "items": _vm.returned_lends } })], 1)], 1)], 1);
   };
   var _sfc_staticRenderFns$6 = [];
   _sfc_render$6._withStripped = true;
@@ -110,7 +110,7 @@
   };
   var _sfc_render$5 = function render() {
     var _vm = this, _c = _vm._self._c;
-    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.inventory")) + " "), _c("k-button-group", { attrs: { "slot": "right" }, slot: "right" }, [_c("k-button", { attrs: { "icon": "add", "variant": "filled", "text": _vm.$t("lendmanagement.category.add") }, on: { "click": function($event) {
+    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.inventory")) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "icon": "add", "variant": "filled", "text": _vm.$t("lendmanagement.category.add") }, on: { "click": function($event) {
       return _vm.$dialog("/lendmanagement/category/create");
     } } }), _c("k-button", { attrs: { "icon": "add", "variant": "filled", "text": _vm.$t("lendmanagement.item.add") }, on: { "click": function($event) {
       return _vm.$dialog("/lendmanagement/item/create");
@@ -195,29 +195,29 @@
     methods: {
       loanIsBack() {
         this.$api.post("lendmanagement/lend/" + this.lend.id + "/return", this.lend);
-        this.$go("/lendmanagement");
+        this.$go("/lendmanagement/lends");
       },
       extend() {
         this.$api.post("lendmanagement/lend/" + this.lend.id + "/extend", this.lend);
-        this.$go("/lendmanagement");
+        this.$go("/lendmanagement/lends");
       },
       notify() {
         this.$api.post("lendmanagement/lend/" + this.lend.id + "/notify", this.lend);
-        this.$go("/lendmanagement");
+        this.$go("/lendmanagement/lends");
       }
     }
   };
   var _sfc_render$3 = function render() {
     var _vm = this, _c = _vm._self._c;
-    return _c("k-inside", [_c("k-view", [_c("k-header", [_vm._v(" " + _vm._s(_vm.borrower.firstname) + " " + _vm._s(_vm.borrower.lastname) + " - " + _vm._s(_vm.lend.start_date) + " "), _c("k-button-group", { attrs: { "slot": "left" }, slot: "left" }, [_c("k-button", { attrs: { "icon": "archive", "text": _vm.$t("lendmanagement.lend.archive") }, on: { "click": function($event) {
+    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.borrower.firstname) + " " + _vm._s(_vm.borrower.lastname) + " - " + _vm._s(_vm.lend.start_date) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "icon": "archive", "variant": "filled", "text": _vm.$t("lendmanagement.lend.archive") }, on: { "click": function($event) {
       _vm.loanIsBack(`${_vm.lend.id})`);
-    } } }), _c("k-button", { attrs: { "icon": "refresh", "text": _vm.$t("lendmanagement.lend.extend") }, on: { "click": function($event) {
+    } } }), _c("k-button", { attrs: { "icon": "refresh", "variant": "filled", "text": _vm.$t("lendmanagement.lend.extend") }, on: { "click": function($event) {
       return _vm.$dialog(`lendmanagement/lend/${_vm.lend.id}/extend`);
-    } } }), _c("k-button", { attrs: { "icon": "undo", "text": _vm.$t("lendmanagement.lend.notify") }, on: { "click": function($event) {
+    } } }), _c("k-button", { attrs: { "icon": "undo", "variant": "filled", "text": _vm.$t("lendmanagement.lend.notify") }, on: { "click": function($event) {
       return _vm.notify(`${_vm.lend.id}`);
-    } } }), _c("k-button", { attrs: { "icon": "email", "text": _vm.$t("lendmanagement.lend.sendMessage") }, on: { "click": function($event) {
+    } } }), _c("k-button", { attrs: { "icon": "email", "variant": "filled", "text": _vm.$t("lendmanagement.lend.sendMessage") }, on: { "click": function($event) {
       return _vm.$dialog(`lendmanagement/lend/${_vm.lend.id}/sendMessage`);
-    } } })], 1)], 1), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("k-grid", { attrs: { "gutter": "small" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("k-date-field", { attrs: { "help": "Fin du prêt +" + _vm.nbr_of_days_added + " jours", "value": _vm.expiry_date, "time": false, "disabled": true, "name": "date", "label": _vm.$t("lendmanagement.lend.form.expiredDate") } })], 1), _c("k-column", { attrs: { "width": "1/2" } })], 1), _c("k-form", { attrs: { "fields": {
+    } } })], 1)], 1), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("k-grid", [_c("k-column", { attrs: { "width": "1/2" } }, [_c("k-date-field", { attrs: { "help": "Fin du prêt +" + _vm.nbr_of_days_added + " jours", "value": _vm.expiry_date, "time": false, "disabled": true, "name": "date", "label": _vm.$t("lendmanagement.lend.form.expiredDate") } })], 1), _c("k-column", { attrs: { "width": "1/2" } })], 1), _c("k-form", { attrs: { "fields": {
       line: {
         type: "line"
       }
@@ -268,11 +268,11 @@
       }
     } }, on: { "input": _vm.input, "submit": _vm.submit }, model: { value: _vm.borrower, callback: function($$v) {
       _vm.borrower = $$v;
-    }, expression: "borrower" } })], 1), _c("k-column", { attrs: { "width": "1/2" } }, [_c("table", { staticClass: "k-products" }, [_c("thead", [_c("tr", [_c("th", { attrs: { "colspan": "3" } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.items")))])])]), _c("tr", [_c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.table.name")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.table.quantity")))]), _c("th")]), _vm._l(_vm.items, function(item, id) {
-      return _c("tr", { key: id }, [_c("td", [_vm._v(_vm._s(item.name))]), _c("td", [_vm._v(_vm._s(item.quantity))]), _c("td", { staticClass: "k-product-options" }, [_c("k-options-dropdown", { attrs: { "options": "lends/" + id } })], 1)]);
-    })], 2), _c("table", { staticClass: "k-products", staticStyle: { "margin-top": "50px" } }, [_c("thead", [_c("tr", [_c("th", { attrs: { "colspan": "3" } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extended")))])])]), _c("tr", [_c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extensions.nbrOfDays")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extensions.addedAt")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extensions.people")))])]), _vm._l(_vm.extensions, function(item, id) {
+    }, expression: "borrower" } })], 1), _c("k-column", { attrs: { "width": "1/2" } }, [_c("table", { staticClass: "k-lend" }, [_c("thead", [_c("tr", [_c("th", { attrs: { "colspan": "3" } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.items")))])])]), _c("tr", [_c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.table.name")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.table.quantity")))])]), _vm._l(_vm.items, function(item, id) {
+      return _c("tr", { key: id }, [_c("td", [_vm._v(_vm._s(item.name))]), _c("td", [_vm._v(_vm._s(item.quantity))])]);
+    })], 2), _c("table", { staticClass: "k-lend", staticStyle: { "margin-top": "50px" } }, [_c("thead", [_c("tr", [_c("th", { attrs: { "colspan": "3" } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extended")))])])]), _c("tr", [_c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extensions.nbrOfDays")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extensions.addedAt")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.extensions.people")))])]), _vm._l(_vm.extensions, function(item, id) {
       return _c("tr", { key: id }, [_c("td", [_vm._v(_vm._s(item.nbr_of_days))]), _c("td", [_vm._v(_vm._s(item.created_at))]), _c("td", [_vm._v(_vm._s(item.user))])]);
-    })], 2)])], 1)], 1)], 1);
+    })], 2)])], 1)], 1);
   };
   var _sfc_staticRenderFns$3 = [];
   _sfc_render$3._withStripped = true;
@@ -9538,7 +9538,7 @@
   };
   var _sfc_render$1 = function render() {
     var _vm = this, _c = _vm._self._c;
-    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.categories")) + " "), _c("k-button-group", { attrs: { "slot": "left" }, slot: "left" }, [_c("k-button", { attrs: { "text": _vm.$t("lendmanagement.category.add"), "variant": "filled", "icon": "add" }, on: { "click": function($event) {
+    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.categories")) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "text": _vm.$t("lendmanagement.category.add"), "variant": "filled", "icon": "add" }, on: { "click": function($event) {
       return _vm.$dialog("lendmanagement/category/create");
     } } })], 1)], 1), _c("table", { staticClass: "k-categories" }, [_c("tr", [_c("th", { staticClass: "k-categories-options", staticStyle: { "text-align": "center" } }, [_vm._v("#")]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.categories.table.name")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.categories.table.location")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.categories.table.nbrObjects")))]), _c("th", { staticClass: "k-categories-options" })]), _vm._l(_vm.categories, function(category, id) {
       return _c("tr", { key: id }, [_c("td", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(category.id))]), _c("td", [_vm._v(_vm._s(category.name))]), _c("td", [_vm._v(_vm._s(category.location))]), _c("td", [_vm._v(_vm._s(category.totalOfObjects))]), _c("td", { staticClass: "k-categories-options" }, [_c("k-options-dropdown", { attrs: { "options": "lendmanagement/category/" + category.id } })], 1)]);
