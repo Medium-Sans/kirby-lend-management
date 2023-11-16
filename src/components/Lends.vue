@@ -54,12 +54,6 @@ export default {
     returned_lends: Array,
     categories: Array
   },
-  methods: {
-    // format the price in EURO
-    price(price) {
-      return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(price);
-    }
-  }
 };
 </script>
 
