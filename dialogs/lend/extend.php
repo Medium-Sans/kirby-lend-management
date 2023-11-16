@@ -1,8 +1,8 @@
 <?php
 
+use Kirby\Toolkit\I18n;
 use MediumSans\LendManagement\Lend;
 use MediumSans\LendManagement\LendExtension;
-use Kirby\Toolkit\I18n;
 use MediumSans\LendManagement\Mailer;
 
 return [
@@ -14,6 +14,14 @@ return [
             'component' => 'k-form-dialog',
             'props' => [
                 'fields' => [
+                    'notify' => [
+                        'label' => i18n::translate('lendmanamement.lend.extend.notifyBorrower'),
+                        'type' => 'toggle',
+                        'text' => [
+                            i18n::translate('lendmanagement.lend.extend.notifyBorrower.no'),
+                            i18n::translate('lendmanagement.lend.extend.notifyBorrower.yes')
+                        ]
+                    ],
                     'extended' => [
                         'label' => i18n::translate('lendmanagement.lend.extensions.nbrOfDays'),
                         'type' => 'number',
@@ -29,6 +37,13 @@ return [
     'submit' => function (string $id) {
         $data = get();
         LendExtension::create($id, $data['extended']);
-        return Mailer::notifyBorrowerOfExtension(Lend::find($id));
+
+        if(array_key_exists('notify', $data)) {
+            if($data['notify']) {
+                Mailer::notifyBorrowerOfExtension(Lend::find($id));
+            }
+        }
+
+        return true;
     }
 ];

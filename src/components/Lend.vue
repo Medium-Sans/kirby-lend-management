@@ -1,24 +1,27 @@
 <template>
   <k-inside>
-    <k-view>
 
       <k-header>
         {{ borrower.firstname }} {{ borrower.lastname }} - {{ lend.start_date }}
 
-        <k-button-group slot="left">
+        <k-button-group slot="buttons">
           <k-button icon="archive"
+                    variant="filled"
                     :text="$t('lendmanagement.lend.archive')"
                     @click="loanIsBack(`${lend.id})`)"/>
 
           <k-button icon="refresh"
+                    variant="filled"
                     :text="$t('lendmanagement.lend.extend')"
                     @click="$dialog(`lendmanagement/lend/${lend.id}/extend`)"/>
 
           <k-button icon="undo"
+                    variant="filled"
                     :text="$t('lendmanagement.lend.notify')"
                     @click="notify(`${lend.id}`)"/>
 
           <k-button icon="email"
+                    variant="filled"
                     :text="$t('lendmanagement.lend.sendMessage')"
                     @click="$dialog(`lendmanagement/lend/${lend.id}/sendMessage`)"/>
         </k-button-group>
@@ -28,7 +31,7 @@
 
         <k-column width="1/2">
 
-          <k-grid gutter="small">
+          <k-grid>
 
             <k-column width="1/2">
               <k-date-field :help="'Fin du prêt +' + nbr_of_days_added +' jours'" :value=expiry_date :time=false
@@ -93,7 +96,7 @@
         </k-column>
 
         <k-column width="1/2">
-          <table class="k-products">
+          <table class="k-lend">
             <thead>
             <tr>
               <th colspan="3">{{ $t('lendmanagement.items') }}</th>
@@ -102,18 +105,14 @@
             <tr>
               <th>{{ $t('lendmanagement.lend.table.name') }}</th>
               <th>{{ $t('lendmanagement.lend.table.quantity') }}</th>
-              <th></th>
             </tr>
             <tr v-for="(item, id) in items" :key="id">
               <td>{{ item.name }}</td>
               <td>{{ item.quantity }}</td>
-              <td class="k-product-options">
-                <k-options-dropdown :options="'lends/' + id"/>
-              </td>
             </tr>
           </table>
 
-          <table style="margin-top: 50px;" class="k-products">
+          <table style="margin-top: 50px;" class="k-lend">
             <thead>
             <tr>
               <th colspan="3">{{ $t('lendmanagement.lend.extended') }}</th>
@@ -133,7 +132,6 @@
         </k-column>
 
       </k-grid>
-    </k-view>
   </k-inside>
 </template>
 
@@ -163,22 +161,51 @@ export default {
   methods: {
     loanIsBack() {
       this.$api.post('lendmanagement/lend/' + this.lend.id + '/return', this.lend);
-      this.$go('/lendmanagement');
+      this.$go('/lendmanagement/lends');
     },
     extend() {
       this.$api.post('lendmanagement/lend/' + this.lend.id + '/extend', this.lend);
-      this.$go('/lendmanagement');
+      this.$go('/lendmanagement/lends');
     },
     notify() {
       this.$api.post('lendmanagement/lend/' + this.lend.id + '/notify', this.lend);
-      this.$go('/lendmanagement');
+      this.$go('/lendmanagement/lends');
     },
   }
 };
 </script>
 
 <style>
-.k-headline {
-  margin-bottom: 8px;
+.k-lend {
+  width: 100%;
+  table-layout: auto;
+  border-spacing: 1px;
+}
+
+.k-lend td {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.k-lend th {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-gray-100);
+}
+
+.k-lend-options {
+  padding: 0 !important;
+  width: 3rem;
+  overflow: visible !important;
 }
 </style>

@@ -28,7 +28,7 @@ return [
                 'pattern' => 'lendmanagement/lend/(:any)/extend',
                 'method' => 'POST',
                 'action' => function (string $id) {
-                    return Lend::return($id);
+                    return Lend::extend($id);
                 }
             ],
             [
