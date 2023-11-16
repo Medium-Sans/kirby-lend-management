@@ -4,14 +4,13 @@
     <k-header>
       {{ $t('view.lend.add') }}
 
-      <k-button-group slot="left">
+      <k-button-group slot="buttons">
         <k-button
           :text="$t('lendmanagement.item.add')"
           icon="add"
           variant="filled"
-          @click="$dialog('inventory/item/create')"
+          @click="$dialog('lendmanagement/item/create')"
         />
-
         <k-button
           :text="$t('lendmanagement.borrower.add')"
           icon="add"
