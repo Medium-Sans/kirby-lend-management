@@ -37,7 +37,7 @@ class Item
      */
     public static function delete(string $id): bool
     {
-        return DB::table(self::$tableName)->where('kirby_uuid', $id)->delete();
+        return DB::table(self::$tableName)->where('id', $id)->delete();
     }
 
     /**

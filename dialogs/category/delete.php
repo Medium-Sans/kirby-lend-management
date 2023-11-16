@@ -13,8 +13,7 @@ return [
             ]
         ];
     },
-    'submit' => function (string $id): void {
-        Category::delete($id);
-        Panel::go('/lendmanagement/categories');
+    'submit' => function (string $id) {
+        return Category::delete($id);
     }
 ];

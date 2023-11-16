@@ -30,7 +30,7 @@ class Category
      */
     public static function delete(string $id): bool
     {
-        $query = DB::table(self::$tableName)->where('kirby_uuid', $id)->delete();
+        $query = DB::table(self::$tableName)->where('id', $id)->delete();
         return $query;
     }
 

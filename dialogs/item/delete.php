@@ -13,8 +13,7 @@ return [
             ]
         ];
     },
-    'submit' => function (string $id): void {
-        Item::delete($id);
-        Panel::go('lendmanagement/inventory');
+    'submit' => function (string $id) {
+        return Item::delete($id);
     }
 ];
