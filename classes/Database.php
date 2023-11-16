@@ -46,7 +46,7 @@ class Database
         {
             $table->increments('id');
             $table->string('kirby_uuid');
-            $table->string('title');
+            $table->string('name');
             $table->string('description')->nullable();
             $table->string('notes')->nullable();
             $table->string('quantity')->nullable();
