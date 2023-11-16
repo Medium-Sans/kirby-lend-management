@@ -3,7 +3,7 @@
     <k-header>
       {{ $t('lendmanagement.categories') }}
 
-      <k-button-group slot="left">
+      <k-button-group slot="buttons">
         <k-button
           :text="$t('lendmanagement.category.add')"
           variant="filled"

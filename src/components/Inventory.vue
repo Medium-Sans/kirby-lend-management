@@ -4,7 +4,7 @@
       <k-header>
         {{ $t('lendmanagement.inventory') }}
 
-        <k-button-group slot="right">
+        <k-button-group slot="buttons">
           <k-button icon="add"
                     variant="filled"
                     :text="$t('lendmanagement.category.add')"
