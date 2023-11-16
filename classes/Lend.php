@@ -23,6 +23,7 @@ class Lend
      */
     public static function create(array $input): bool
     {
+        $input['created_at'] = date('Y-m-d H:i:s');
         return self::update(uuid(), $input);
     }
 
@@ -68,7 +69,7 @@ class Lend
         // of the plugin here is the place to do it
         if (!Database::hasTable(Lend::$tableName)) {
             Database::init();
-        };
+        }
 
         $result = DB::table(self::$tableName)->get()->toArray();
 
@@ -83,47 +84,46 @@ class Lend
      */
     public static function listOfPendingLends(): array
     {
-        // get all items
-        $lends = static::list();
-        $pendingLends = [];
+        $query = DB::table(self::$tableName)
+            ->leftJoin('lend_extensions', self::$tableName.'.id', '=', 'lend_extensions.lend_id')
+            ->whereNull(self::$tableName.'.returned_date')
+            ->whereNull('lend_extensions.lend_id') // Ensures the lend is not prolonged
+            ->where(self::$tableName.'.end_date', '>', date('Y-m-d'))
+            ->select(self::$tableName.'.*') // Adjust the selection as needed
+            ->get()
+            ->toArray();
 
-        foreach ($lends as $lend) {
-            if (!$lend->returned_date) {
-                $pendingLends[] = $lend;
-            }
-        }
-
-        return $pendingLends;
+        return $query;
     }
 
-    public static function totalPendingLends(): int
+    public static function totalPendingLends(): string
     {
-        return count(self::listOfPendingLends());
+        $pendingLends = self::listOfPendingLends();
+        return strval(count($pendingLends));
     }
 
     /**
-     * Get the number of late pending lends from the lends.json
-     *
+     * Get the number of late pending lends
      * @return array array of late and pending lends
      */
     public static function listOfLatePendingLends(): array
     {
-        // get all items
-        $lends = self::list();
-        $latePendingLends = [];
+        $query = DB::table(self::$tableName)
+            ->leftJoin('lend_extensions', self::$tableName.'.id', '=', 'lend_extensions.lend_id')
+            ->whereNull(self::$tableName.'.returned_date')
+            ->whereNull('lend_extensions.lend_id') // Ensures the lend is not prolonged
+            ->where(self::$tableName.'.end_date', '<', date('Y-m-d'))
+            ->select(self::$tableName.'.*') // Adjust the selection as needed
+            ->get()
+            ->toArray();
 
-        foreach ($lends as $lend) {
-            if (!$lend->returned_date && (strtotime($lend->end_date) < strtotime(date('Y-m-d')))) {
-                $latePendingLends[] = $lend;
-            }
-        }
-
-        return $latePendingLends;
+        return $query;
     }
 
     public static function totalLatePendingLends(): int
     {
-        return count(self::listOfLatePendingLends());
+        $latePendingLends = self::listOfLatePendingLends();
+        return strval(count($latePendingLends));
     }
 
     /**
@@ -133,18 +133,16 @@ class Lend
      */
     public static function listOfPendingAndProlongedLends(): array
     {
-        // get all items
-        $lends = self::list();
-        $pendingAndProlongedLends = [];
+         $query = DB::table(self::$tableName)
+            ->leftJoin('lend_extensions', self::$tableName.'.id', '=', 'lend_extensions.lend_id')
+            ->whereNull(self::$tableName.'.returned_date')
+            ->whereNotNull('lend_extensions.lend_id') // Checks if there is a lend extension
+            ->where(self::$tableName.'.end_date', '<', date('Y-m-d'))
+            ->select(self::$tableName.'.*', 'lend_extensions.*') // Select columns as required
+            ->get()
+            ->toArray();
 
-        foreach ($lends as $lend) {
-            if ((!$lend->returned_date)
-                && (strtotime($lend->end_date) < strtotime(date('Y-m-d')))) {
-                $pendingAndProlongedLends[] = $lend;
-            }
-        }
-
-        return $pendingAndProlongedLends;
+        return $query;
     }
 
     public static function totalPendingAndProlongedLends(): int
@@ -176,29 +174,16 @@ class Lend
      */
     public static function update(string $id, array $input): bool
     {
-        $input['kirby_uuid'] = $id;
         $input['borrower_id'] = $input['borrower_id'][0] ?? null;
-
-        // The end date must be greater than the start date
-        if (V::date($input['end_date'], '>=', $input['start_date']) === false) {
-            throw new InvalidArgumentException('The date of return must be greater than the date of lend');
-        }
-
-        // require a borrower
-        if (V::required($input['borrower_id']) === false) {
-            throw new InvalidArgumentException('A borrower must be set');
-        }
-
-        // require a item
-        if (V::required($input['items']) === false) {
-            throw new InvalidArgumentException('An item must be set');
-        }
+        $kirby_uuid = (array_key_exists('kirby_uuid', $input)) ? $input['kirby_uuid'] : $id;
 
         $user = kirby()->user();
 
+        self::isValid($input);
+
         $lend = DB::table(self::$tableName)->updateOrInsert(
             [
-                'kirby_uuid' => $id
+                'kirby_uuid' => $kirby_uuid,
             ],
             [
                 'start_date' => $input['start_date'],
@@ -220,6 +205,24 @@ class Lend
         }
 
         return $lend;
+    }
+
+    public static function isValid(array $input): bool
+    {
+        // The end date must be greater than the start date
+        if (V::date($input['end_date'], '>=', $input['start_date']) === false) {
+            throw new InvalidArgumentException('The date of return must be greater than the date of lend');
+        }
+
+        // require a borrower
+        if (V::required($input['borrower_id']) === false) {
+            throw new InvalidArgumentException('A borrower must be set');
+        }
+
+        // require a item
+        if (V::required($input['items']) === false) {
+            throw new InvalidArgumentException('An item must be set');
+        }
     }
 
     /**
