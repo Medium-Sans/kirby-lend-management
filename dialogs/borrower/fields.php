@@ -2,27 +2,27 @@
 
 return [
     'firstname' => [
-        'label' => 'Prénom',
+        'label' => t('lendmanagement.dialogs.firstname'),
         'type' => 'text',
         'width' => '1/2'
     ],
     'lastname' => [
-        'label' => 'Nom',
+        'label' => t('lendmanagement.dialogs.lastname'),
         'type' => 'text',
         'width' => '1/2'
     ],
     'email' => [
-        'label' => 'Email',
+        'label' => t('lendmanagement.dialogs.email'),
         'type' => 'email',
         'width' => '1/2'
     ],
     'phone' => [
-        'label' => 'Téléphone',
+        'label' => t('lendmanagement.dialogs.phone'),
         'type' => 'text',
         'width' => '1/2'
     ],
     'notes' => [
-        'label' => 'Notes',
+        'label' => t('lendmanagement.dialogs.notes'),
         'type' => 'textarea'
     ],
 ];
