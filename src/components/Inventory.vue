@@ -29,8 +29,10 @@
         </tr>
 
         <tr v-for="(item, id) in items" :key="id">
-          <td id="item-id" style="text-align: center;">{{ item.id}}</td>
-          <td class="name fitwidth">{{ item.name }}</td>
+          <td id="item-id" style="text-align: center;">{{ item.id }}</td>
+          <td class="name fitwidth">
+            <a :href="'lendmanagement/item/' + item.id">{{ item.name }}</a>
+          </td>
           <td>{{ item.category }}</td>
           <td class="fitwidth" style="text-align: center;">{{ item.quantity }}</td>
           <td style="text-align: center;">{{ formatDate(item.updated_at) }}</td>
@@ -39,6 +41,7 @@
             <k-options-dropdown :options="'lendmanagement/item/' + item.id"/>
           </td>
         </tr>
+
       </table>
   </k-inside>
 </template>
@@ -66,19 +69,25 @@ export default {
 .k-inventory {
   width: 100%;
   table-layout: auto;
-  border-collapse: collapse;
+  border-spacing: 1px;
 }
-
+.k-inventory td {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: var(--color-white);
+}
 .k-inventory th {
   text-align: left;
-  padding: 0.5rem;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   border-bottom: 1px solid var(--color-border);
   background: var(--color-gray-100);
-}
-
-.k-inventory td {
-  padding: 0.5rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-white);
 }
 </style>
