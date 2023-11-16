@@ -5,6 +5,8 @@ namespace MediumSans\LendManagement;
 use Beebmx\KirbyDb\DB;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
+use Kirby\Toolkit\I18n;
+use Kirby\Toolkit\V;
 
 class Borrower
 {
@@ -93,11 +95,38 @@ class Borrower
      */
     public static function update(string $id, array $input): bool
     {
+        $kirby_uuid = (array_key_exists('kirby_uuid', $input)) ? $input['kirby_uuid'] : $id;
+        self::isValid($input);
         $input['updated_at'] = date('Y-m-d H:i:s');
         $query = DB::table(self::$tableName)
-                    ->updateOrInsert(['kirby_uuid' => $input['kirby_uuid']], $input);
+                    ->updateOrInsert(['kirby_uuid' => $kirby_uuid], $input);
 
         return $query;
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function isValid(array $input): bool
+    {
+        $error = false;
+        if (V::required($input['firstname']) === false) {
+            $error = true;
+            throw new InvalidArgumentException(i18n::translate('lendmanagement.error.firstname'));
+        }
+        if (V::required($input['lastname']) === false) {
+            $error = true;
+            throw new InvalidArgumentException(i18n::translate('lendmanagement.error.lastname'));
+        }
+        if (V::required($input['email']) === false) {
+            $error = true;
+            throw new InvalidArgumentException(i18n::translate('lendmanagement.error.email'));
+        }
+        if (V::required($input['phone']) === false) {
+            $error = true;
+            throw new InvalidArgumentException(i18n::translate('lendmanagement.error.phone'));
+        }
+        return $error;
     }
 
     /**
