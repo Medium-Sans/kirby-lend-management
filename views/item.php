@@ -4,7 +4,7 @@ use MediumSans\LendManagement\Category;
 use MediumSans\LendManagement\Item;
 
 return [
-    'pattern' => 'lendmanagement/inventory/item/(:any)',
+    'pattern' => 'lendmanagement/item/(:any)',
     'action'  => function ($id) {
 
         $item = Item::find($id)[0];
@@ -19,7 +19,7 @@ return [
                     'link'  => 'lendmanagement/inventory'
                 ],
                 [
-                    'label' => $item->title,
+                    'label' => $item->name,
                     'link'  => 'lendmanagement/inventory/item/' . $id
                 ]
             ],
