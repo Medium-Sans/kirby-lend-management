@@ -2,16 +2,16 @@
 
 return [
     'name' => [
-        'label' => 'Name',
+        'label' => t('lendmanagement.dialogs.name'),
         'type' => 'text'
     ],
     'description' => [
-        'label' => 'Description',
+        'label' => t('lendmanagement.dialogs.description'),
         'type' => 'textarea',
         'buttons' => false
     ],
     'location' => [
-        'label' => 'Location',
+        'label' => t('lendmanagement.dialogs.location'),
         'type' => 'text'
     ],
 ];
