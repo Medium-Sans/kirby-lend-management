@@ -2,6 +2,10 @@
   "lendmanagement.inventory": "Inventaire",
   "lendmanagement.dashboard": "Dashboard",
   "lendmanagement.dialogs.name": "Nom",
+  "lendmanagement.dialogs.firstname": "Prénom",
+  "lendmanagement.dialogs.lastname": "Nom",
+  "lendmanagement.dialogs.email": "Email",
+  "lendmanagement.dialogs.phone": "Téléphone",
   "lendmanagement.dialogs.description": "Description",
   "lendmanagement.dialogs.quantity": "Quantité",
   "lendmanagement.dialogs.category": "Catégorie",
@@ -48,7 +52,7 @@
   "lendmanagement.lendAdd.missingFields": "Certains champs ne sont pas remplis !",
   "lendmanagement.items": "Objets",
   "lendmanagement.item": "Objet",
-  "lendmanagement.item.form.title": "Désignation",
+  "lendmanagement.item.form.name": "Nom",
   "lendmanagement.item.form.description": "Description",
   "lendmanagement.item.form.note": "Notes",
   "lendmanagement.item.form.quantity": "Quantité",
@@ -83,5 +87,11 @@
   "lendmanagement.inventory.table.createdAt": "Ajouté le",
   "lendmanagement.inventory.table.updatedAt": "Dernière modification",
   "lendmanagement.lend.table.name": "Nom",
-  "lendmanagement.lend.table.quantity": "Quantité"
+  "lendmanagement.lend.table.quantity": "Quantité",
+  "lendmanagement.error.firstname": "Le champ prénom doit être rempli !",
+  "lendmanagement.error.lastname": "Le champ nom de famille doit être rempli !",
+  "lendmanagement.error.email": "Le champ email doit être rempli !",
+  "lendmanagement.error.phone": "Le champ téléphone doit être rempli !",
+  "lendmanagement.error.name": "Le champ nom doit être rempli !"
 }
+

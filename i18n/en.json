@@ -1,6 +1,10 @@
 {
   "lendmanagement.inventory": "Inventory",
   "lendmanagement.dialogs.name": "Name",
+  "lendmanagement.dialogs.firstname": "First name",
+  "lendmanagement.dialogs.lastname": "Last name",
+  "lendmanagement.dialogs.email": "Email",
+  "lendmanagement.dialogs.phone": "Phone",
   "lendmanagement.dialogs.description": "Description",
   "lendmanagement.dialogs.quantity": "Quantity",
   "lendmanagement.dialogs.category": "Category",
@@ -47,7 +51,7 @@
   "lendmanagement.lendAdd.missingFields": "Please fill all the fields !",
   "lendmanagement.items": "Items",
   "lendmanagement.item": "Item",
-  "lendmanagement.item.form.title": "Title",
+  "lendmanagement.item.form.name": "Nom",
   "lendmanagement.item.form.description": "Description",
   "lendmanagement.item.form.note": "Note",
   "lendmanagement.item.form.quantity": "Quantity",
@@ -57,6 +61,7 @@
   "lendmanagement.borrowers": "Borrowers",
   "lendmanagement.borrower.add": "Add a borrower",
   "lendmanagement.borrower.delete": "Do you really want to delete this borrower ?",
+  "lendmanagement.categories": "Categories",
   "lendmanagement.categories.table.name": "Name",
   "lendmanagement.categories.table.location": "Location",
   "lendmanagement.categories.table.nbrObjects": "Number of objects",
@@ -81,5 +86,10 @@
   "lendmanagement.inventory.table.createdAt": "Added at",
   "lendmanagement.inventory.table.updatedAt": "Last update",
   "lendmanagement.lend.table.name": "Name",
-  "lendmanagement.lend.table.quantity": "Quantity"
+  "lendmanagement.lend.table.quantity": "Quantity",
+  "lendmanagement.error.firstname": "The firstname is empty.",
+  "lendmanagement.error.lastname": "The lastname is empty.",
+  "lendmanagement.error.email": "The email is empty.",
+  "lendmanagement.error.phone": "The phone number is empty.",
+  "lendmanagement.error.name": "Name is empty."
 }
