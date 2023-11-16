@@ -4,6 +4,7 @@ namespace MediumSans\LendManagement;
 
 use Beebmx\KirbyDb\DB;
 use Kirby\Exception\InvalidArgumentException;
+use Kirby\Toolkit\I18n;
 use Kirby\Toolkit\V;
 use chillerlan\QRCode\{QRCode, QROptions};
 use Kirby\Exception\NotFoundException;
@@ -126,17 +127,25 @@ class Item
 
         $input['qr_code'] = $QrCode->render($id);
         $input['updated_at'] = date('Y-m-d H:i:s');
+        $kirby_uuid = (array_key_exists('kirby_uuid', $input)) ? $input['kirby_uuid'] : $id;
 
-        // The end date must be greater than the start date
-        if (V::required($input['name']) === false) {
-            throw new InvalidArgumentException('A name must be set');
-        }
+        self::isValid($input);
 
         // if there is already an item with this same uuid we update it
         // otherwise we create it
         return DB::table(self::$tableName)->updateOrInsert(
-            ['kirby_uuid' => $input['kirby_uuid']],
+            ['kirby_uuid' => $kirby_uuid],
             $input);
+    }
+
+    public static function isValid(array $input): bool
+    {
+        $error = false;
+        if (V::required($input['name']) === false) {
+            $error = true;
+            throw new InvalidArgumentException(i18n::translate('lendmanagement.error.name'));
+        }
+        return $error;
     }
 
     /**
