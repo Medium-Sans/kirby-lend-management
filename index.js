@@ -65,17 +65,11 @@
       late_lends: Array,
       returned_lends: Array,
       categories: Array
-    },
-    methods: {
-      // format the price in EURO
-      price(price) {
-        return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(price);
-      }
     }
   };
   var _sfc_render$6 = function render() {
     var _vm = this, _c = _vm._self._c;
-    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.lends")) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "variant": "filled", "icon": "add", "link": `/lendmanagement/lend-add` } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.add")) + " ")])], 1)], 1), _c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.dashboard.status")))])], 1), _c("k-stats", { attrs: { "reports": _vm.stats } }), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.inProgress")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.lends } })], 1), _c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.late")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.late_lends } })], 1), _c("k-column", { attrs: { "width": "1/1" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.returned")))])], 1), _c("k-collection", { attrs: { "sortable": "true", "layout": "list", "items": _vm.returned_lends } })], 1)], 1)], 1);
+    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.lends")) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "variant": "filled", "icon": "add", "link": `/lendmanagement/lend-add` } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.add")) + " ")])], 1)], 1), _c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.dashboard.status")))])], 1), _c("k-stats", { attrs: { "reports": _vm.stats } }), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.inProgress")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.lends } })], 1), _c("k-column", { attrs: { "width": "1/2" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.late")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.late_lends } })], 1), _c("k-column", { attrs: { "width": "1/1" } }, [_c("header", { staticClass: "k-section-header" }, [_c("k-headline", [_vm._v(_vm._s(_vm.$t("lendmanagement.lend.returned")))])], 1), _c("k-collection", { attrs: { "layout": "list", "items": _vm.returned_lends } })], 1)], 1)], 1);
   };
   var _sfc_staticRenderFns$6 = [];
   _sfc_render$6._withStripped = true;
@@ -115,7 +109,7 @@
     } } }), _c("k-button", { attrs: { "icon": "add", "variant": "filled", "text": _vm.$t("lendmanagement.item.add") }, on: { "click": function($event) {
       return _vm.$dialog("/lendmanagement/item/create");
     } } })], 1)], 1), _c("table", { staticClass: "k-inventory" }, [_c("tr", [_c("th", { staticStyle: { "text-align": "center" } }, [_vm._v("#")]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.inventory.table.title")))]), _c("th", [_vm._v(_vm._s(_vm.$t("lendmanagement.inventory.table.category")))]), _c("th", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.inventory.table.quantity")))]), _c("th", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.inventory.table.updatedAt")))]), _c("th", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.inventory.table.createdAt")))]), _c("th", { staticClass: "k-product-options" })]), _vm._l(_vm.items, function(item, id) {
-      return _c("tr", { key: id }, [_c("td", { staticStyle: { "text-align": "center" }, attrs: { "id": "item-id" } }, [_vm._v(_vm._s(item.id))]), _c("td", { staticClass: "name fitwidth" }, [_vm._v(_vm._s(item.name))]), _c("td", [_vm._v(_vm._s(item.category))]), _c("td", { staticClass: "fitwidth", staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(item.quantity))]), _c("td", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(_vm.formatDate(item.updated_at)))]), _c("td", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(_vm.formatDate(item.created_at)))]), _c("td", { staticClass: "k-product-options" }, [_c("k-options-dropdown", { attrs: { "options": "lendmanagement/item/" + item.id } })], 1)]);
+      return _c("tr", { key: id }, [_c("td", { staticStyle: { "text-align": "center" }, attrs: { "id": "item-id" } }, [_vm._v(_vm._s(item.id))]), _c("td", { staticClass: "name fitwidth" }, [_c("a", { attrs: { "href": "lendmanagement/item/" + item.id } }, [_vm._v(_vm._s(item.name))])]), _c("td", [_vm._v(_vm._s(item.category))]), _c("td", { staticClass: "fitwidth", staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(item.quantity))]), _c("td", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(_vm.formatDate(item.updated_at)))]), _c("td", { staticStyle: { "text-align": "center" } }, [_vm._v(_vm._s(_vm.formatDate(item.created_at)))]), _c("td", { staticClass: "k-product-options" }, [_c("k-options-dropdown", { attrs: { "options": "lendmanagement/item/" + item.id } })], 1)]);
     })], 2)], 1);
   };
   var _sfc_staticRenderFns$5 = [];
@@ -9467,8 +9461,8 @@
   };
   var _sfc_render$2 = function render() {
     var _vm = this, _c = _vm._self._c;
-    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("view.lend.add")) + " "), _c("k-button-group", { attrs: { "slot": "left" }, slot: "left" }, [_c("k-button", { attrs: { "text": _vm.$t("lendmanagement.item.add"), "icon": "add", "variant": "filled" }, on: { "click": function($event) {
-      return _vm.$dialog("inventory/item/create");
+    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.$t("view.lend.add")) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "text": _vm.$t("lendmanagement.item.add"), "icon": "add", "variant": "filled" }, on: { "click": function($event) {
+      return _vm.$dialog("lendmanagement/item/create");
     } } }), _c("k-button", { attrs: { "text": _vm.$t("lendmanagement.borrower.add"), "icon": "add", "variant": "filled" }, on: { "click": function($event) {
       return _vm.$dialog("lendmanagement/borrower/create");
     } } })], 1)], 1), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "1/2" } }, [_c("k-fieldset", { attrs: { "fields": {
@@ -9566,7 +9560,10 @@
     },
     methods: {
       forceFileDownload(response, title) {
-        const url = window.URL.createObjectURL(new Blob([response], { encoding: "UTF-8", type: "text/plain;charset=UTF-8" }));
+        const url = window.URL.createObjectURL(new Blob([response], {
+          encoding: "UTF-8",
+          type: "text/plain;charset=UTF-8"
+        }));
         const link = document.createElement("a");
         link.href = url;
         link.setAttribute("download", title);
@@ -9584,22 +9581,16 @@
   };
   var _sfc_render = function render() {
     var _vm = this, _c = _vm._self._c;
-    return _c("k-inside", [_c("k-view", [_c("k-header", [_vm._v(" " + _vm._s(_vm.item.title) + " "), _c("k-button-group", { attrs: { "slot": "left" }, slot: "left" }, [_c("k-button", { attrs: { "text": "Delete", "icon": "trash" }, on: { "click": function($event) {
-      return _vm.$dialog("inventory/item/" + _vm.item.id + "/delete");
-    } } }), _c("k-button", { attrs: { "text": "Print", "icon": "print" }, on: { "click": _vm.print } })], 1), _c("k-button-group", { attrs: { "slot": "right" }, slot: "right" }, [_c("k-button", { attrs: { "icon": "add" }, on: { "click": function($event) {
-      return _vm.$dialog("/inventory/category/create");
-    } } }, [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.category.add")) + " ")])], 1)], 1), _c("k-grid", { attrs: { "gutter": "large" } }, [_c("k-column", { attrs: { "width": "2/3" } }, [_c("k-form", { attrs: { "fields": {
-      title: {
-        label: _vm.$t("lendmanagement.item.form.title"),
+    return _c("k-inside", [_c("k-header", [_vm._v(" " + _vm._s(_vm.item.name) + " "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "text": "Delete", "icon": "trash", "variant": "filled" }, on: { "click": function($event) {
+      return _vm.$dialog("lendmanagement/inventory/item/" + _vm.item.id + "/delete");
+    } } }), _c("k-button", { attrs: { "text": "Print", "icon": "print", "variant": "filled" }, on: { "click": _vm.print } }), _c("k-button", { attrs: { "icon": "add", "variant": "filled" }, on: { "click": function($event) {
+      return _vm.$dialog("lendmanagement/inventory/category/create");
+    } } }, [_vm._v(" " + _vm._s(_vm.$t("lendmanagement.category.add")) + " ")])], 1)], 1), _c("k-grid", { staticStyle: { "gap": "3rem" } }, [_c("k-column", { attrs: { "width": "2/3" } }, [_c("k-form", { attrs: { "fields": {
+      name: {
+        label: _vm.$t("lendmanagement.item.form.name"),
         type: "text",
         required: true,
-        width: "1/2"
-      },
-      quantity: {
-        label: _vm.$t("lendmanagement.item.form.quantity"),
-        type: "number",
-        required: true,
-        width: "1/2"
+        width: "1"
       },
       description: {
         label: _vm.$t("lendmanagement.item.form.description"),
@@ -9614,17 +9605,24 @@
         search: true,
         options: _vm.categories,
         max: 1,
-        width: "1"
+        width: "1/2"
+      },
+      quantity: {
+        label: _vm.$t("lendmanagement.item.form.quantity"),
+        type: "number",
+        required: true,
+        width: "1/2"
       },
       notes: {
         label: _vm.$t("lendmanagement.item.form.note"),
         type: "textarea",
         required: false,
-        width: "1"
+        width: "1",
+        size: "medium"
       }
     } }, on: { "input": _vm.input, "submit": _vm.submit }, model: { value: _vm.item, callback: function($$v) {
       _vm.item = $$v;
-    }, expression: "item" } }), _c("k-button", { attrs: { "icon": "check" }, on: { "click": _vm.submit } }, [_vm._v("Save")])], 1), _c("k-column", { attrs: { "width": "1/3" } }, [_c("k-field", { attrs: { "label": "Qr-Code" } }, [_c("k-image", { staticClass: "k-image", attrs: { "src": _vm.item.qr_code, "ratio": "1/1" } })], 1)], 1)], 1)], 1)], 1);
+    }, expression: "item" } }), _c("k-button", { attrs: { "variant": "filled", "icon": "check" }, on: { "click": _vm.submit } }, [_vm._v(_vm._s(_vm.$t("lendmanagement.lendAdd.save")))])], 1), _c("k-column", { attrs: { "width": "1/3" } }, [_c("k-field", { attrs: { "label": "Qr-Code" } }, [_c("k-image", { staticClass: "k-image", attrs: { "src": _vm.item.qr_code, "ratio": "1/1" } })], 1)], 1)], 1)], 1);
   };
   var _sfc_staticRenderFns = [];
   _sfc_render._withStripped = true;

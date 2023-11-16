@@ -54,6 +54,7 @@ Kirby::plugin('mediumsans/kirby-lend-management', [
                 ],
                 'views' => [
                     require __DIR__ . '/views/inventory.php',
+                    require __DIR__ . '/views/item.php',
                 ]
             ];
         },

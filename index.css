@@ -6,18 +6,26 @@
 .k-inventory {
   width: 100%;
   table-layout: auto;
-  border-collapse: collapse;
+  border-spacing: 1px;
+}
+.k-inventory td {
+  text-align: left;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background: var(--color-white);
 }
 .k-inventory th {
   text-align: left;
-  padding: 0.5rem;
+  font-size: var(--text-sm);
+  padding: var(--spacing-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   border-bottom: 1px solid var(--color-border);
   background: var(--color-gray-100);
-}
-.k-inventory td {
-  padding: 0.5rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-white);
 }
 
 .k-borrowers {
@@ -138,7 +146,10 @@
   overflow: visible !important;
 }
 
+.k-form {
+  margin-bottom: var(--spacing-4);
+}
 .k-image {
-  height: 10px;
+  height: 100%;
   width: auto;
 }
