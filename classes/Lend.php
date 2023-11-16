@@ -343,7 +343,7 @@ class Lend
                 ];
             }
         }
-        return $collection;
+        return array_reverse($collection);
     }
 
     /**
