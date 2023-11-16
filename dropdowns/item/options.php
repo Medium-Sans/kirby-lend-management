@@ -5,6 +5,11 @@ return [
     'action'  => function (string $id) {
         return [
             [
+                'text'   => t('lendmanagement.item.dropdown.preview'),
+                'icon'   => 'preview',
+                'link' => '/lendmanagement/item/' . $id
+            ],
+            [
                 'text'   => t('lendmanagement.item.dropdown.edit'),
                 'icon'   => 'edit',
                 'dialog' => 'lendmanagement/item/' . $id . '/update'
